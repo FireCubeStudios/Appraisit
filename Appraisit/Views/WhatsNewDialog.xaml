@@ -1,0 +1,63 @@
+﻿<ContentDialog
+    x:Class="Appraisit.Views.WhatsNewDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Uid="WhatsNewDialog"
+    mc:Ignorable="d"
+    d:DesignHeight="345"
+    d:DesignWidth="550">
+    <ContentDialog.TitleTemplate>
+        <DataTemplate x:DataType="x:String">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="ms-appx:///Assets/StoreLogo.png" Width="40" Height="40" />
+                <TextBlock Text="{x:Bind}" Margin="{StaticResource SmallLeftMargin}" VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </ContentDialog.TitleTemplate>
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock           
+                TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
+                Appraisit beta 0.4.3:
+                <LineBreak/>
+                -Added support to sort comments
+                <LineBreak/>
+                -Sort comments in new, top, best, Controversial, Q and A, live, old and random
+                <LineBreak/>
+                -Fluent design changes
+                <LineBreak/>
+                -Added blur to post dialog
+                <LineBreak/>
+                -Added shadows
+                <LineBreak/>
+                -Added grid re-order animations
+                <LineBreak/>
+                -Added reveal focus
+                <LineBreak/>
+                -Added navigation bloom animation
+                <LineBreak/>
+                -Added profile flyout with basic info
+                <LineBreak/>
+                -Changed extra to explore for pivot header
+                <LineBreak/>
+                -Double tap to open ms store search
+                <LineBreak/>
+                -Added button to open browser for link posts as alternative to hyper link
+                <LineBreak/>
+                -Right click to open menu flyout with multiple commands
+                <LineBreak/>
+                -Menu flyout and post commandbar can now search on app, reddit and store
+                <LineBreak/>
+                -Added button to open posts in browser
+                <LineBreak/>
+                -Changed upvote icon and upvote/downvote in menuflyout
+                <LineBreak/>
+                -search can now search ms store and reddit on web
+                <LineBreak/>
+                -Bug fixes and performance improvements
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>
