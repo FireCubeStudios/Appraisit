@@ -12,7 +12,7 @@ namespace Appraisit.Helpers
 {
     public class HotPostsClass : IIncrementalSource<Posts>
     {
-        public string refreshToken = "209908787246-4p2wKVe0RaB_coetdNPtatNe45c";
+        public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings; 
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string appId = "-bL9o_t7kgNNmA";
         List<Posts> PostCollection;
@@ -22,15 +22,15 @@ namespace Appraisit.Helpers
         {
             await Task.Run(() =>
             {
+                string refreshToken = localSettings.Values["refresh_token"].ToString();
                 // Gets items from the collection according to pageIndex and pageSize parameters.
                 PostCollection = new List<Posts>();
                 var reddit = new RedditAPI(appId, refreshToken, secret);
                 var subreddit = reddit.Subreddit("Appraisit");
-                var posts = subreddit.Posts.GetHot(limit: limit);
+                var posts = subreddit.Posts.GetHot(limit: limit).Skip(skipInt);
                 limit = limit + 10;
-                if (posts.Count > 0)
-                {
-                    foreach (Post post in posts.Skip(skipInt))
+                
+                    foreach (Post post in posts)
                     {
 
                         // pageContent += Environment.NewLine + "### [" + post.Title + "](" + post.Permalink + ")" + Environment.NewLine;
@@ -48,7 +48,7 @@ namespace Appraisit.Helpers
                             PostCommentCount = post.Comments.GetComments("new").Count.ToString()
                         });
                     }
-                }
+                
                 // Simulates a longer request...
                 skipInt = skipInt + 10;
             });

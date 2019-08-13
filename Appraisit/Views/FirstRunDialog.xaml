@@ -20,11 +20,12 @@
     <ScrollViewer>
         <StackPanel>
             <TextBlock
+                x:Name="FirstText"
                 IsTextSelectionEnabled="True"
                 TextWrapping="WrapWholeWords">
                Login to reddit
                 <LineBreak/>
-                appraisit is pwoered by reddit
+                appraisit is powered by reddit
             </TextBlock>
         </StackPanel>
     </ScrollViewer>

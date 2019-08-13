@@ -20,41 +20,29 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.4.3:
+                Appraisit beta 0.5.4:
                 <LineBreak/>
-                -Added support to sort comments
+                -Upvote, downvote and reply to comments
                 <LineBreak/>
-                -Sort comments in new, top, best, Controversial, Q and A, live, old and random
+                -Major performance improvements to loading the posts
                 <LineBreak/>
-                -Fluent design changes
+                -Fluent design
                 <LineBreak/>
-                -Added blur to post dialog
+                -Swipe commands do something
                 <LineBreak/>
-                -Added shadows
+                -View comment upvotes and downvotes
                 <LineBreak/>
-                -Added grid re-order animations
+                -Sort posts into a list view or gridview
                 <LineBreak/>
-                -Added reveal focus
+                -Improved comment and reply ui
                 <LineBreak/>
-                -Added navigation bloom animation
+                -Double click to open the app
                 <LineBreak/>
-                -Added profile flyout with basic info
+                -UI changes
                 <LineBreak/>
-                -Changed extra to explore for pivot header
+                -Removed mobile support due to compatibility issues
                 <LineBreak/>
-                -Double tap to open ms store search
-                <LineBreak/>
-                -Added button to open browser for link posts as alternative to hyper link
-                <LineBreak/>
-                -Right click to open menu flyout with multiple commands
-                <LineBreak/>
-                -Menu flyout and post commandbar can now search on app, reddit and store
-                <LineBreak/>
-                -Added button to open posts in browser
-                <LineBreak/>
-                -Changed upvote icon and upvote/downvote in menuflyout
-                <LineBreak/>
-                -search can now search ms store and reddit on web
+                -However code for mobile version still exists so winddows 10 on arm tablets can use the mobille ui when the arm version is downloaded
                 <LineBreak/>
                 -Bug fixes and performance improvements
             </TextBlock>

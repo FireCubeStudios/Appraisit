@@ -31,6 +31,8 @@ using Windows.UI.Xaml.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.Networking.Connectivity;
+using Windows.System.Profile;
 
 namespace Appraisit.Views
 {
@@ -38,6 +40,7 @@ namespace Appraisit.Views
 
     {
         //string BackupappId = "fNIq4XWgq6T33w";
+        int view = 1;
         private SpriteVisual _destinationSprite;
         ColorBloomTransitionHelper transition;
         private Compositor _compositor;
@@ -47,7 +50,7 @@ namespace Appraisit.Views
         public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public string refreshToken;
         public string BackuprefreshToken = "209908787246-4p2wKVe0RaB_coetdNPtatNe45c";
-        public string accessToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
+        public string accessToken;
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string PostFlair = "Update";
@@ -67,25 +70,25 @@ namespace Appraisit.Views
             InitializeComponent();
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(TitleGrid);
-            if ((string)localSettings.Values["refresh_token"] == null)
-            {
-                var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
-                var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-                Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
-                ContentGrid.Visibility = Visibility.Collapsed;
-                FindName("loginView");
-                loginView.Navigate(targetUri);
-            }
-            else
-            {
+            Window.Current.SetTitleBar(TitleGrid);                     
+                    if ((string)localSettings.Values["refresh_token"] == null)
+                    {
+                        ProgressRing.IsActive = true;
+                        var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+                        var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
+                        Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
+                        ContentGrid.Visibility = Visibility.Collapsed;
+                        FindName("loginView");
+                        loginView.Navigate(targetUri);
+                        ProgressRing.IsActive = false;
+                    }
+                    else
+                    {
 
 
-                refreshToken = localSettings.Values["refresh_token"].ToString();
+                        refreshToken = localSettings.Values["refresh_token"].ToString();
 
-            }
-
-
+                    }
 
         }
         public ElementTheme ElementTheme
@@ -113,13 +116,38 @@ namespace Appraisit.Views
             public string CommentAuthor { get; set; }
             public string CommentText { get; set; }
             public string CommentDate { get; set; }
+            public string CommentUpvotes { get; set; }
+            public string CommentDownvotes { get; set; }
+            public Comment CommentSelf { get; set; }
         }
         private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            try
+            {
+             if (connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+             {
                 ProgressRing.IsActive = true;
-                switch (PivotNavigator.SelectedIndex.ToString())
+                        transition = new ColorBloomTransitionHelper(hostForVisual);
+                        var header = sender as Pivot;
+                        var headerPosition = header.TransformToVisual(PivotNavigator).TransformPoint(new Windows.Foundation.Point(0d, 0d));
+                        var initialBounds = new Windows.Foundation.Rect()  // maps to a rectangle the size of the header
+                        {
+                            Width = header.RenderSize.Width,
+
+                            Height = header.RenderSize.Height,
+
+                            X = headerPosition.X,
+
+                            Y = headerPosition.Y
+                        };
+                        var finalBounds = Window.Current.Bounds;  // maps to the bounds of the current window
+                        transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
+                                         initialBounds,                                  // the initial size and position
+                                                   finalBounds);
+                        switch (PivotNavigator.SelectedIndex.ToString())
                 {
                     case "0":
                         try
@@ -157,23 +185,19 @@ namespace Appraisit.Views
 
                 }
                 ProgressRing.IsActive = false;
-                transition = new ColorBloomTransitionHelper(hostForVisual);
-                var header = sender as Pivot;
-                var headerPosition = header.TransformToVisual(PivotNavigator).TransformPoint(new Windows.Foundation.Point(0d, 0d));
-                var initialBounds = new Windows.Foundation.Rect()  // maps to a rectangle the size of the header
+                            // the area to fill over the animation duration
+                 }
+              }
+                catch
                 {
-                    Width = header.RenderSize.Width,
-
-                    Height = header.RenderSize.Height,
-
-                    X = headerPosition.X,
-
-                    Y = headerPosition.Y
-                };
-                var finalBounds = Window.Current.Bounds;  // maps to the bounds of the current window
-                transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
-                                 initialBounds,                                  // the initial size and position
-                                           finalBounds);                             // the area to fill over the animation duration
+                    UniversalPageNotification.Show("No internet connection");
+                }
+               if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                 {
+                UnloadObject(PivotBar);
+                FindName("SB");
+                FindName("MobileBar");
+                 }
 
             });
         }
@@ -235,58 +259,58 @@ namespace Appraisit.Views
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                FindName("PostDialog");
-                CommentCollection = new List<Comments>();
-                NewCommentCollection = new List<Comments>();
-                TopCommentCollection = new List<Comments>();
-                ControversialCommentCollection = new List<Comments>();
-                QACommentCollection = new List<Comments>();
-                RandomCommentCollection = new List<Comments>();
-                OldCommentCollection = new List<Comments>();
-                LiveCommentCollection = new List<Comments>();
-                FindName("SearchTip");
-                SearchTip.IsOpen = false;
-                UnloadObject(SearchTip);
-                _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
-                _destinationSprite = _compositor.CreateSpriteVisual();
+            FindName("PostDialog");
+            CommentCollection = new List<Comments>();
+            NewCommentCollection = new List<Comments>();
+            TopCommentCollection = new List<Comments>();
+            ControversialCommentCollection = new List<Comments>();
+            QACommentCollection = new List<Comments>();
+            RandomCommentCollection = new List<Comments>();
+            OldCommentCollection = new List<Comments>();
+            LiveCommentCollection = new List<Comments>();
+            FindName("SearchTip");
+            SearchTip.IsOpen = false;
+            UnloadObject(SearchTip);
+            _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
+            _destinationSprite = _compositor.CreateSpriteVisual();
 
-                _destinationSprite.Size = new Vector2((float)ContentGrid.ActualWidth, (float)ContentGrid.ActualHeight);
+            _destinationSprite.Size = new Vector2((float)ContentGrid.ActualWidth, (float)ContentGrid.ActualHeight);
 
-                ElementCompositionPreview.SetElementChildVisual(ContentGrid, _destinationSprite);
+            ElementCompositionPreview.SetElementChildVisual(ContentGrid, _destinationSprite);
 
-                _destinationSprite.IsVisible = true;
-                IGraphicsEffect graphicsEffect = null;
-                string[] animatableProperties = null;
-                graphicsEffect = new GaussianBlurEffect()
+            _destinationSprite.IsVisible = true;
+            IGraphicsEffect graphicsEffect = null;
+            string[] animatableProperties = null;
+            graphicsEffect = new GaussianBlurEffect()
 
+            {
+                Name = "Blur",
+                BlurAmount = 10,
+
+                Source = new CompositionEffectSourceParameter("ContentGrid"),
+
+                Optimization = EffectOptimization.Balanced,
+
+                BorderMode = EffectBorderMode.Hard,
+
+            };
+            CompositionEffectFactory _effectFactory = _compositor.CreateEffectFactory(graphicsEffect, animatableProperties);
+            CompositionEffectBrush brush = _effectFactory.CreateBrush();
+            brush.SetSourceParameter("ContentGrid", _compositor.CreateBackdropBrush());
+            _destinationSprite.Brush = brush;
+            ScalarKeyFrameAnimation showAnimation = _compositor.CreateScalarKeyFrameAnimation();
+
+            showAnimation.InsertKeyFrame(0f, 0f);
+
+            showAnimation.InsertKeyFrame(1f, 1f);
+
+            showAnimation.Duration = TimeSpan.FromMilliseconds(1500);
+
+            _destinationSprite.StartAnimation("Opacity", showAnimation);
+            if (e.ClickedItem != null)
+            {
+                try
                 {
-                    Name = "Blur",
-                    BlurAmount = 10,
-
-                    Source = new CompositionEffectSourceParameter("ContentGrid"),
-
-                    Optimization = EffectOptimization.Balanced,
-
-                    BorderMode = EffectBorderMode.Hard,
-
-                };
-                CompositionEffectFactory _effectFactory = _compositor.CreateEffectFactory(graphicsEffect, animatableProperties);
-                CompositionEffectBrush brush = _effectFactory.CreateBrush();
-                brush.SetSourceParameter("ContentGrid", _compositor.CreateBackdropBrush());
-                _destinationSprite.Brush = brush;
-                ScalarKeyFrameAnimation showAnimation = _compositor.CreateScalarKeyFrameAnimation();
-
-                showAnimation.InsertKeyFrame(0f, 0f);
-
-                showAnimation.InsertKeyFrame(1f, 1f);
-
-                showAnimation.Duration = TimeSpan.FromMilliseconds(1500);
-
-                _destinationSprite.StartAnimation("Opacity", showAnimation);
-                if (e.ClickedItem != null)
-                {
-                    try
-                    {
                         var info = e.ClickedItem as Posts;
                         var S = info.PostSelf as SelfPost;
                         String Title = info.TitleText;
@@ -304,677 +328,773 @@ namespace Appraisit.Views
                         {
                             PostSelf = info.PostSelf
                         };
-                        var CommentsList = postComment.Comments.GetConfidence();
-                        if (CommentsList.Count > 0)
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            foreach (Comment commentObject in CommentsList)
+                            var CommentsList = postComment.Comments.GetConfidence();
+                            if (CommentsList.Count > 0)
                             {
-                                CommentCollection.Add(new Comments()
+                                foreach (Comment commentObject in CommentsList)
                                 {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                               /* var CommentReplies = commentObject.Comments.GetComments();
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (Comment ReplyObject in CommentReplies)
+                                    CommentCollection.Add(new Comments()
                                     {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        ReplyCommentTreeViewControl.ItemsSource = ReplyCollection;
-                                       /* MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                               // else
-                                //{*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
-                        }
-                        var NewCommentsList = postComment.Comments.GetNew();
-                        if (NewCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in NewCommentsList)
-                            {
-                                NewCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
-                        }
-                        var TopCommentsList = postComment.Comments.GetTop();
-                        if (TopCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in TopCommentsList)
-                            {
-                                TopCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
-                        }
-                        var OldCommentsList = postComment.Comments.GetOld();
-                        if (OldCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in OldCommentsList)
-                            {
-                                OldCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
-                        }
-                        var ControversialCommentsList = postComment.Comments.GetControversial();
-                        if (ControversialCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in ControversialCommentsList)
-                            {
-                                ControversialCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
-                        }
-                        var RandomCommentsList = postComment.Comments.GetRandom();
-                        if (RandomCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in RandomCommentsList)
-                            {
-                                RandomCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            RandomCommentTreeViewControl.ItemsSource = RandomCommentCollection;
-                        }
-                        var liveCommentsList = postComment.Comments.GetLive();
-                        if (liveCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in liveCommentsList)
-                            {
-                                LiveCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
-                        }
-                        var QACommentsList = postComment.Comments.GetQA();
-                        if (QACommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in QACommentsList)
-                            {
-                                QACommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            QACommentTreeViewControl.ItemsSource = QACommentCollection;
-                        }
-                        await PostDialog.ShowAsync();
-                    }
-                    catch
-                    {
-                        var info = e.ClickedItem as Posts;
-                        var S = info.PostSelf as SelfPost;
-                        var L = info.PostSelf as LinkPost;
-                        LinkNavigator.IsEnabled = true;
-                        String Title = info.TitleText;
-                        String Author = info.PostAuthor;
-                        string Date = info.PostDate;
-                        Post postComment = info.PostSelf;
-                        PostDialog.Title = Title;
-                        AuthorText.Text = Author;
-                        CreatedText.Text = Date;
-                        Uri Link = new Uri(L.URL.ToString());
-                        LinkPostLink.Visibility = Visibility.Visible;
-                        PostContentText.Visibility = Visibility.Collapsed;
-                        LinkPostLink.NavigateUri = Link;
-                        ReferencePost = new OpenPosts()
-                        {
-                            PostSelf = info.PostSelf
-                        };
-                        var CommentsList = postComment.Comments.GetConfidence();
-                        if (CommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in CommentsList)
-                            {
-                                CommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /* var CommentReplies = commentObject.Comments.GetComments();
-                                 if (CommentReplies.Count > 0)
-                                 {
-                                     foreach (Comment ReplyObject in CommentReplies)
-                                     {
-                                         ReplyCollection.Add(new Comments()
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /* var CommentReplies = commentObject.Comments.GetComments();
+                                         if (CommentReplies.Count > 0)
                                          {
-                                             CommentAuthor = commentObject.Author,
-                                             CommentDate = commentObject.Created.ToString(),
-                                             CommentText = commentObject.Body,
-                                         });
-                                         ReplyCommentTreeViewControl.ItemsSource = ReplyCollection;
-                                        /* MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                         replyNode.Content = CommentCollection;
-                                         replyNode.Children.Add(replyNode);
-                                         MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                         rootNode.Content = CommentCollection;
-                                         UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                             foreach (Comment ReplyObject in CommentReplies)
+                                             {
+                                                 ReplyCollection.Add(new Comments()
+                                                 {
+                                                     CommentAuthor = commentObject.Author,
+                                                     CommentDate = commentObject.Created.ToString(),
+                                                     CommentText = commentObject.Body,
+                                                 });
+                                                 ReplyCommentTreeViewControl.ItemsSource = ReplyCollection;
+                                                /* MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                 replyNode.Content = CommentCollection;
+                                                 replyNode.Children.Add(replyNode);
+                                                 MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                 rootNode.Content = CommentCollection;
+                                                 UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                             }
+                                         }
+
+                                        // else
+                                         //{*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
+                            }
+                            var NewCommentsList = postComment.Comments.GetNew();
+                            if (NewCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in NewCommentsList)
+                                {
+                                    NewCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
+                            }
+                            var TopCommentsList = postComment.Comments.GetTop();
+                            if (TopCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in TopCommentsList)
+                                {
+                                    TopCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                            }
+                            var OldCommentsList = postComment.Comments.GetOld();
+                            if (OldCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in OldCommentsList)
+                                {
+                                    OldCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
+                            }
+                            var ControversialCommentsList = postComment.Comments.GetControversial();
+                            if (ControversialCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in ControversialCommentsList)
+                                {
+                                    ControversialCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
+                            }
+                            var RandomCommentsList = postComment.Comments.GetRandom();
+                            if (RandomCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in RandomCommentsList)
+                                {
+                                    RandomCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+
+                            }
+                            var liveCommentsList = postComment.Comments.GetLive();
+                            if (liveCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in liveCommentsList)
+                                {
+                                    LiveCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
+                            }
+                            var QACommentsList = postComment.Comments.GetQA();
+                            if (QACommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in QACommentsList)
+                                {
+                                    QACommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                        /*var CommentReplies = commentObject.Replies;
+                                        if (CommentReplies.Count > 0)
+                                        {
+                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            {
+                                                ReplyCollection.Add(new Comments()
+                                                {
+                                                    CommentAuthor = commentObject.Author,
+                                                    CommentDate = commentObject.Created.ToString(),
+                                                    CommentText = commentObject.Body,
+                                                });
+                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                                replyNode.Content = CommentCollection;
+                                                replyNode.Children.Add(replyNode);
+                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                                rootNode.Content = CommentCollection;
+                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            }
+                                        }
+
+                                        else
+                                        {*/
+                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                        //   rootNode.Content = CommentCollection;
+                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        // }
+
+                                    }
+                                QACommentTreeViewControl.ItemsSource = QACommentCollection;
+                            }
+
+                            else
+                            {
+                                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                                {
+                                    TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                                    QACommentTreeViewControl.ItemsSource = QACommentCollection;
+                                    LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
+                                    RandomCommentTreeViewControl.ItemsSource = RandomCommentCollection;
+                                    ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
+                                    NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
+                                    TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                                    OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
+                                    UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
+                                });
+                            }
+                            await PostDialog.ShowAsync();
+                        });                  
+                }
+                catch
+                {
+                    var info = e.ClickedItem as Posts;
+                    var S = info.PostSelf as SelfPost;
+                    var L = info.PostSelf as LinkPost;
+                    LinkNavigator.IsEnabled = true;
+                    String Title = info.TitleText;
+                    String Author = info.PostAuthor;
+                    string Date = info.PostDate;
+                    Post postComment = info.PostSelf;
+                    PostDialog.Title = Title;
+                    AuthorText.Text = Author;
+                    CreatedText.Text = Date;
+                    Uri Link = new Uri(L.URL.ToString());
+                    LinkPostLink.Visibility = Visibility.Visible;
+                    PostContentText.Visibility = Visibility.Collapsed;
+                    LinkPostLink.NavigateUri = Link;
+                    ReferencePost = new OpenPosts()
+                    {
+                        PostSelf = info.PostSelf
+                    };
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            var CommentsList = postComment.Comments.GetConfidence();
+                            if (CommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in CommentsList)
+                                {
+                                    CommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /* var CommentReplies = commentObject.Comments.GetComments();
+                                     if (CommentReplies.Count > 0)
+                                     {
+                                         foreach (Comment ReplyObject in CommentReplies)
+                                         {
+                                             ReplyCollection.Add(new Comments()
+                                             {
+                                                 CommentAuthor = commentObject.Author,
+                                                 CommentDate = commentObject.Created.ToString(),
+                                                 CommentText = commentObject.Body,
+                                             });
+                                             ReplyCommentTreeViewControl.ItemsSource = ReplyCollection;
+                                            /* MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                             replyNode.Content = CommentCollection;
+                                             replyNode.Children.Add(replyNode);
+                                             MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                             rootNode.Content = CommentCollection;
+                                             UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                         }
                                      }
-                                 }
 
-                                // else
-                                 //{*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
+                                    // else
+                                     //{*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
 
+                                }
+                                UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
                             }
-                            UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
-                        }
-                        var NewCommentsList = postComment.Comments.GetNew();
-                        if (NewCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in NewCommentsList)
+                            var NewCommentsList = postComment.Comments.GetNew();
+                            if (NewCommentsList.Count > 0)
                             {
-                                NewCommentCollection.Add(new Comments()
+                                foreach (Comment commentObject in NewCommentsList)
                                 {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                               
-                            }
-                            NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
-                        }
-                        var TopCommentsList = postComment.Comments.GetTop();
-                        if (TopCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in TopCommentsList)
-                            {
-                                TopCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
+                                    NewCommentCollection.Add(new Comments()
                                     {
-                                        ReplyCollection.Add(new Comments()
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
                                         {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
                                     }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
+                                }
+                                NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
+                            }
+                            var TopCommentsList = postComment.Comments.GetTop();
+                            if (TopCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in TopCommentsList)
+                                {
+                                    TopCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
+                                        {
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
+                                    }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
+                                }
+                                TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                            }
+                            var OldCommentsList = postComment.Comments.GetOld();
+                            if (OldCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in OldCommentsList)
+                                {
+                                    OldCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
+                                        {
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
+                                    }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
+                                }
+                                OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
+                            }
+                            var ControversialCommentsList = postComment.Comments.GetControversial();
+                            if (ControversialCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in ControversialCommentsList)
+                                {
+                                    ControversialCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
+                                        {
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
+                                    }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
+                                }
+                                ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
+                            }
+                            var RandomCommentsList = postComment.Comments.GetRandom();
+                            if (RandomCommentsList.Count > 0)
+                            {
+                                foreach (Comment commentObject in RandomCommentsList)
+                                {
+                                    RandomCommentCollection.Add(new Comments()
+                                    {
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
+                                        {
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
+                                    }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
                                 }
 
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
                             }
-                            TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
-                        }
-                        var OldCommentsList = postComment.Comments.GetOld();
-                        if (OldCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in OldCommentsList)
+                            var liveCommentsList = postComment.Comments.GetLive();
+                            if (liveCommentsList.Count > 0)
                             {
-                                OldCommentCollection.Add(new Comments()
+                                foreach (Comment commentObject in liveCommentsList)
                                 {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
+                                    LiveCommentCollection.Add(new Comments()
                                     {
-                                        ReplyCollection.Add(new Comments()
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
                                         {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
                                     }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
                                 }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
+                                LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
                             }
-                            OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
-                        }
-                        var ControversialCommentsList = postComment.Comments.GetControversial();
-                        if (ControversialCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in ControversialCommentsList)
+                            var QACommentsList = postComment.Comments.GetQA();
+                            if (QACommentsList.Count > 0)
                             {
-                                ControversialCommentCollection.Add(new Comments()
+                                foreach (Comment commentObject in QACommentsList)
                                 {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
+                                    QACommentCollection.Add(new Comments()
                                     {
-                                        ReplyCollection.Add(new Comments()
+                                        CommentAuthor = commentObject.Author,
+                                        CommentDate = commentObject.Created.ToString(),
+                                        CommentText = commentObject.Body,
+                                        CommentDownvotes = commentObject.DownVotes.ToString(),
+                                        CommentUpvotes = commentObject.UpVotes.ToString(),
+                                        CommentSelf = commentObject
+                                    });
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
                                         {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
                                     }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
                                 }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
+                                QACommentTreeViewControl.ItemsSource = QACommentCollection;
                             }
-                            ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
-                        }
-                        var RandomCommentsList = postComment.Comments.GetRandom();
-                        if (RandomCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in RandomCommentsList)
+
+                            else
                             {
-                                RandomCommentCollection.Add(new Comments()
+                                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                                 {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
+                                    TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                                    QACommentTreeViewControl.ItemsSource = QACommentCollection;
+                                    LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
+                                    RandomCommentTreeViewControl.ItemsSource = RandomCommentCollection;
+                                    ControversialCommentTreeViewControl.ItemsSource = ControversialCommentCollection;
+                                    NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
+                                    TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
+                                    OldCommentTreeViewControl.ItemsSource = OldCommentCollection;
+                                    UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
                                 });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            RandomCommentTreeViewControl.ItemsSource = RandomCommentCollection;
-                        }
-                        var liveCommentsList = postComment.Comments.GetLive();
-                        if (liveCommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in liveCommentsList)
-                            {
-                                LiveCommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            LiveCommentTreeViewControl.ItemsSource = LiveCommentCollection;
-                        }
-                        var QACommentsList = postComment.Comments.GetQA();
-                        if (QACommentsList.Count > 0)
-                        {
-                            foreach (Comment commentObject in QACommentsList)
-                            {
-                                QACommentCollection.Add(new Comments()
-                                {
-                                    CommentAuthor = commentObject.Author,
-                                    CommentDate = commentObject.Created.ToString(),
-                                    CommentText = commentObject.Body,
-
-                                });
-                                /*var CommentReplies = commentObject.Replies;
-                                if (CommentReplies.Count > 0)
-                                {
-                                    foreach (UIElement ReplyObject in CommentReplies)
-                                    {
-                                        ReplyCollection.Add(new Comments()
-                                        {
-                                            CommentAuthor = commentObject.Author,
-                                            CommentDate = commentObject.Created.ToString(),
-                                            CommentText = commentObject.Body,
-                                        });
-                                        MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                        replyNode.Content = CommentCollection;
-                                        replyNode.Children.Add(replyNode);
-                                        MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        rootNode.Content = CommentCollection;
-                                        UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    }
-                                }
-
-                                else
-                                {*/
-                                // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                //   rootNode.Content = CommentCollection;
-                                //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                // }
-
-                            }
-                            QACommentTreeViewControl.ItemsSource = QACommentCollection;
-                        }
+                    }
+                });
                         await PostDialog.ShowAsync();
                     }
                 }
@@ -984,12 +1104,14 @@ namespace Appraisit.Views
         private async void Upvotes_Click(object sender, RoutedEventArgs e)
         {
             Post upvote = ReferencePost.PostSelf;
+            UniversalPostNotification.Show("Upvoted");
             await upvote.UpvoteAsync();
         }
 
         private async void Downvotes_Click(object sender, RoutedEventArgs e)
         {
             Post downvote = ReferencePost.PostSelf;
+            UniversalPostNotification.Show("Downvoted");
             await downvote.UpvoteAsync();
         }
 
@@ -1037,41 +1159,47 @@ namespace Appraisit.Views
 
         private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
             {
                 Random number = new Random();
                 if (number.Next(1, 2) == 1)
                 {
-                    PostCollection = new List<Posts>();
-                    var reddit = new RedditAPI(appId, refreshToken, secret);
-                    var subreddit = reddit.Subreddit("Appraisit");
-                    List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
-                    if (posts.Count == 0)
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        return;
-                    }
-                    else
-                    {
-                        foreach (Post post in posts)
+                        PostCollection = new List<Posts>();
+                        var reddit = new RedditAPI(appId, refreshToken, secret);
+                        var subreddit = reddit.Subreddit("Appraisit");
+                        List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+                        if (posts.Count == 0)
                         {
-
-                            var p = post as SelfPost;
-                            PostCollection.Add(new Posts()
-                            {
-                                TitleText = post.Title,
-                                PostSelf = post,
-                                PostAuthor = "by: " + post.Author,
-                                PostDate = "Created: " + post.Created,
-                                PostUpvotes = post.UpVotes.ToString(),
-                                PostDownvotes = post.DownVotes.ToString(),
-                                PostCommentCount = post.Comments.GetComments("new").Count.ToString()
-                            });
-
-                            SearchGridViewControl.ItemsSource = PostCollection;
-
+                            return;
                         }
-                    }
+                        else
+                        {
+                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                            {
+                                foreach (Post post in posts)
+                                {
+                                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                                    {
+                                        var p = post as SelfPost;
+                                        PostCollection.Add(new Posts()
+                                        {
+                                            TitleText = post.Title,
+                                            PostSelf = post,
+                                            PostAuthor = "by: " + post.Author,
+                                            PostDate = "Created: " + post.Created,
+                                            PostUpvotes = post.UpVotes.ToString(),
+                                            PostDownvotes = post.DownVotes.ToString(),
+                                            PostCommentCount = post.Comments.GetComments("new").Count.ToString()
+                                        });
 
+                                        SearchGridViewControl.ItemsSource = PostCollection;
+                                    });
+                                }
+                            });
+                        }
+                    });
 
                 }
                 else
@@ -1395,23 +1523,26 @@ namespace Appraisit.Views
         }
         private async void CreatePostDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
             {
                 if (NewPostPivot.SelectedIndex == 0)
                 {
                     try
                     {
-                        if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            return;
-                        }
-                        else
-                        {
-                            string TITLETEST = TitlePostText.Text.ToString();
-                            var reddit = new RedditAPI(appId, refreshToken, secret);
-                            var subreddit = reddit.Subreddit("Appraisit");
-                            subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(PostFlair.ToString());
-                        }
+                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                string TITLETEST = TitlePostText.Text.ToString();
+                                var reddit = new RedditAPI(appId, refreshToken, secret);
+                                var subreddit = reddit.Subreddit("Appraisit");
+                                subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(PostFlair.ToString());
+                            }
+                        });
                     }
                     catch
                     {
@@ -1422,27 +1553,31 @@ namespace Appraisit.Views
                 {
                     try
                     {
-                        if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            return;
-                        }
-                        else
-                        {
-                            Uri Link = new Uri(NewPostLink.Text.ToString());
-                            if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
+                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
                             {
-                                string TITLETEST = TitlePostText.Text.ToString();
-                                var reddit = new RedditAPI(appId, refreshToken, secret);
-                                var subreddit = reddit.Subreddit("Appraisit");
-                                subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(PostFlair.ToString());
+                                return;
                             }
-                        }
+                            else
+                            {
+                                Uri Link = new Uri(NewPostLink.Text.ToString());
+                                if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
+                                {
+                                    string TITLETEST = TitlePostText.Text.ToString();
+                                    var reddit = new RedditAPI(appId, refreshToken, secret);
+                                    var subreddit = reddit.Subreddit("Appraisit");
+                                    subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(PostFlair.ToString());
+                                }
+                            }
+                        });
                     }
                     catch
                     {
                         return;
                     }
                 }
+                UniversalPageNotification.Show("Post created (refresh to view)");
             });
         }
 
@@ -1454,69 +1589,37 @@ namespace Appraisit.Views
             await Windows.System.Launcher.LaunchUriAsync(uriBing);
         }
 
-        private async void NewCommentButton_Click(object sender, RoutedEventArgs e)
+        private async void TopComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                try
+                var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
+                TopPostsClass TopGenerator = new TopPostsClass();
+                string newOrder = TopOrder.SelectedItem.ToString();
+                switch (newOrder)
                 {
-                    var reddit = new RedditAPI(appId, refreshToken, secret);
-                    var subreddit = reddit.Subreddit("Appraisit");
-                    Post NewComment = ReferencePost.PostSelf;
-                    await NewComment.ReplyAsync(body: CommentTextMessage.Text.ToString());
-                    CommentTextMessage.Text = "";
-                    await Task.Delay(6000);
-                    var CommentsList = NewComment.Comments.GetComments("new");
-                    if (CommentsList.Count > 0)
-                    {
-                        foreach (Comment commentObject in CommentsList)
-                        {
-                            CommentCollection.Add(new Comments()
-                            {
-                                CommentAuthor = commentObject.Author,
-                                CommentDate = commentObject.Created.ToString(),
-                                CommentText = commentObject.Body,
-                            });
-
-                        }
-                        UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
-                    }
-                }
-                catch
-                {
-                    return;
+                    case "all":
+                        TopGenerator.Order = newOrder;
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        break;
+                    case "year":
+                        TopGenerator.Order = newOrder;
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        break;
+                    case "month":
+                        TopGenerator.Order = newOrder;
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        break;
+                    case "week":
+                        TopGenerator.Order = newOrder;
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        break;
+                    case "day":
+                        TopGenerator.Order = newOrder;
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        break;
                 }
             });
-        }
-
-        private void TopComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
-            TopPostsClass TopGenerator = new TopPostsClass();
-            string newOrder = TopOrder.SelectedItem.ToString();
-            switch (newOrder)
-            {
-                case "all":
-                    TopGenerator.Order = newOrder;
-                    TopGridViewControl.ItemsSource = Topcollection;
-                    break;
-                case "year":
-                    TopGenerator.Order = newOrder;
-                    TopGridViewControl.ItemsSource = Topcollection;
-                    break;
-                case "month":
-                    TopGenerator.Order = newOrder;
-                    TopGridViewControl.ItemsSource = Topcollection;
-                    break;
-                case "week":
-                    TopGenerator.Order = newOrder;
-                    TopGridViewControl.ItemsSource = Topcollection;
-                    break;
-                case "day":
-                    TopGenerator.Order = newOrder;
-                    TopGridViewControl.ItemsSource = Topcollection;
-                    break;
-            }
         }
 
         private void PostDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -1544,13 +1647,16 @@ namespace Appraisit.Views
 
         private async void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
             {
                 var reddit = new RedditAPI(appId, refreshToken, secret);
-                UserName.Text = "Username: " + reddit.Account.Me.Name;
-                Cakeday.Text = "Created/Cake Day: " + reddit.Account.Me.Created.ToString();
-                LinkKarma.Text = "Karma: " + reddit.Account.Me.LinkKarma;
-                CommentKarma.Text = "Comment Karma: " + reddit.Account.Me.CommentKarma;
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    UserName.Text = "Username: " + reddit.Account.Me.Name;
+                    Cakeday.Text = "Created/Cake Day: " + reddit.Account.Me.Created.ToString();
+                    LinkKarma.Text = "Karma: " + reddit.Account.Me.LinkKarma;
+                    CommentKarma.Text = "Comment Karma: " + reddit.Account.Me.CommentKarma;
+                });
             });
         }
 
@@ -1664,6 +1770,220 @@ namespace Appraisit.Views
         private async void RedditSearch_Click(object sender, RoutedEventArgs e)
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/appraisit/search/?q=" + SearchBox.Text));
+        }
+
+        private void MenuFlyoutItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            var CommentsList = ReferencePost.PostSelf.Comments.GetComments("new");
+            if (CommentsList.Count > 0)
+            {
+                foreach (Comment commentObject in CommentsList)
+                {
+                    CommentCollection.Add(new Comments()
+                    {
+                        CommentAuthor = commentObject.Author,
+                        CommentDate = commentObject.Created.ToString(),
+                        CommentText = commentObject.Body,
+                    });
+
+                }
+                UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
+            }
+        }
+
+        private async void SwipeItem_Invoked_1(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
+        {
+            await Task.Run(async() =>
+            {
+                FindName("SearchTip");
+                SearchTip.IsOpen = false;
+                FindName("CreatePostDialog");
+                await CreatePostDialog.ShowAsync();
+            });
+        }
+
+        private async void SwipeItem_Invoked_2(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
+        {
+            await Task.Run(() =>
+            {
+                FindName("SearchTip");
+                SearchTip.IsOpen = true;
+            });
+        }
+
+        private async void SwipeItem_Invoked_3(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                ProgressRing.IsActive = true;
+                switch (PivotNavigator.SelectedIndex.ToString())
+                {
+                    case "0":
+                        try
+                        {
+                            var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
+                            NewGridViewControl.ItemsSource = Newcollection;
+                        }
+                        catch
+                        {
+                            RefreshAccess();
+                        }
+                        ProgressRing.IsActive = false;
+                        break;
+                    case "1":
+                        var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                        HotGridViewControl.ItemsSource = Hotcollection;
+                        ProgressRing.IsActive = false;
+                        break;
+                    case "2":
+                        var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
+                        TopGridViewControl.ItemsSource = Topcollection;
+                        ProgressRing.IsActive = false;
+                        break;
+                    case "3":
+                        var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                        RisingGridViewControl.ItemsSource = Risingcollection;
+                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                        ControversialGridViewControl.ItemsSource = Controversialcollection;
+                        ProgressRing.IsActive = false;
+                        ProgressRing.IsActive = false;
+                        break;
+
+                }
+                ProgressRing.IsActive = false;
+            });
+        }
+      
+        private async void UniversalZoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                if (view == 1)
+                {
+                    switch (PivotNavigator.SelectedIndex.ToString())
+                    {
+                        case "0":
+                            NewGridViewControl.OneRowModeEnabled = true;
+                            view = view + 1;
+                            break;
+                        case "1":
+                            HotGridViewControl.OneRowModeEnabled = true;
+                            view = view + 1;
+                            break;
+                        case "2":
+                            TopGridViewControl.OneRowModeEnabled = true;
+                            view = view + 1;
+                            break;
+                        case "3":
+                            RisingGridViewControl.OneRowModeEnabled = true;
+                            ControversialGridViewControl.OneRowModeEnabled = true;
+                            view = view + 1;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (PivotNavigator.SelectedIndex.ToString())
+                    {
+                        case "0":
+                            NewGridViewControl.OneRowModeEnabled = false;
+                            view = view - 1;
+                            break;
+                        case "1":
+                            HotGridViewControl.OneRowModeEnabled = false;
+                            view = view - 1;
+                            break;
+                        case "2":
+                            TopGridViewControl.OneRowModeEnabled = false;
+                            view = view - 1;
+                            break;
+                        case "3":
+                            RisingGridViewControl.OneRowModeEnabled = false;
+                            ControversialGridViewControl.OneRowModeEnabled = false;
+                            view = view - 1;
+                            break;
+                    }
+                }
+            });
+           }
+
+        private async void ReplyText_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            var s = (FrameworkElement)sender;
+            var D = s.DataContext;
+            var dse = D as Comments;
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        UniversalPostNotification.Show("Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)");
+                        var reddit = new RedditAPI(appId, refreshToken, secret);
+                        var subreddit = reddit.Subreddit("Appraisit");
+                        await dse.CommentSelf.ReplyAsync(sender.Text);
+                        sender.Text = "";
+
+                    });
+                }
+                catch
+                {
+                    return;
+                }
+            });
+        }
+
+        private async void CommentTextMessage_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    UniversalPostNotification.Show("Comment sent (refresh to view)");
+                    var reddit = new RedditAPI(appId, refreshToken, secret);
+                    var subreddit = reddit.Subreddit("Appraisit");
+                    Post NewComment = ReferencePost.PostSelf;
+                    await NewComment.ReplyAsync(body: sender.Text.ToString());
+                    sender.Text = "";
+                    await Task.Delay(6000);
+                    var CommentsList = NewComment.Comments.GetComments("new");
+                    if (CommentsList.Count > 0)
+                    {
+                        foreach (Comment commentObject in CommentsList)
+                        {
+                            CommentCollection.Add(new Comments()
+                            {
+                                CommentAuthor = commentObject.Author,
+                                CommentDate = commentObject.Created.ToString(),
+                                CommentText = commentObject.Body,
+                            });
+
+                        }
+                        UniversalCommentTreeViewControl.ItemsSource = CommentCollection;
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+            });
+        }
+        private async void UpvoteComment_Click(object sender, RoutedEventArgs e)
+        {
+            var s = (FrameworkElement)sender;
+            var D = s.DataContext;
+            var dse = D as Comments;
+            UniversalPostNotification.Show("Upvoted");
+            await dse.CommentSelf.UpvoteAsync();
+        }
+
+        private async void DownvoteComment_Click(object sender, RoutedEventArgs e)
+        {
+            var s = (FrameworkElement)sender;
+            var D = s.DataContext;
+            var dse = D as Comments;
+            UniversalPostNotification.Show("Downvoted");
+            await dse.CommentSelf.DownvoteAsync();
         }
     }
 }

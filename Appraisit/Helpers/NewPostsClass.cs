@@ -22,28 +22,28 @@ namespace Appraisit.Helpers
     }
     public class NewPostsClass : IIncrementalSource<Posts>
     {
-        public string refreshToken = "209908787246-4p2wKVe0RaB_coetdNPtatNe45c";
+        public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string appId = "-bL9o_t7kgNNmA";
         public int limit = 10;
         public int skipInt = 0;
         List<Posts> PostCollection;
-        public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public async Task<IEnumerable<Posts>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             await Task.Run(async() =>
             {
-            try
+                string refreshToken = localSettings.Values["refresh_token"].ToString();
+                try
                 {
                 PostCollection = new List<Posts>();
                 var reddit = new RedditAPI(appId, refreshToken, secret);
                 var subreddit = reddit.Subreddit("Appraisit");
-                var posts = subreddit.Posts.GetNew(limit: limit);
+                var posts = subreddit.Posts.GetNew(limit: limit).Skip(skipInt);
                 limit = limit + 10;
-                if (posts.Count > 0)
-                {
-                    foreach (Post post in posts.Skip(skipInt))
+                //if ()
+               // {
+                    foreach (Post post in posts)
                     {
 
                         // pageContent += Environment.NewLine + "### [" + post.Title + "](" + post.Permalink + ")" + Environment.NewLine;
@@ -64,7 +64,7 @@ namespace Appraisit.Helpers
 
 
                     }
-                }
+               // }
                 skipInt = skipInt + 10;
             
             
