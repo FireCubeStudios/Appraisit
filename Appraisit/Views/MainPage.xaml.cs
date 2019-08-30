@@ -33,6 +33,7 @@ using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Networking.Connectivity;
 using Windows.System.Profile;
+using Microsoft.Services.Store.Engagement;
 
 namespace Appraisit.Views
 {
@@ -54,6 +55,7 @@ namespace Appraisit.Views
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string PostFlair = "Update";
+        public string FlairTemplate;
         List<Posts> PostCollection;
         List<Comments> CommentCollection;
         List<Comments> NewCommentCollection;
@@ -68,7 +70,7 @@ namespace Appraisit.Views
         public MainPage()
         {
             InitializeComponent();
-
+           
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleGrid);                     
                     if ((string)localSettings.Values["refresh_token"] == null)
@@ -122,9 +124,10 @@ namespace Appraisit.Views
         }
         private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
             {
-            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+               
+                var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
             try
             {
              if (connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
@@ -152,8 +155,9 @@ namespace Appraisit.Views
                     case "0":
                         try
                         {
-                            var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                            NewGridViewControl.ItemsSource = Newcollection;
+                                    var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
+                                    NewGridViewControl.ItemsSource = Newcollection;
+                                   
                         }
                         catch
                         {
@@ -203,9 +207,11 @@ namespace Appraisit.Views
         }
         public async void RefreshAccess()
         {
-            LoginHelper loginHelper = new LoginHelper(appId, secret);
-            var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
-            refreshToken = result.RefreshToken;
+            
+                LoginHelper loginHelper = new LoginHelper(appId, secret);
+                var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
+                refreshToken = result.RefreshToken;
+           
         }
 
 
@@ -1104,14 +1110,30 @@ namespace Appraisit.Views
         private async void Upvotes_Click(object sender, RoutedEventArgs e)
         {
             Post upvote = ReferencePost.PostSelf;
-            UniversalPostNotification.Show("Upvoted");
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Upvoted";
+            }
+            else
+            {
+                UniversalPostNotification.Show("Upvoted");
+            }
             await upvote.UpvoteAsync();
         }
 
         private async void Downvotes_Click(object sender, RoutedEventArgs e)
         {
             Post downvote = ReferencePost.PostSelf;
-            UniversalPostNotification.Show("Downvoted");
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Downvoted";
+            }
+            else
+            {
+                UniversalPostNotification.Show("Downvoted");
+            }
             await downvote.UpvoteAsync();
         }
 
@@ -1124,7 +1146,7 @@ namespace Appraisit.Views
 
         private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Task.Run(async () =>
             {
                 PostCollection = new List<Posts>();
                 var reddit = new RedditAPI(appId, refreshToken, secret);
@@ -1136,6 +1158,8 @@ namespace Appraisit.Views
                 }
                 else
                 {
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
                     foreach (Post post in posts)
                     {
                         var p = post as SelfPost;
@@ -1149,39 +1173,43 @@ namespace Appraisit.Views
                             PostDownvotes = post.DownVotes.ToString(),
                             PostCommentCount = post.Comments.GetComments("new").Count.ToString()
                         });
-
-                        SearchGridViewControl.ItemsSource = PostCollection;
-
+                      
+                            SearchGridViewControl.ItemsSource = PostCollection;
+                      
                     }
-                }
             });
+        }
+            });
+
         }
 
         private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
+            await Task.Run(async () =>
             {
                 Random number = new Random();
                 if (number.Next(1, 2) == 1)
                 {
-                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
+                   
                         PostCollection = new List<Posts>();
                         var reddit = new RedditAPI(appId, refreshToken, secret);
                         var subreddit = reddit.Subreddit("Appraisit");
-                        List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+                    await Task.Run(async () =>
+                    {
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+
                         if (posts.Count == 0)
                         {
                             return;
                         }
                         else
                         {
-                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                            {
-                                foreach (Post post in posts)
+                       
+                            foreach (Post post in posts)
                                 {
-                                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                                    {
+                                  
                                         var p = post as SelfPost;
                                         PostCollection.Add(new Posts()
                                         {
@@ -1193,14 +1221,14 @@ namespace Appraisit.Views
                                             PostDownvotes = post.DownVotes.ToString(),
                                             PostCommentCount = post.Comments.GetComments("new").Count.ToString()
                                         });
-
-                                        SearchGridViewControl.ItemsSource = PostCollection;
-                                    });
-                                }
-                            });
-                        }
+                                       
+                                            SearchGridViewControl.ItemsSource = PostCollection;
+                                      
+                                    }
+                        
+                    }
                     });
-
+                    });
                 }
                 else
                 {
@@ -1221,17 +1249,20 @@ namespace Appraisit.Views
         }
         private async void LoginView_NavigationStarting(WebView _, WebViewNavigationStartingEventArgs args)
         {
-            LoginHelper loginHelper = new LoginHelper(appId, secret);
-            if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
-            {
-                var result = await loginHelper.Login_Stage2(args.Uri);
-                accessToken = result.AccessToken;
-                refreshToken = result.RefreshToken;
+            
+                LoginHelper loginHelper = new LoginHelper(appId, secret);
+                if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
+                {
+                    var result = await loginHelper.Login_Stage2(args.Uri);
+                    accessToken = result.AccessToken;
+                    refreshToken = result.RefreshToken;
 
-                localSettings.Values["refresh_token"] = result.RefreshToken;
-                ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                UnloadObject(loginView);
-            }
+                    localSettings.Values["refresh_token"] = result.RefreshToken;
+                    ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    UnloadObject(loginView);
+                }
+           
+           
         }
 
         private async void RefreshToken()
@@ -1240,7 +1271,7 @@ namespace Appraisit.Views
             var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
             accessToken = result.AccessToken;
             refreshToken = result.RefreshToken;
-            ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            FindName("ContentGrid");
             ProgressRing.IsActive = false;
         }
 
@@ -1513,6 +1544,7 @@ namespace Appraisit.Views
         {
             RadioButton rb = sender as RadioButton;
             PostFlair = rb.Content.ToString();
+            FlairTemplate = rb.Content.ToString();
         }
         private async void OpenCreatePostDialog(object sender, RoutedEventArgs e)
         {
@@ -1540,7 +1572,7 @@ namespace Appraisit.Views
                                 string TITLETEST = TitlePostText.Text.ToString();
                                 var reddit = new RedditAPI(appId, refreshToken, secret);
                                 var subreddit = reddit.Subreddit("Appraisit");
-                                subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(PostFlair.ToString());
+                                subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
                             }
                         });
                     }
@@ -1567,7 +1599,7 @@ namespace Appraisit.Views
                                     string TITLETEST = TitlePostText.Text.ToString();
                                     var reddit = new RedditAPI(appId, refreshToken, secret);
                                     var subreddit = reddit.Subreddit("Appraisit");
-                                    subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(PostFlair.ToString());
+                                    subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
                                 }
                             }
                         });
@@ -1917,8 +1949,9 @@ namespace Appraisit.Views
                 try
                 {
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
-                        UniversalPostNotification.Show("Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)");
+                    {                     
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)";                  
                         var reddit = new RedditAPI(appId, refreshToken, secret);
                         var subreddit = reddit.Subreddit("Appraisit");
                         await dse.CommentSelf.ReplyAsync(sender.Text);
@@ -1939,7 +1972,9 @@ namespace Appraisit.Views
             {
                 try
                 {
-                    UniversalPostNotification.Show("Comment sent (refresh to view)");
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "Comment sent (refresh to view)";
+                  
                     var reddit = new RedditAPI(appId, refreshToken, secret);
                     var subreddit = reddit.Subreddit("Appraisit");
                     Post NewComment = ReferencePost.PostSelf;
@@ -1973,7 +2008,15 @@ namespace Appraisit.Views
             var s = (FrameworkElement)sender;
             var D = s.DataContext;
             var dse = D as Comments;
-            UniversalPostNotification.Show("Upvoted");
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Upvoted";
+            }
+            else
+            {
+                UniversalPostNotification.Show("Upvoted");
+            }
             await dse.CommentSelf.UpvoteAsync();
         }
 
@@ -1982,8 +2025,30 @@ namespace Appraisit.Views
             var s = (FrameworkElement)sender;
             var D = s.DataContext;
             var dse = D as Comments;
-            UniversalPostNotification.Show("Downvoted");
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Downvoted";
+            }
+            else
+            {
+                UniversalPostNotification.Show("Downvoted");
+            }
             await dse.CommentSelf.DownvoteAsync();
+        }
+
+        private void SignOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+            var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
+            Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
+            //UnloadObject(ContentGrid);
+            ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            FindName("loginView");
+            loginView.Navigate(targetUri);
+            localSettings.Values["refresh_token"] = null;
+            refreshToken = null;
         }
     }
 }

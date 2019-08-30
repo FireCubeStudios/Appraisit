@@ -20,32 +20,14 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.5.4:
+                Appraisit beta 0.8.7.0(mobile only):
                 <LineBreak/>
-                -Upvote, downvote and reply to comments
+                -Fixed crashes with notifications
                 <LineBreak/>
-                -Major performance improvements to loading the posts
-                <LineBreak/>
-                -Fluent design
-                <LineBreak/>
-                -Swipe commands do something
-                <LineBreak/>
-                -View comment upvotes and downvotes
-                <LineBreak/>
-                -Sort posts into a list view or gridview
-                <LineBreak/>
-                -Improved comment and reply ui
-                <LineBreak/>
-                -Double click to open the app
-                <LineBreak/>
-                -UI changes
-                <LineBreak/>
-                -Removed mobile support due to compatibility issues
-                <LineBreak/>
-                -However code for mobile version still exists so winddows 10 on arm tablets can use the mobille ui when the arm version is downloaded
+                -Possibly fixed login bug
                 <LineBreak/>
                 -Bug fixes and performance improvements
             </TextBlock>
-        </StackPanel>
+        </StackPanel> 
     </ScrollViewer>
 </ContentDialog>

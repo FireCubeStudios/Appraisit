@@ -191,7 +191,8 @@
                             </controls:TabViewItem>
                             <controls:TabViewItem Header="Rising">
                                 <Grid>
-                                    <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+                                    <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
+                                    <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
                                         
                                             <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="RisingGridViewControl"
     ItemHeight="200"
@@ -209,25 +210,23 @@
                             </controls:TabViewItem>
                             <controls:TabViewItem Header="Controversial">
                                 <Grid>
-                                    <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
-                                        
-                                            <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="ControversialGridViewControl"
+                                    <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
+                                    <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
+
+                                        <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="ControversialGridViewControl"
     ItemHeight="200"
     DesiredWidth="500"
     ItemTemplate="{StaticResource PostsTemplate}"
     IsItemClickEnabled="True"
     ItemClick="UniversalGridViewControl_ItemClick">
-                                                <controls:AdaptiveGridView.Footer>
-                                                    <ProgressRing IsActive="True"/>
-                                                </controls:AdaptiveGridView.Footer>
-                                            </controls:AdaptiveGridView>
-                                        
+                                            <controls:AdaptiveGridView.Footer>
+                                                <ProgressRing IsActive="True"/>
+                                            </controls:AdaptiveGridView.Footer>
+                                        </controls:AdaptiveGridView>
+
                                     </muxcontrols:RefreshContainer>
                                 </Grid>
                             </controls:TabViewItem>
-                            <controls:TabView.Footer>
-                                <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                            </controls:TabView.Footer>
                         </controls:TabView>
                     </PivotItem>
                     <Pivot.LeftHeader>
@@ -244,6 +243,7 @@
                                                 <TextBlock x:Name="Cakeday" Margin="0, 0, 0, 12"/>
                                                 <TextBlock x:Name="LinkKarma" Margin="0, 0, 0, 12"/>
                                                 <TextBlock x:Name="CommentKarma" Margin="0, 0, 0, 12"/>
+                                                <Button Click="SignOutButton_Click">Sign out</Button>
                                             </StackPanel>
                                         </Flyout>
                                     </AppBarButton.Flyout>
@@ -384,7 +384,8 @@
                 DefaultButton="Primary"
                  Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'
                 x:Load="False">
-                <StackPanel Orientation="Vertical" Margin="50">
+                <ScrollViewer>
+                    <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText"/>
                     <Pivot Name="NewPostPivot">
                         <PivotItem Header="Text">
@@ -397,13 +398,15 @@
                                 <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink"/>
                             </StackPanel>
                         </PivotItem>
-                </Pivot>
+                    </Pivot>
                     <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                    <RadioButton Content="Update" IsChecked="True" Checked="UniversalRadioButton_Checked"/>
-                    <RadioButton Content="Price Drop" Checked="UniversalRadioButton_Checked"/>
-                    <RadioButton Content="New Release" Checked="UniversalRadioButton_Checked"/>
-                    <RadioButton Content="Discover" Checked="UniversalRadioButton_Checked"/>
-                </StackPanel>
+                        <RadioButton Content="Update" IsChecked="True" Checked="UniversalRadioButton_Checked"/>
+                        <RadioButton Content="Price Drop" Checked="UniversalRadioButton_Checked"/>
+                        <RadioButton Content="New Release" Checked="UniversalRadioButton_Checked"/>
+                        <RadioButton Content="Discover" Checked="UniversalRadioButton_Checked"/>
+                        <RadioButton Content="7284e7d0-b889-11e9-aeb1-0e11aefa7bba" Checked="UniversalRadioButton_Checked"/>
+                    </StackPanel>
+                </ScrollViewer>
             </ContentDialog>
             <ContentDialog
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -445,6 +448,9 @@
                         <controls:InAppNotification x:Name="UniversalPostNotification" VerticalAlignment="Bottom">
                             <!-- InAppNotification content -->
                         </controls:InAppNotification>
+                        <muxcontrols:TeachingTip x:Name="UniversalPostTip" IsOpen="False" VerticalAlignment="Bottom">
+                            
+                        </muxcontrols:TeachingTip>
                         <Pivot>
                             <PivotItem Header="Best">
                                 <muxcontrols:TreeView Name="UniversalCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
@@ -490,6 +496,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </ContentDialog>
+         
             <muxcontrols:TeachingTip x:Name="SearchTip"
                                  Title="Search"
                                      x:Load="False"
