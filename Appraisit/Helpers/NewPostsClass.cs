@@ -21,6 +21,8 @@ namespace Appraisit.Helpers
         public string PostUpvotes { get; set; }
         public string PostDownvotes { get; set; }
         public string PostCommentCount { get; set; }
+        public string PostFlair { get; set; }
+        public string PostFlairColor { get; set; }
     }
     public class NewPostsClass : IIncrementalSource<Posts>
     {
@@ -35,8 +37,7 @@ namespace Appraisit.Helpers
            
                 await Task.Run(async () =>
             {
-           
-          string refreshToken = localSettings.Values["refresh_token"].ToString();
+             string refreshToken = localSettings.Values["refresh_token"].ToString();
           try
           {
               PostCollection = new List<Posts>();
@@ -61,7 +62,9 @@ namespace Appraisit.Helpers
                       PostDate = "Created: " + post.Created,
                       PostUpvotes = post.UpVotes.ToString(),
                       PostDownvotes = post.DownVotes.ToString(),
-                      PostCommentCount = (post.Comments.GetComments("new").Count.ToString())
+                      PostCommentCount = (post.Comments.GetComments("new").Count.ToString()),
+                      PostFlair = post.Listing.LinkFlairText,
+                      PostFlairColor = post.Listing.LinkFlairBackgroundColor
                   });
 
 
@@ -100,7 +103,9 @@ namespace Appraisit.Helpers
                               PostDate = "Created: " + post.Created,
                               PostUpvotes = post.UpVotes.ToString(),
                               PostDownvotes = post.DownVotes.ToString(),
-                              PostCommentCount = (post.Comments.GetComments("new").Count.ToString())
+                              PostCommentCount = (post.Comments.GetComments("new").Count.ToString()),
+                              PostFlair = post.Listing.LinkFlairText,
+                              PostFlairColor = post.Listing.LinkFlairBackgroundColor
                           });
 
 
@@ -124,6 +129,7 @@ namespace Appraisit.Helpers
 
          
       });
+                
             return PostCollection;
             // Gets items from the collection according to pageIndex and pageSize parameters.
             //  var result = (from Posts in PostCollection

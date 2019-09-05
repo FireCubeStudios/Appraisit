@@ -34,6 +34,8 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Networking.Connectivity;
 using Windows.System.Profile;
 using Microsoft.Services.Store.Engagement;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace Appraisit.Views
 {
@@ -54,7 +56,6 @@ namespace Appraisit.Views
         public string accessToken;
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
-        public string PostFlair = "Update";
         public string FlairTemplate;
         List<Posts> PostCollection;
         List<Comments> CommentCollection;
@@ -133,7 +134,7 @@ namespace Appraisit.Views
              if (connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
              {
                 ProgressRing.IsActive = true;
-                        transition = new ColorBloomTransitionHelper(hostForVisual);
+                       /* transition = new ColorBloomTransitionHelper(hostForVisual);
                         var header = sender as Pivot;
                         var headerPosition = header.TransformToVisual(PivotNavigator).TransformPoint(new Windows.Foundation.Point(0d, 0d));
                         var initialBounds = new Windows.Foundation.Rect()  // maps to a rectangle the size of the header
@@ -149,7 +150,7 @@ namespace Appraisit.Views
                         var finalBounds = Window.Current.Bounds;  // maps to the bounds of the current window
                         transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
                                          initialBounds,                                  // the initial size and position
-                                                   finalBounds);
+                                                   finalBounds);*/
                         switch (PivotNavigator.SelectedIndex.ToString())
                 {
                     case "0":
@@ -194,7 +195,15 @@ namespace Appraisit.Views
               }
                 catch
                 {
-                    UniversalPageNotification.Show("No internet connection");
+                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                    {
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "No internet connection";
+                    }
+                    else
+                    {
+                        UniversalPageNotification.Show("No internet connection");
+                    }                    
                 }
                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                  {
@@ -274,6 +283,7 @@ namespace Appraisit.Views
             RandomCommentCollection = new List<Comments>();
             OldCommentCollection = new List<Comments>();
             LiveCommentCollection = new List<Comments>();
+            ReplyCollection = new List<Comments>();
             FindName("SearchTip");
             SearchTip.IsOpen = false;
             UnloadObject(SearchTip);
@@ -329,6 +339,7 @@ namespace Appraisit.Views
                         PostContentText.Visibility = Visibility.Visible;
                         LinkPostLink.Visibility = Visibility.Collapsed;
                         PostContentText.Text = S.SelfText;
+                        FlairText.Text = "Flair: " + S.Listing.LinkFlairText;
                         LinkNavigator.IsEnabled = false;
                         ReferencePost = new OpenPosts()
                         {
@@ -395,33 +406,34 @@ namespace Appraisit.Views
                                         CommentUpvotes = commentObject.UpVotes.ToString(),
                                         CommentSelf = commentObject
                                     });
-                                        /*var CommentReplies = commentObject.Replies;
+                                    try
+                                    {
+                                        var CommentReplies = commentObject.Replies;
                                         if (CommentReplies.Count > 0)
                                         {
-                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            foreach (Comment CommentObject in CommentReplies)
                                             {
                                                 ReplyCollection.Add(new Comments()
                                                 {
-                                                    CommentAuthor = commentObject.Author,
-                                                    CommentDate = commentObject.Created.ToString(),
-                                                    CommentText = commentObject.Body,
+                                                    CommentAuthor = CommentObject.Author,
+                                                    CommentDate = CommentObject.Created.ToString(),
+                                                    CommentText = CommentObject.Body,
+                                                    CommentDownvotes = CommentObject.DownVotes.ToString(),
+                                                    CommentUpvotes = CommentObject.UpVotes.ToString(),
+                                                    CommentSelf = CommentObject,
                                                 });
-                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                                replyNode.Content = CommentCollection;
-                                                replyNode.Children.Add(replyNode);
-                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                                rootNode.Content = CommentCollection;
-                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+
                                             }
+                                            RepliesCommentTreeViewControl.ItemsSource = ReplyCollection;
+
                                         }
 
-                                        else
-                                        {*/
-                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        //   rootNode.Content = CommentCollection;
-                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                        // }
 
+                                    }
+                                  catch
+                                    {
+
+                                    }
                                     }
                                 NewCommentTreeViewControl.ItemsSource = NewCommentCollection;
                             }
@@ -439,34 +451,62 @@ namespace Appraisit.Views
                                         CommentUpvotes = commentObject.UpVotes.ToString(),
                                         CommentSelf = commentObject
                                     });
-                                        /*var CommentReplies = commentObject.Replies;
+                                    try
+                                    {
+                                        var CommentReplies = commentObject.Replies;
                                         if (CommentReplies.Count > 0)
                                         {
-                                            foreach (UIElement ReplyObject in CommentReplies)
+                                            foreach (Comment CommentObject in CommentReplies)
                                             {
                                                 ReplyCollection.Add(new Comments()
                                                 {
-                                                    CommentAuthor = commentObject.Author,
-                                                    CommentDate = commentObject.Created.ToString(),
-                                                    CommentText = commentObject.Body,
+                                                    CommentAuthor = CommentObject.Author,
+                                                    CommentDate = CommentObject.Created.ToString(),
+                                                    CommentText = CommentObject.Body,
+                                                    CommentDownvotes = CommentObject.DownVotes.ToString(),
+                                                    CommentUpvotes = CommentObject.UpVotes.ToString(),
+                                                    CommentSelf = CommentObject,
                                                 });
-                                                MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                                replyNode.Content = CommentCollection;
-                                                replyNode.Children.Add(replyNode);
-                                                MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                                rootNode.Content = CommentCollection;
-                                                UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+
                                             }
+                                            RepliesCommentTreeViewControl.ItemsSource = ReplyCollection;
+
                                         }
 
-                                        else
-                                        {*/
-                                        // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                        //   rootNode.Content = CommentCollection;
-                                        //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                        // }
 
                                     }
+                                    catch
+                                    {
+
+                                    }
+                                    /*var CommentReplies = commentObject.Replies;
+                                    if (CommentReplies.Count > 0)
+                                    {
+                                        foreach (UIElement ReplyObject in CommentReplies)
+                                        {
+                                            ReplyCollection.Add(new Comments()
+                                            {
+                                                CommentAuthor = commentObject.Author,
+                                                CommentDate = commentObject.Created.ToString(),
+                                                CommentText = commentObject.Body,
+                                            });
+                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
+                                            replyNode.Content = CommentCollection;
+                                            replyNode.Children.Add(replyNode);
+                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                            rootNode.Content = CommentCollection;
+                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                        }
+                                    }
+
+                                    else
+                                    {*/
+                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
+                                    //   rootNode.Content = CommentCollection;
+                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
+                                    // }
+
+                                }
                                 TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
                             }
                             var OldCommentsList = postComment.Comments.GetOld();
@@ -724,6 +764,7 @@ namespace Appraisit.Views
                     Uri Link = new Uri(L.URL.ToString());
                     LinkPostLink.Visibility = Visibility.Visible;
                     PostContentText.Visibility = Visibility.Collapsed;
+                    FlairText.Text = "Flair: " + S.Listing.LinkFlairText;
                     LinkPostLink.NavigateUri = Link;
                     ReferencePost = new OpenPosts()
                     {
@@ -1117,7 +1158,7 @@ namespace Appraisit.Views
             }
             else
             {
-                UniversalPostNotification.Show("Upvoted");
+                UniversalPostNotification.Show("Upvoted", 3000);
             }
             await upvote.UpvoteAsync();
         }
@@ -1132,7 +1173,7 @@ namespace Appraisit.Views
             }
             else
             {
-                UniversalPostNotification.Show("Downvoted");
+                UniversalPostNotification.Show("Downvoted", 3000);
             }
             await downvote.UpvoteAsync();
         }
@@ -1543,8 +1584,25 @@ namespace Appraisit.Views
         private void UniversalRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            PostFlair = rb.Content.ToString();
-            FlairTemplate = rb.Content.ToString();
+            switch(rb.Content.ToString())
+            {
+                case "Update":
+                    FlairTemplate = "89cc3e84-8ba2-11e9-b1b0-0ecce5ed8ed0";
+                    break;
+                case "Price Drop":
+                    FlairTemplate = "5944e7c0-8ba2-11e9-940b-0e44c05763c0";
+                    break;
+                case "Non ms store app":
+                    FlairTemplate = "7284e7d0-b889-11e9-aeb1-0e11aefa7bba";
+                    break;
+                case "New Release":
+                    FlairTemplate = "0beabbbe-6765-11e9-a21c-0e06ff2b8078";
+                    break;
+                case "Discover":
+                    FlairTemplate = "29f854ac-8ba2-11e9-aaa1-0e0ea830c7ec";
+                    break;
+            }
+            
         }
         private async void OpenCreatePostDialog(object sender, RoutedEventArgs e)
         {
@@ -1609,7 +1667,15 @@ namespace Appraisit.Views
                         return;
                     }
                 }
-                UniversalPageNotification.Show("Post created (refresh to view)");
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Post created (refresh to view)";
+                }
+                else
+                {
+                    UniversalPageNotification.Show("Post created (refresh to view)", 3000);
+                }              
             });
         }
 
@@ -2015,7 +2081,7 @@ namespace Appraisit.Views
             }
             else
             {
-                UniversalPostNotification.Show("Upvoted");
+                UniversalPostNotification.Show("Upvoted", 3000);
             }
             await dse.CommentSelf.UpvoteAsync();
         }
@@ -2032,7 +2098,7 @@ namespace Appraisit.Views
             }
             else
             {
-                UniversalPostNotification.Show("Downvoted");
+                UniversalPostNotification.Show("Downvoted", 3000);
             }
             await dse.CommentSelf.DownvoteAsync();
         }

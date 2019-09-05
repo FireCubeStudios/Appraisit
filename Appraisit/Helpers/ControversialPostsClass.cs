@@ -44,7 +44,9 @@ namespace Appraisit.Helpers
                             PostDate = "Created: " + post.Created,
                             PostUpvotes = post.UpVotes.ToString(),
                             PostDownvotes = post.DownVotes.ToString(),
-                            PostCommentCount = post.Comments.GetComments("new").Count.ToString()
+                            PostCommentCount = post.Comments.GetComments("new").Count.ToString(),
+                            PostFlair = post.Listing.LinkFlairText,
+                            PostFlairColor = post.Listing.LinkFlairBackgroundColor
                         });
                     }
                
