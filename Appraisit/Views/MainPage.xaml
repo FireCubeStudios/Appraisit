@@ -349,7 +349,6 @@
                                 </PivotItem>
                                 <PivotItem Header="What's new">
                                     <StackPanel Orientation="Vertical">
-                                        <Button x:Name="FirstRun" Click="Welcome_Click" Margin="10" VerticalAlignment="Center">Welcome</Button>
                                         <Button x:Name="Whatsnew" Click="Whatsnew_Click" Margin="10" VerticalAlignment="Center">What's new</Button>
                                     </StackPanel>
                                 </PivotItem>
@@ -366,7 +365,7 @@
                                             <TextBlock
                     
                     Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" Text="appraisit beta"/>
+                    Style="{ThemeResource BodyTextBlockStyle}" Text="Appraisit beta 0.8.7.0 pc / 0.9.8.0 mobile final version"/>
                                             <!--x:Uid="Settings_AboutDescription"-->
                                             <HyperlinkButton
                     Content="Privacy Statement"
