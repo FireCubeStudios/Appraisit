@@ -52,8 +52,9 @@ namespace Appraisit.Views
         // string backupRefreshToken = "209908787246-qLtBfs46Ci9dWAcesPmmCZt-lz0";
         public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public string refreshToken;
-        public string BackuprefreshToken = "209908787246-4p2wKVe0RaB_coetdNPtatNe45c";
+        public string BackuprefreshToken = "344019503430-vIqovAQ5eVORrnpqlnyI3ScgOkE";
         public string accessToken;
+        public string backupaccessToken = "344019503430-BUX_uSW3ZfNr9wqbcWU5GMp8qfU";
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string FlairTemplate;
@@ -73,26 +74,59 @@ namespace Appraisit.Views
             InitializeComponent();
            
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(TitleGrid);                     
-                    if ((string)localSettings.Values["refresh_token"] == null)
+            Window.Current.SetTitleBar(TitleGrid);
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+            {
+                refreshToken = BackuprefreshToken;
+                PivotBar.Visibility = Visibility.Collapsed;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UnloadObject(MobileBar);
+                }
+                    SignInBar.Visibility = Visibility.Visible;
+                UniversalPageTip.IsOpen = true;
+                UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
+            }
+            else
+            {
+
+                if ((string)localSettings.Values["refresh_token"] == null)
+                {
+                    refreshToken = BackuprefreshToken;
+                    localSettings.Values["refresh_token"] = BackuprefreshToken;
+                    PivotBar.Visibility = Visibility.Collapsed;
+                    SignInBar.Visibility = Visibility.Visible;
+                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     {
-                        ProgressRing.IsActive = true;
-                        var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
-                        var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-                        Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
-                        ContentGrid.Visibility = Visibility.Collapsed;
-                        FindName("loginView");
-                        loginView.Navigate(targetUri);
-                        ProgressRing.IsActive = false;
+                        UnloadObject(MobileBar);
                     }
-                    else
+                    UniversalPageTip.IsOpen = true;
+                    UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                }
+                else
+                {
+                    refreshToken = localSettings.Values["refresh_token"].ToString();
+                    PivotBar.Visibility = Visibility.Visible;
+                    SignInBar.Visibility = Visibility.Collapsed;
+                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     {
-
-
-                        refreshToken = localSettings.Values["refresh_token"].ToString();
-
+                        FindName("MobileBar");
+                        PivotBar.Visibility = Visibility.Collapsed;
                     }
+                }
+            }
 
+
+
+            /*ProgressRing.IsActive = true;
+            var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
+            var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
+            Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
+            ContentGrid.Visibility = Visibility.Collapsed;
+            FindName("loginView");
+            FindName("WebBlockBar");
+            loginView.Navigate(targetUri);
+            ProgressRing.IsActive = false;*/
         }
         public ElementTheme ElementTheme
         {
@@ -129,7 +163,8 @@ namespace Appraisit.Views
             {
                
                 var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-            try
+     
+                try
             {
              if (connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
              {
@@ -156,9 +191,8 @@ namespace Appraisit.Views
                     case "0":
                         try
                         {
-                                    var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                                    NewGridViewControl.ItemsSource = Newcollection;
-                                   
+                                      var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
+                                      NewGridViewControl.ItemsSource = Newcollection;                                                           
                         }
                         catch
                         {
@@ -168,13 +202,13 @@ namespace Appraisit.Views
                         break;
                     case "1":
                         FindName("HotGridViewControl");
-                        var Hotcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
+                        var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
                         HotGridViewControl.ItemsSource = Hotcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "2":
                         FindName("TopGridViewControl");
-                        var Topcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                        var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
                         TopGridViewControl.ItemsSource = Topcollection;
                         ProgressRing.IsActive = false;
                         break;
@@ -239,7 +273,7 @@ namespace Appraisit.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void OnGoBack(object sender, RoutedEventArgs e)
+       /* private void OnGoBack(object sender, RoutedEventArgs e)
         {
             if (webView.CanGoBack == true)
             {
@@ -268,7 +302,7 @@ namespace Appraisit.Views
         private void WebviewPanel_NewWindowRequested(WebView sender, WebViewNewWindowRequestedEventArgs args)
         {
             webView.NavigateToString(webView.Source.ToString());
-        }
+        }*/
 
         private async void UniversalGridViewControl_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -1150,32 +1184,48 @@ namespace Appraisit.Views
 
         private async void Upvotes_Click(object sender, RoutedEventArgs e)
         {
-            Post upvote = ReferencePost.PostSelf;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Upvoted";
+                UniversalPostTip.Title = "Cant upvote without sign in";
             }
             else
             {
-                UniversalPostNotification.Show("Upvoted", 3000);
-            }
-            await upvote.UpvoteAsync();
+                Post upvote = ReferencePost.PostSelf;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Upvoted";
+                }
+                else
+                {
+                    UniversalPostNotification.Show("Upvoted", 3000);
+                }
+                await upvote.UpvoteAsync();
+            }        
         }
 
         private async void Downvotes_Click(object sender, RoutedEventArgs e)
         {
-            Post downvote = ReferencePost.PostSelf;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Downvoted";
+                UniversalPostTip.Title = "Cant downvote without sign in";
             }
             else
             {
-                UniversalPostNotification.Show("Downvoted", 3000);
+                Post downvote = ReferencePost.PostSelf;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Downvoted";
+                }
+                else
+                {
+                    UniversalPostNotification.Show("Downvoted", 3000);
+                }
+                await downvote.UpvoteAsync();
             }
-            await downvote.UpvoteAsync();
         }
 
         private void OpenSearchDialog_Click(object sender, RoutedEventArgs e)
@@ -1285,6 +1335,7 @@ namespace Appraisit.Views
             Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
             ContentGrid.Visibility = Visibility.Collapsed;
             loginView.Visibility = Visibility.Visible;
+            FindName("WebBlockBar");
             loginView.Navigate(targetUri);
 
         }
@@ -1297,10 +1348,18 @@ namespace Appraisit.Views
                     var result = await loginHelper.Login_Stage2(args.Uri);
                     accessToken = result.AccessToken;
                     refreshToken = result.RefreshToken;
-
+               NewPivotItem.Header = result.RefreshToken;
                     localSettings.Values["refresh_token"] = result.RefreshToken;
                     ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                PivotBar.Visibility = Visibility.Visible;
+                SignInBar.Visibility = Visibility.Collapsed;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    FindName("MobileBar");
+                    PivotBar.Visibility = Visibility.Collapsed;
+                }
                     UnloadObject(loginView);
+                UnloadObject(WebBlockBar);
                 }
            
            
@@ -1679,13 +1738,13 @@ namespace Appraisit.Views
             });
         }
 
-        private async void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
+       /* private async void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
         {
             var uriBing = new Uri(webView.Source.ToString());
 
             // Launch the URI
             await Windows.System.Launcher.LaunchUriAsync(uriBing);
-        }
+        }*/
 
         private async void TopComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -2007,40 +2066,55 @@ namespace Appraisit.Views
 
         private async void ReplyText_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            var s = (FrameworkElement)sender;
-            var D = s.DataContext;
-            var dse = D as Comments;
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
-                try
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Cant reply without sign in";
+            }
+            else
+            {
+                var s = (FrameworkElement)sender;
+                var D = s.DataContext;
+                var dse = D as Comments;
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {                     
+                    try
+                    {
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
                             UniversalPostTip.IsOpen = true;
-                            UniversalPostTip.Title = "Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)";                  
-                        var reddit = new RedditAPI(appId, refreshToken, secret);
-                        var subreddit = reddit.Subreddit("Appraisit");
-                        await dse.CommentSelf.ReplyAsync(sender.Text);
-                        sender.Text = "";
+                            UniversalPostTip.Title = "Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)";
+                            var reddit = new RedditAPI(appId, refreshToken, secret);
+                            var subreddit = reddit.Subreddit("Appraisit");
+                            await dse.CommentSelf.ReplyAsync(sender.Text);
+                            sender.Text = "";
 
-                    });
-                }
-                catch
-                {
-                    return;
-                }
-            });
+                        });
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                });
+            }
         }
 
         private async void CommentTextMessage_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "Cant comment without sign in";
+            }
+            else
+            {
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                        UniversalPostTip.IsOpen = true;
-                        UniversalPostTip.Title = "Comment sent (refresh to view)";
-                  
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Comment sent (refresh to view)";
+
                     var reddit = new RedditAPI(appId, refreshToken, secret);
                     var subreddit = reddit.Subreddit("Appraisit");
                     Post NewComment = ReferencePost.PostSelf;
@@ -2068,54 +2142,99 @@ namespace Appraisit.Views
                     return;
                 }
             });
+            }
         }
         private async void UpvoteComment_Click(object sender, RoutedEventArgs e)
         {
-            var s = (FrameworkElement)sender;
-            var D = s.DataContext;
-            var dse = D as Comments;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Upvoted";
+                UniversalPostTip.Title = "Cant upvote without sign in";
             }
             else
             {
-                UniversalPostNotification.Show("Upvoted", 3000);
+                var s = (FrameworkElement)sender;
+                var D = s.DataContext;
+                var dse = D as Comments;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Upvoted";
+                    AppBarButton see = sender as AppBarButton;
+                    var ll = see.Label;
+                    ll = ll + 1;
+                    see.Label = ll;
+                }
+                else
+                {
+                    UniversalPostNotification.Show("Upvoted", 3000);
+                }
+                await dse.CommentSelf.UpvoteAsync();
             }
-            await dse.CommentSelf.UpvoteAsync();
         }
 
         private async void DownvoteComment_Click(object sender, RoutedEventArgs e)
         {
-            var s = (FrameworkElement)sender;
-            var D = s.DataContext;
-            var dse = D as Comments;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Downvoted";
+                UniversalPostTip.Title = "Cant upvote without sign in";
             }
             else
             {
-                UniversalPostNotification.Show("Downvoted", 3000);
+                var s = (FrameworkElement)sender;
+                var D = s.DataContext;
+                var dse = D as Comments;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    UniversalPostTip.IsOpen = true;
+                    UniversalPostTip.Title = "Downvoted";
+                    AppBarButton see = sender as AppBarButton;
+                    see.Label = "-1";
+                }
+                else
+                {
+                    UniversalPostNotification.Show("Downvoted", 3000);
+                }
+                await dse.CommentSelf.DownvoteAsync();
             }
-            await dse.CommentSelf.DownvoteAsync();
         }
 
-        private void SignOutButton_Click(object sender, RoutedEventArgs e)
+        private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            refreshToken = BackuprefreshToken;
+            localSettings.Values["refresh_token"] = BackuprefreshToken;
+            /*LoginHelper loginHelper = new LoginHelper(appId, secret);
+            var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
+            accessToken = result.AccessToken;
+            refreshToken = result.RefreshToken;*/
+            FindName("ContentGrid");
+            ProgressRing.IsActive = false;
+            PivotBar.Visibility = Visibility.Collapsed;
+            SignInBar.Visibility = Visibility.Visible;
+        }
+
+        private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            SolidColorBrush eee = new SolidColorBrush();
+            Grid ee = sender as Grid;
+            ee.BorderBrush = eee;
+
+        }
+
+        private void SignIn_Click(object sender, RoutedEventArgs e)
+        {
+            ProgressRing.IsActive = true;
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
             Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
-            //UnloadObject(ContentGrid);
-            ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            ContentGrid.Visibility = Visibility.Collapsed;
             FindName("loginView");
+            FindName("WebBlockBar");
             loginView.Navigate(targetUri);
-            localSettings.Values["refresh_token"] = null;
-            refreshToken = null;
+            ProgressRing.IsActive = false;
         }
+
     }
 }
 

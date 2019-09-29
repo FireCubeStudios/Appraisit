@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/windowsTemplateStudio" IgnorableNamespaces="uap mp genTemplate">
-  <Identity Name="2505FireCubeStudios.Appraisit" Publisher="CN=3C7C8FC9-7104-4B33-8730-EE1E929D5D3B" Version="0.81.7.0" />
+  <Identity Name="2505FireCubeStudios.Appraisit" Publisher="CN=3C7C8FC9-7104-4B33-8730-EE1E929D5D3B" Version="0.11.10.0" />
   <mp:PhoneIdentity PhoneProductId="8fd5e5b6-7235-4920-b714-7e1468e13fa1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Appraisit</DisplayName>
@@ -9,7 +9,7 @@
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
-    <!--<TargetDeviceFamily Name="Windows.Mobile" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15254.0" />-->
+    <TargetDeviceFamily Name="Windows.Mobile" MinVersion="10.0.15063.0" MaxVersionTested="10.0.18132.0" />
   </Dependencies>
   <Resources>
     <Resource Language="x-generate" />

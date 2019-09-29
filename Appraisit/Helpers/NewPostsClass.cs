@@ -37,7 +37,7 @@ namespace Appraisit.Helpers
            
                 await Task.Run(async () =>
             {
-             string refreshToken = localSettings.Values["refresh_token"].ToString();
+                string refreshToken = localSettings.Values["refresh_token"].ToString();
           try
           {
               PostCollection = new List<Posts>();

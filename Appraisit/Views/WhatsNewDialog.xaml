@@ -20,39 +20,14 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.8.7.0(Universal + pc exclusive):
+                Appraisit beta 0.11.10.0 (Universal):
                 <LineBreak/>
-                -Support for non - ms store flair
+                -Appraisit now doesnt need a reddit account to be used
                 <LineBreak/>
-                -Flair now uses templates
+                -Sign in button
+                 <LineBreak/>
+                -Fixed bug with hot posts showing top posts and vice versa
                 <LineBreak/>
-                -Removed one row mode from website mode
-                <LineBreak/>
-                -Mobile uses teaching tips instead
-                <LineBreak/>
-                -Image support
-                <LineBreak/>
-                -Fixed refresh container bug
-                <LineBreak/>
-                -Flair support (pc)
-                <LineBreak/>
-                -Removed navigation animation (pc)
-                <LineBreak/>
-                -Reply support, upvote, downvote replies and reply to replies (pc)
-                <LineBreak/>
-                -Swipe item colors (pc)
-                <LineBreak/>
-                -Changed hidden in app notification to a universal teaching tip
-                <LineBreak/>
-                -Search typing improvements
-                <LineBreak/>
-                -Acrylic changes (pc)
-                <LineBreak/>
-                -Theme transitions (pc)
-                <LineBreak/>
-                -Notifications and tips show for only a certain duration (pc)
-                <LineBreak/>
-                -Tips have light dismiss (pc)
             </TextBlock>
         </StackPanel> 
     </ScrollViewer>
