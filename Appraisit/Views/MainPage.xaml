@@ -107,17 +107,17 @@
                 <muxcontrols:SwipeControl HorizontalAlignment="Center" VerticalAlignment="Center">
                     <muxcontrols:SwipeControl.RightItems>
                         <muxcontrols:SwipeItems>
-                            <muxcontrols:SwipeItem Text="Create post" Background="Red" Invoked="SwipeItem_Invoked_1">
+                            <muxcontrols:SwipeItem x:Uid="CreatePostSwipe" Text="Create post" Background="Red" Invoked="SwipeItem_Invoked_1">
                                 <muxcontrols:SwipeItem.IconSource>
                                     <muxcontrols:SymbolIconSource Symbol="Add"/>
                                 </muxcontrols:SwipeItem.IconSource>
                             </muxcontrols:SwipeItem>
-                            <muxcontrols:SwipeItem Text="Search posts" Background="Green" Invoked="SwipeItem_Invoked_2">
+                            <muxcontrols:SwipeItem x:Uid="SearchPostsSwipe" Text="Search posts" Background="Green" Invoked="SwipeItem_Invoked_2">
                                 <muxcontrols:SwipeItem.IconSource>
                                     <muxcontrols:SymbolIconSource Symbol="Find"/>
                                 </muxcontrols:SwipeItem.IconSource>
                             </muxcontrols:SwipeItem>
-                            <muxcontrols:SwipeItem Text="Refresh" Background="Blue" Invoked="SwipeItem_Invoked_3">
+                            <muxcontrols:SwipeItem x:Uid="RefreshSwipe" Text="Refresh" Background="Blue" Invoked="SwipeItem_Invoked_3">
                                 <muxcontrols:SwipeItem.IconSource>
                                     <muxcontrols:SymbolIconSource Symbol="Refresh"/>
                                 </muxcontrols:SwipeItem.IconSource>
@@ -173,18 +173,18 @@
                             </StackPanel>
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Open in web" Icon="Globe" Click="PostInWebClickLocal"/>
+                                    <MenuFlyoutItem x:Uid="OpenInWebMFI" Text="Open in web" Icon="Globe" Click="PostInWebClickLocal"/>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Text="Upvote" Icon="Like" Click="Upvotes_Click"/>
-                                    <MenuFlyoutItem Text="Downvote" Icon="Dislike" Click="Downvotes_Click"/>
+                                    <MenuFlyoutItem x:Uid="UpvoteMFI" Text="Upvote" Icon="Like" Click="Upvotes_Click"/>
+                                    <MenuFlyoutItem x:Uid="DownvoteMFI" Text="Downvote" Icon="Dislike" Click="Downvotes_Click"/>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutSubItem Text="Search">
-                                        <MenuFlyoutItem Text="Search appraisit" Icon="Find" Click="MenuFlyoutItem_Click_1"/>
-                                        <MenuFlyoutItem Text="Search on reddit" Icon="Find" Click="MenuFlyoutItem_Click_2"/>
-                                        <MenuFlyoutItem Text="Search on store" Icon="Find" Click="MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutSubItem Text="Search" x:Uid="SearchMFI">
+                                        <MenuFlyoutItem x:Uid="SearchAppraisitMFI" Text="Search appraisit" Icon="Find" Click="MenuFlyoutItem_Click_1"/>
+                                        <MenuFlyoutItem x:Uid="SearchRedditMFI" Text="Search on reddit" Icon="Find" Click="MenuFlyoutItem_Click_2"/>
+                                        <MenuFlyoutItem x:Uid="SearchStoreMFI" Text="Search on store" Icon="Find" Click="MenuFlyoutItem_Click"/>
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Text="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
+                                    <MenuFlyoutItem x:Uid="RefreshCommentsMFI" Text="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
                         </StackPanel>
@@ -295,9 +295,9 @@
                             <AppBarButton x:Name="Upvotes" Icon="Like"  Label="{Binding CommentUpvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}' Click="Upvotes_Click"></AppBarButton>
                             <AppBarButton x:Name="Downvotes" Icon="Dislike" Label="{Binding CommentDownvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}' Click="Downvotes_Click"></AppBarButton>
                         </CommandBar>
-                        <controls:Expander Header="Reply" IsExpanded="false">
+                        <controls:Expander Header="Reply" IsExpanded="false" x:Uid="ReplyExpander">
                             <StackPanel Orientation="Vertical" Margin="10">
-                                <AutoSuggestBox Header="Reply:" PlaceholderText="Send a reply" x:Name="ReplyText" QueryIcon="Comment" QuerySubmitted="ReplyText_QuerySubmitted" Width="300"></AutoSuggestBox>
+                                <AutoSuggestBox x:Uid="ReplyText" Header="Reply:" PlaceholderText="Send a reply" x:Name="ReplyText" QueryIcon="Comment" QuerySubmitted="ReplyText_QuerySubmitted" Width="300"></AutoSuggestBox>
                             </StackPanel>
                         </controls:Expander>
                     </StackPanel>
@@ -323,7 +323,7 @@
             <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" RequestedTheme="Dark" x:Load="False"/>
             <Grid x:Name="ContentGrid" Canvas.ZIndex="0">
                 <Pivot HorizontalAlignment="Center" x:Name="PivotNavigator" SelectionChanged="Pivot_SelectionChanged" Foreground="Purple">
-                    <PivotItem Header="New" x:Name="NewPivotItem">
+                    <PivotItem Header="New" x:Name="NewPivotItem" x:Uid="NewPi">
                         <Grid>
                             
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100">></AppBarButton>
@@ -345,7 +345,7 @@
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
-                    <PivotItem Header="Hot">
+                    <PivotItem Header="Hot" x:Uid="HotPi">
                         <Grid>
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
                             <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
@@ -365,9 +365,9 @@
                         </Grid>
 
                     </PivotItem>
-                    <PivotItem Header="Top">
+                    <PivotItem Header="Top" x:Uid="TopPi">
                         <Grid>
-                            <ComboBox SelectionChanged="TopComboBox_SelectionChanged" x:Name="TopOrder" Canvas.ZIndex="100" PlaceholderText="all" Width="200">
+                            <ComboBox SelectionChanged="TopComboBox_SelectionChanged" x:Name="TopOrder" x:Uid="TopOrder"  Canvas.ZIndex="100" PlaceholderText="all" Width="200">
                                 <x:String>all</x:String>
                                 <x:String>year</x:String>
                                 <x:String>month</x:String>
@@ -397,7 +397,7 @@
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
-                    <PivotItem Header="Explore">
+                    <PivotItem Header="Explore" x:Uid="ExplorePi">
                         <controls:TabView CanCloseTabs="False" x:Name="ExtraNavigationView" x:Load="False">
                           <!--  <controls:TabViewItem Header="Website">
                                 <Grid>
@@ -413,7 +413,7 @@
                                     </CommandBar>
                                 </Grid>
                             </controls:TabViewItem>-->
-                            <controls:TabViewItem Header="Rising">
+                            <controls:TabViewItem Header="Rising" x:Uid="RisingTVI">
                                 <Grid>
                                     <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
                                     <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
@@ -437,7 +437,7 @@
                                     </muxcontrols:RefreshContainer>
                                 </Grid>
                             </controls:TabViewItem>
-                            <controls:TabViewItem Header="Controversial">
+                            <controls:TabViewItem Header="Controversial" x:Uid="ControversialTVI">
                                 <Grid>
                                     <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
                                     <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
@@ -468,9 +468,9 @@
                         <Grid>
                             <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="PivotBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right" x:Load="True">
                                 <!--<AppBarButton Icon="AddFriend" x:Name="LoginDialogOpen" Click="LoginDialogOpen_Click"></AppBarButton>-->
-                                <AppBarButton Icon="Setting" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
-                                <AppBarButton Icon="Globe" Label="Web" Click="WebBarButton_Click"/>
-                                <AppBarButton Icon="AddFriend" Label="Profile" Click="ProfileButton_Click">
+                                <AppBarButton Icon="Setting" x:Uid="SettingOpenButton" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
+                                <AppBarButton Icon="Globe" Label="Web" x:Uid="WebBarButton" Click="WebBarButton_Click"/>
+                                <AppBarButton Icon="AddFriend" Label="Profile" x:Uid="ProfileButton" Click="ProfileButton_Click">
                                     <AppBarButton.Flyout>
                                         <Flyout>
                                             <StackPanel>
@@ -478,27 +478,27 @@
                                                 <TextBlock x:Name="Cakeday" Margin="0, 0, 0, 12"/>
                                                 <TextBlock x:Name="LinkKarma" Margin="0, 0, 0, 12"/>
                                                 <TextBlock x:Name="CommentKarma" Margin="0, 0, 0, 12"/>
-                                                <Button Click="SignOutButton_Click">Sign out</Button>
+                                                <Button x:Uid="SignOutButton" Click="SignOutButton_Click">Sign out</Button>
                                             </StackPanel>
                                         </Flyout>
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
-                                <AppBarButton Icon="Refresh" Label="Refresh" Click="Refresh"/>
-                                <AppBarButton Icon="Find" Label="Search" Click="OpenSearchDialog_Click"/>
-                                <AppBarButton Icon="Add" Label="Create post" Click="OpenCreatePostDialog"/>
+                                <AppBarButton Icon="Refresh" Label="Refresh" x:Uid="Refresh" Click="Refresh"/>
+                                <AppBarButton Icon="Find" Label="Search" x:Uid="OpenSearchDialog" Click="OpenSearchDialog_Click"/>
+                                <AppBarButton Icon="Add" Label="Create post" x:Uid="OpenCreatePostDialog" Click="OpenCreatePostDialog"/>
                             </CommandBar>
                             <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="SignInBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right">
-                                <AppBarButton Icon="AddFriend" Label="Sign in">
+                                <AppBarButton Icon="AddFriend" Label="Sign in" x:Uid="SignInABB">
                                     <AppBarButton.Flyout>
                                         <Flyout>
                                             <StackPanel>
-                                                <Button x:Name="SignIn" Click="SignIn_Click">Sign in</Button>
+                                                <Button x:Name="SignIn" x:Uid="SignIn" Click="SignIn_Click">Sign in</Button>
                                             </StackPanel>
                                         </Flyout>
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
                             </CommandBar>
-                            <AppBarButton Icon="Setting" Label="Settings" x:Name="SB" x:Load="False" Click="SettingOpenButton_Click"/>
+                            <AppBarButton Icon="Setting" Label="Settings" x:Name="SB" x:Uid="SB" x:Load="False" Click="SettingOpenButton_Click"/>
                         </Grid>
                    
                     </Pivot.LeftHeader>
@@ -514,7 +514,7 @@
                                         <AppBarButton Icon="Back" Click="MyFancyPanel_BackdropClicked"></AppBarButton>
                                     </CommandBar>
                                 </Pivot.LeftHeader>
-                                <PivotItem Header="Settings">
+                                <PivotItem Header="Settings" x:Uid="SettingsPi">
                                     <StackPanel x:Name="ContentPanel">
                                         <TextBlock
                 x:Uid="Settings_Personalization"
@@ -560,22 +560,22 @@
                                             </StackPanel>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Click="LivePin" Margin="10">Pin to startscreen</Button>
-                                            <Button Click="PinAppToTaskbar_Click" Margin="10">Pin to taskbar</Button>
+                                            <Button Click="LivePin" Margin="10" x:Uid="LivePin">Pin to startscreen</Button>
+                                            <Button Click="PinAppToTaskbar_Click" Margin="10" x:Uid="PinAppToTaskbar">Pin to taskbar</Button>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Click="Rate_Click" Margin="10">Rate Appraisit</Button>
+                                            <Button Click="Rate_Click" Margin="10" x:Uid="Rate">Rate Appraisit</Button>
                                             <Button IsEnabled="False" x:Name="Feedbackbutton" FontFamily="Segoe MDL2 Assets" Content="&#xE939;" Margin="10" Click="FeedbackLink_Click">
                                             </Button>
                                         </StackPanel>
                                     </StackPanel>
                                 </PivotItem>
-                                <PivotItem Header="What's new">
+                                <PivotItem x:Uid="WhatsNewPI" Header="What's new">
                                     <StackPanel Orientation="Vertical">
-                                        <Button x:Name="Whatsnew" Click="Whatsnew_Click" Margin="10" VerticalAlignment="Center">What's new</Button>
+                                        <Button x:Name="Whatsnew" x:Uid="Whatsnew" Click="Whatsnew_Click" Margin="10" VerticalAlignment="Center">What's new</Button>
                                     </StackPanel>
                                 </PivotItem>
-                                <PivotItem Header="About">
+                                <PivotItem x:Uid="AboutPI" Header="About">
                                     <StackPanel>
                                         <TextBlock
                     x:Uid="Settings_About"
@@ -586,7 +586,7 @@
                     Text="{x:Bind VersionDescription, Mode=OneWay}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
                                             <!--x:Uid="Settings_AboutDescription"-->
-                                            <HyperlinkButton
+                                            <HyperlinkButton x:Uid="PrivacyHB"
                     Content="Privacy Statement"
                     Margin="{StaticResource XSmallTopMargin}"
                     NavigateUri="https://www.websitepolicies.com/policies/view/ti1U34qB"/>
@@ -658,6 +658,7 @@
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  x:Name="CreatePostDialog"
+                x:Uid="CreatePostDialog"
                 CloseButtonText="Cancel"
                 PrimaryButtonText="Post"
                 PrimaryButtonClick="CreatePostDialog_PrimaryButtonClick"
@@ -666,20 +667,20 @@
                 x:Load="False">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText"/>
+                    <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText" x:Uid="TitlePostText" />
                     <Pivot Name="NewPostPivot">
-                        <PivotItem Header="Text">
+                        <PivotItem Header="Text" x:Uid="TextPi">
                             <StackPanel Orientation="Vertical" Margin="50" >
-                                <TextBox Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText"/>
+                                <TextBox Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText" x:Uid="PostText" />
                             </StackPanel>
                         </PivotItem>
-                        <PivotItem Header="Link">
+                        <PivotItem Header="Link" x:Uid="LinkPi">
                             <StackPanel Orientation="Vertical" Margin="50">
-                                <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink"/>
+                                <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink" x:Uid="NewPostLink" />
                             </StackPanel>
                         </PivotItem>
                     </Pivot>
-                    <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}" x:Uid="FlairLabel" />
                         <RadioButton Content="Update" IsChecked="True" Checked="UniversalRadioButton_Checked"/>
                         <RadioButton Content="Price Drop" Checked="UniversalRadioButton_Checked"/>
                         <RadioButton Content="New Release" Checked="UniversalRadioButton_Checked"/>
@@ -692,13 +693,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             x:Name="PostDialog"
+                x:Uid="PostDialog"
                 x:Load="False"
         CloseButtonText="Close"
                 CloseButtonClick="PostDialog_CloseButtonClick"
         DefaultButton="Primary" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'>
                 <ScrollViewer>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
-                        <HyperlinkButton Content="Link" x:Name="LinkPostLink" Visibility="Collapsed"/>
+                        <HyperlinkButton Content="Link" x:Name="LinkPostLink" x:Uid="LinkPostLink" Visibility="Collapsed"/>
                         <TextBlock x:Name="PostContentText"
             TextWrapping="Wrap" />
                         <TextBlock x:Name="FlairText" Margin="10" TextWrapping="Wrap"></TextBlock>
@@ -707,22 +709,22 @@
                         <TextBlock x:Name="CreatedText"
             TextWrapping="Wrap" Margin="10"/>
                         <CommandBar Background='{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}' Margin="20">
-                            <AppBarButton x:Name="LinkNavigator" Icon="Link" Label="Link" Background='{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}' Click="LinkNavigator_Click" IsEnabled="False"/>
+                            <AppBarButton x:Name="LinkNavigator" x:Uid="LinkNavigator" Icon="Link" Label="Link" Background='{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}' Click="LinkNavigator_Click" IsEnabled="False"/>
                             <AppBarSeparator/>
                             <AppBarButton x:Name="Upvotes" Icon="Like"  Label="{Binding PostUpvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}' Click="Upvotes_Click"></AppBarButton>
                             <AppBarButton x:Name="Downvotes" Icon="Dislike" Label="{Binding PostDownvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}' Click="Downvotes_Click"></AppBarButton>
                             <AppBarSeparator/>
-                            <AppBarButton x:Name="Openinweb" Icon="Globe" Label="Web" Background="{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}" Click="PostInWebClick"></AppBarButton>
+                            <AppBarButton x:Name="Openinweb" x:Uid="Openinweb" Icon="Globe" Label="Web" Background="{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}" Click="PostInWebClick"></AppBarButton>
                             <CommandBar.SecondaryCommands>
-                                <AppBarButton Label="Search appraisit" Icon="Find" Click="bARFlyoutItem_Click_1"/>
-                                <AppBarButton Label="Search on reddit" Icon="Find" Click="bARFlyoutItem_Click_2"/>
-                                <AppBarButton Label="Search on store" Icon="Find" Click="bARenuFlyoutItem_Click"/>
+                                <AppBarButton x:Uid="SearchAppraisitABB" Label="Search appraisit" Icon="Find" Click="bARFlyoutItem_Click_1"/>
+                                <AppBarButton x:Uid="SearchRedditABB" Label="Search on reddit" Icon="Find" Click="bARFlyoutItem_Click_2"/>
+                                <AppBarButton x:Uid="SearchStoreABB" Label="Search on store" Icon="Find" Click="bARenuFlyoutItem_Click"/>
                                 <AppBarSeparator/>
-                                <AppBarButton Label="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
+                                <AppBarButton x:Uid="RefreshCommentsABB" Label="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
                         <StackPanel Orientation="Vertical" Margin="20">
-                            <AutoSuggestBox Header="Comment:" PlaceholderText="this is a comment"  x:Name="CommentTextMessage" QueryIcon="Comment" QuerySubmitted="CommentTextMessage_QuerySubmitted"></AutoSuggestBox>
+                            <AutoSuggestBox Header="Comment:" PlaceholderText="this is a comment"  x:Name="CommentTextMessage" x:Uid="CommentTextMessage" QueryIcon="Comment" QuerySubmitted="CommentTextMessage_QuerySubmitted"></AutoSuggestBox>
                         </StackPanel>
                         <!--<controls:AdaptiveGridView  Name="UniversalCommentGridViewControl" ItemHeight="200" IsItemClickEnabled="False" MaxHeight="600" DesiredWidth="500" ItemTemplate="{StaticResource CommentsTemplate}">
                     </controls:AdaptiveGridView>-->
@@ -733,47 +735,47 @@
                             
                         </muxcontrols:TeachingTip>
                         <Pivot>
-                            <PivotItem Header="Best">
+                            <PivotItem Header="Best" x:Uid="BestPi">
                                 <muxcontrols:TreeView Name="UniversalCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header="Replies (experimental)">
+                            <PivotItem Header="Replies (experimental)" x:Uid="RepliesPi">
                                 <muxcontrols:TreeView Name="RepliesCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header="New">
+                            <PivotItem Header="New" x:Uid="NewPi">
                                 <muxcontrols:TreeView Name="NewCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header="Top">
+                            <PivotItem Header="Top" x:Uid="TopPi">
                                 <muxcontrols:TreeView Name="TopCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header="Controversial">
+                            <PivotItem Header="Controversial" x:Uid="ControversialPi">
                                 <muxcontrols:TreeView Name="ControversialCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header="Old">
+                            <PivotItem Header="Old" x:Uid="OldPi">
                                 <muxcontrols:TreeView Name="OldCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header='Q and A'>
+                            <PivotItem Header='Q and A' x:Uid="QandAPi">
                                 <muxcontrols:TreeView Name="QACommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header='Live'>
+                            <PivotItem Header='Live' x:Uid="LivePi">
                                 <muxcontrols:TreeView Name="LiveCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
                             </PivotItem>
-                            <PivotItem Header='Random'>
+                            <PivotItem Header='Random' x:Uid="RandomPi">
                                 <muxcontrols:TreeView Name="RandomCommentTreeViewControl"  ItemTemplate="{StaticResource CommentsTemplate}" >
 
                                 </muxcontrols:TreeView>
@@ -786,6 +788,7 @@
             <muxcontrols:TeachingTip x:Name="SearchTip"
                                  Title="Search"
                                      x:Load="False"
+                                     x:Uid="SearchTip"
             PreferredPlacement="Top">
                 <muxcontrols:TeachingTip.IconSource>
                     <muxcontrols:SymbolIconSource Symbol="Find" />
@@ -794,11 +797,12 @@
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
                     <AutoSuggestBox PlaceholderText="Search posts:"
                                 x:Name='SearchBox'
+                                    x:Uid="SearchBox"
         TextChanged="SearchBox_TextChanged"
         QueryIcon="Find"
         QuerySubmitted="SearchBox_QuerySubmitted"/>
                     <Pivot>
-                        <PivotItem Header="Reddit">
+                        <PivotItem Header="Reddit" x:Uid="RedditPi">
                             <controls:AdaptiveGridView  Name="SearchGridViewControl"
     MaxHeight="600"
     ItemHeight="200"
@@ -808,13 +812,13 @@
     ItemClick="UniversalGridViewControl_ItemClick">
                             </controls:AdaptiveGridView>
                         </PivotItem>
-                        <PivotItem Header="Store">
-                            <Button Content="Search Microsoft Store" Click="SearchMSButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <PivotItem Header="Store" x:Uid="StorePi">
+                            <Button x:Uid="SearchMicrosoftStoreButton" Content="Search Microsoft Store" Click="SearchMSButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 
                             </Button>
                         </PivotItem>
-                        <PivotItem Header="Web">
-                            <Button Content="Search reddit on web" Click="RedditSearch_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <PivotItem Header="Web" x:Uid="WebPi">
+                            <Button x:Uid="SearchRedditWebButton" Content="Search reddit on web" Click="RedditSearch_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                             </Button>
                         </PivotItem>
