@@ -1690,6 +1690,8 @@ namespace Appraisit.Views
                                 var reddit = new RedditAPI(appId, refreshToken, secret);
                                 var subreddit = reddit.Subreddit("Appraisit");
                                 subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                TitlePostText.Text = "";
+                                PostText.Text = "";
                             }
                         });
                     }
