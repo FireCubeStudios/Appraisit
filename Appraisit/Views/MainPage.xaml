@@ -499,10 +499,7 @@
                                             <TextBlock
                     Text="{x:Bind VersionDescription, Mode=OneWay}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
-                                            <TextBlock
-                    
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" Text="Appraisit beta 0.8.7.0 pc / 0.9.8.0 mobile final version"/>
+
                                             <!--x:Uid="Settings_AboutDescription"-->
                                             <HyperlinkButton
                     Content="Privacy Statement"
