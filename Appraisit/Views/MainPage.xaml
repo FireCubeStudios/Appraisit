@@ -20,6 +20,88 @@
     <Page.Resources>
         <SolidColorBrush x:Key="SystemColor" Color="{ThemeResource SystemAccentColor}"/>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme"/>
+        <Style x:Key="FABButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Margin" Value="8,10" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" >
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="EllipseBackground.Opacity" Value="0.8" />
+
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="EllipseBackground.Opacity" Value="0.8" />
+
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.Opacity" Value="0.5" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+
+                            </VisualStateManager.VisualStateGroups>
+                            <!--DropShadowPanel-->
+                            <controls:DropShadowPanel  
+                                    Margin="{TemplateBinding Margin}" 
+                                    BlurRadius="14" ShadowOpacity="0.5" OffsetX="10" OffsetY="14" 
+                                    HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalContentAlignment="Stretch" VerticalAlignment="Center">
+                                <Ellipse x:Name="EllipseBackground" Width="60" Height="60"
+                                       Margin="{TemplateBinding Margin}"
+                                      StrokeThickness="{TemplateBinding BorderThickness}"
+                                      Stroke="{TemplateBinding BorderBrush}"
+                                      Fill="{TemplateBinding Background}"/>
+                            </controls:DropShadowPanel>
+
+
+                            <ContentPresenter x:Name="ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw" />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <DataTemplate x:Key="PostsTemplate">
             <Grid>
                 <muxcontrols:SwipeControl HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -57,6 +139,7 @@
                 FocusVisualPrimaryThickness="3"
                 FocusVisualSecondaryThickness="1"
                 Background='{ThemeResource SystemControlChromeLowAcrylicElementBrush}'
+                            BorderBrush="{ThemeResource SystemControlBackgroundBaseMediumRevealBorderBrush}"
                             PointerEntered="Grid_PointerEntered"
                 Padding="5">
                             <Interactivity:Interaction.Behaviors>
@@ -78,11 +161,11 @@
                                 </CoreInteractions:EventTriggerBehavior>
                             </Interactivity:Interaction.Behaviors>
                             <StackPanel RightTapped="StackPanel_RightTapped" DoubleTapped="StackPanel_DoubleTapped" Holding="StackPanel_Holding" AllowFocusOnInteraction='True' Orientation="Vertical" Margin="20">
-                            <TextBlock x:Name="Header" FontSize="20" Text="{Binding TitleText}" TextWrapping="WrapWholeWords"></TextBlock>
-
-                            <TextBlock x:Name="Flair" Text="{Binding PostFlair}" Foreground="{Binding PostFlairColor}" TextWrapping="WrapWholeWords"></TextBlock>
-
-                            <TextBlock x:Name="PostAuthor" Text="{Binding PostAuthor}" TextWrapping="WrapWholeWords"></TextBlock>
+                                <TextBlock x:Name="Header" FontSize="20" Text="{Binding TitleText}" TextWrapping="WrapWholeWords"></TextBlock>
+                                <Grid CornerRadius="20" Background="{ThemeResource SystemControlAcrylicWindowBrush}" BorderBrush="{ThemeResource SystemControlHighlightListMediumBrush}" HorizontalAlignment="Left" Padding="10, 5, 10, 5">
+                                    <TextBlock x:Name="Flair" Text="{Binding PostFlair}" Foreground="{Binding PostFlairColor}" TextWrapping="WrapWholeWords"></TextBlock>
+                                </Grid>
+                                <TextBlock x:Name="PostAuthor" Text="{Binding PostAuthor}" TextWrapping="WrapWholeWords"></TextBlock>
                             <TextBlock x:Name="PostCreated" Text="{Binding PostDate}" TextWrapping="WrapWholeWords"></TextBlock>
                             <StackPanel Orientation="Horizontal">
                                 <AppBarButton Icon="LikeDislike" Label="{Binding PostUpvotes}" IsTapEnabled="False" IsFocusEngagementEnabled="False" IsHitTestVisible="False" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"></AppBarButton>
@@ -221,6 +304,9 @@
                 </Grid>
             </muxcontrols:TreeViewItem>
         </DataTemplate>
+        <!--ItemContainerStyle -->
+    
+
     </Page.Resources>
     <Grid
         x:Name="ContentArea" Background='{ThemeResource SystemControlAcrylicWindowBrush}'>
@@ -499,10 +585,6 @@
                                             <TextBlock
                     Text="{x:Bind VersionDescription, Mode=OneWay}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
-                                            <TextBlock
-                    
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" Text="Appraisit beta 0.8.7.0 pc / 0.9.8.0 mobile final version"/>
                                             <!--x:Uid="Settings_AboutDescription"-->
                                             <HyperlinkButton
                     Content="Privacy Statement"
@@ -513,15 +595,8 @@
                                     </StackPanel>
                                 </PivotItem>
                             </Pivot>
-
-
-
                         </Grid>
-
-
-
                     </usercontrol:BarFlyout.PanelContent>
-
                 </usercontrol:BarFlyout>
                 <controls:InAppNotification x:Name="UniversalPageNotification" >
                     <!-- InAppNotification content -->
@@ -529,12 +604,53 @@
                 <muxcontrols:TeachingTip x:Name="UniversalPageTip" IsOpen="False" VerticalAlignment="Bottom" IsLightDismissEnabled="True">
 
                 </muxcontrols:TeachingTip>
-                <CommandBar x:Name="MobileBar" VerticalAlignment="Bottom" DefaultLabelPosition="Right" x:Load="False" OverflowButtonVisibility="Collapsed"  Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
-                    <AppBarButton Icon="Globe" Label="Web" Click="WebBarButton_Click"/>
-                    <AppBarButton Icon="Refresh" Label="Refresh" Click="Refresh"/>
-                    <AppBarButton Icon="Find" Label="Search" x:Name="OpenSearchDialog" Click="OpenSearchDialog_Click"/>
-                    <AppBarButton Icon="Add" Label="Create post" Click="OpenCreatePostDialog"/>
-                </CommandBar>
+                <Button x:Name="MobileBar"
+                        x:Load="False"
+                    Style="{StaticResource FABButtonStyle}"
+                   VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20" Canvas.ZIndex="30">
+                    <!--Visibility="Visible" Show-->
+                    <animations:Implicit.ShowAnimations>
+                        <animations:TranslationAnimation Duration="0:0:1" From="0,100,0" To="0,0,0"/>
+                        <animations:OpacityAnimation Duration="0:0:1" From="0.0" To="1.0"/>
+                    </animations:Implicit.ShowAnimations>
+                    <!--Visibility="Collapsed" Hide-->
+                    <animations:Implicit.HideAnimations>
+                        <animations:TranslationAnimation Duration="0:0:1" From="0,0,0" To="0,100,0"/>
+                        <animations:OpacityAnimation Duration="0:0:1" From="1.0" To="0.0"/>
+                    </animations:Implicit.HideAnimations>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Icon="Globe" Text="Web" Click="WebBarButton_Click"/>
+                            <MenuFlyoutItem Icon="Refresh" Text="Refresh" Click="Refresh"/>
+                            <MenuFlyoutItem Icon="Find" Text="Search" x:Name="OpenSearchDialog" Click="OpenSearchDialog_Click"/>
+                            <MenuFlyoutItem Icon="Add" Text="Create post" Click="OpenCreatePostDialog"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+
+                    <SymbolIcon Symbol="Add"></SymbolIcon>
+                </Button>
+                <Button x:Name="MobileSignInBar"
+                        Visibility="Collapsed"
+                    Style="{StaticResource FABButtonStyle}"
+                   VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20" Canvas.ZIndex="30">
+                    <!--Visibility="Visible" Show-->
+                    <animations:Implicit.ShowAnimations>
+                        <animations:TranslationAnimation Duration="0:0:1" From="0,100,0" To="0,0,0"/>
+                        <animations:OpacityAnimation Duration="0:0:1" From="0.0" To="1.0"/>
+                    </animations:Implicit.ShowAnimations>
+                    <!--Visibility="Collapsed" Hide-->
+                    <animations:Implicit.HideAnimations>
+                        <animations:TranslationAnimation Duration="0:0:1" From="0,0,0" To="0,100,0"/>
+                        <animations:OpacityAnimation Duration="0:0:1" From="1.0" To="0.0"/>
+                    </animations:Implicit.HideAnimations>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Click="SignIn_Click">Sign in</MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+
+                    <SymbolIcon Symbol="AddFriend"></SymbolIcon>
+                </Button>
                 <ProgressRing IsActive="False" x:Name="ProgressRing" Canvas.ZIndex="100" Width="50" Height="50"/>
             </Grid>
             <ContentDialog

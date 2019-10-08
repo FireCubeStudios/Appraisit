@@ -75,43 +75,81 @@ namespace Appraisit.Views
            
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleGrid);
-            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
             {
-                refreshToken = BackuprefreshToken;
-                PivotBar.Visibility = Visibility.Collapsed;
-                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                {
-                    UnloadObject(MobileBar);
-                }
-                    SignInBar.Visibility = Visibility.Visible;
-                UniversalPageTip.IsOpen = true;
-                UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
-            }
-            else
-            {
-
-                if ((string)localSettings.Values["refresh_token"] == null)
+                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                 {
                     refreshToken = BackuprefreshToken;
-                    localSettings.Values["refresh_token"] = BackuprefreshToken;
                     PivotBar.Visibility = Visibility.Collapsed;
+                  
                     SignInBar.Visibility = Visibility.Visible;
-                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                    {
-                        UnloadObject(MobileBar);
-                    }
                     UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                    UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
                 }
                 else
                 {
-                    refreshToken = localSettings.Values["refresh_token"].ToString();
-                    PivotBar.Visibility = Visibility.Visible;
-                    SignInBar.Visibility = Visibility.Collapsed;
+
+                    if ((string)localSettings.Values["refresh_token"] == null)
+                    {
+                        refreshToken = BackuprefreshToken;
+                        localSettings.Values["refresh_token"] = BackuprefreshToken;
+                        PivotBar.Visibility = Visibility.Collapsed;
+                        SignInBar.Visibility = Visibility.Visible;
+                      
+                        UniversalPageTip.IsOpen = true;
+                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                    }
+                    else
+                    {
+                        refreshToken = localSettings.Values["refresh_token"].ToString();
+                        PivotBar.Visibility = Visibility.Visible;
+                        SignInBar.Visibility = Visibility.Collapsed;
+                     
+                    }
+                }
+            }
+            else
+            {
+                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                {
+                    refreshToken = BackuprefreshToken;
                     if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     {
-                        FindName("MobileBar");
-                        PivotBar.Visibility = Visibility.Collapsed;
+                        MobileSignInBar.Visibility = Visibility.Visible;
+                        UnloadObject(SB);
+                        UnloadObject(MobileBar);
+                    }
+                    MobileSignInBar.Visibility = Visibility.Visible;
+                    UniversalPageTip.IsOpen = true;
+                    UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
+                }
+                else
+                {
+
+                    if ((string)localSettings.Values["refresh_token"] == null)
+                    {
+                        refreshToken = BackuprefreshToken;
+                        localSettings.Values["refresh_token"] = BackuprefreshToken;
+
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        {
+                           MobileSignInBar.Visibility = Visibility.Visible;
+                            UnloadObject(SB);
+                            UnloadObject(MobileBar);
+                        }
+                        UniversalPageTip.IsOpen = true;
+                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                    }
+                    else
+                    {
+                        refreshToken = localSettings.Values["refresh_token"].ToString();
+                        MobileSignInBar.Visibility = Visibility.Collapsed;
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        {
+                            PivotBar.Visibility = Visibility.Collapsed;
+                            FindName("SB");
+                            FindName("MobileBar");
+                        }
                     }
                 }
             }
@@ -239,12 +277,7 @@ namespace Appraisit.Views
                         UniversalPageNotification.Show("No internet connection");
                     }                    
                 }
-               if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                 {
-                UnloadObject(PivotBar);
-                FindName("SB");
-                FindName("MobileBar");
-                 }
+               
 
             });
         }
@@ -798,7 +831,7 @@ namespace Appraisit.Views
                     Uri Link = new Uri(L.URL.ToString());
                     LinkPostLink.Visibility = Visibility.Visible;
                     PostContentText.Visibility = Visibility.Collapsed;
-                    FlairText.Text = "Flair: " + S.Listing.LinkFlairText;
+                    FlairText.Text = "Flair: " + L.Listing.LinkFlairText;
                     LinkPostLink.NavigateUri = Link;
                     ReferencePost = new OpenPosts()
                     {
@@ -1348,7 +1381,7 @@ namespace Appraisit.Views
                     var result = await loginHelper.Login_Stage2(args.Uri);
                     accessToken = result.AccessToken;
                     refreshToken = result.RefreshToken;
-               NewPivotItem.Header = result.RefreshToken;
+              // NewPivotItem.Header = result.RefreshToken;
                     localSettings.Values["refresh_token"] = result.RefreshToken;
                     ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 PivotBar.Visibility = Visibility.Visible;
@@ -1356,7 +1389,9 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     FindName("MobileBar");
+                    FindName("SB");
                     PivotBar.Visibility = Visibility.Collapsed;
+                    MobileSignInBar.Visibility = Visibility.Collapsed;
                 }
                     UnloadObject(loginView);
                 UnloadObject(WebBlockBar);
@@ -1690,6 +1725,8 @@ namespace Appraisit.Views
                                 var reddit = new RedditAPI(appId, refreshToken, secret);
                                 var subreddit = reddit.Subreddit("Appraisit");
                                 subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                TitlePostText.Text = "";
+                                PostText.Text = "";
                             }
                         });
                     }
@@ -1717,6 +1754,8 @@ namespace Appraisit.Views
                                     var reddit = new RedditAPI(appId, refreshToken, secret);
                                     var subreddit = reddit.Subreddit("Appraisit");
                                     subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                    TitlePostText.Text = "";
+                                    PostText.Text = "";
                                 }
                             }
                         });

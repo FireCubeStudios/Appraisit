@@ -20,13 +20,21 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.11.10.0 (Universal):
+                Appraisit beta 0.14.10.0 (Universal):
                 <LineBreak/>
-                -Appraisit now doesnt need a reddit account to be used
+                -New rounded ui flair
                 <LineBreak/>
-                -Sign in button
+                -Removed mobilebar (Mobile)
                  <LineBreak/>
-                -Fixed bug with hot posts showing top posts and vice versa
+                -Added mobile button to replace mobile bar, less intrusive more intuitive (mobile)
+                <LineBreak/>
+                -Low memory usage mode whne app goes to back ground
+                <LineBreak/>
+                -Fixed bug where opening link posts crashed the app
+                <LineBreak/>
+                -Fixed bug where pivot header would be changed when logged in
+                <LineBreak/>
+                -Possibly fixed bug where mobile users cant sign in
                 <LineBreak/>
             </TextBlock>
         </StackPanel> 
