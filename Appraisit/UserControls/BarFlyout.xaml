@@ -38,7 +38,7 @@
 
 
 
-        <controls:DropShadowPanel Margin="40,20" HorizontalAlignment="Left" Color="Black" BlurRadius="30" ShadowOpacity="1">
+        <controls:DropShadowPanel Margin="40,20" HorizontalAlignment="Left" Background="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}" BlurRadius="30" ShadowOpacity="1">
 
             <!--Panel content-->
 
