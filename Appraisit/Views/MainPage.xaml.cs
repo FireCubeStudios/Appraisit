@@ -1727,6 +1727,40 @@ namespace Appraisit.Views
                                 subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Text.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
                                 TitlePostText.Text = "";
                                 PostText.Text = "";
+                                switch (PivotNavigator.SelectedIndex.ToString())
+                                {
+                                    case "0":
+                                        try
+                                        {
+                                            var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
+                                            NewGridViewControl.ItemsSource = Newcollection;
+                                        }
+                                        catch
+                                        {
+                                            RefreshAccess();
+                                        }
+                                        ProgressRing.IsActive = false;
+                                        break;
+                                    case "1":
+                                        var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                        HotGridViewControl.ItemsSource = Hotcollection;
+                                        ProgressRing.IsActive = false;
+                                        break;
+                                    case "2":
+                                        var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
+                                        TopGridViewControl.ItemsSource = Topcollection;
+                                        ProgressRing.IsActive = false;
+                                        break;
+                                    case "3":
+                                        var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                        RisingGridViewControl.ItemsSource = Risingcollection;
+                                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                        ControversialGridViewControl.ItemsSource = Controversialcollection;
+                                        ProgressRing.IsActive = false;
+                                        ProgressRing.IsActive = false;
+                                        break;
+
+                                }
                             }
                         });
                     }
@@ -1756,6 +1790,40 @@ namespace Appraisit.Views
                                     subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
                                     TitlePostText.Text = "";
                                     PostText.Text = "";
+                                    switch (PivotNavigator.SelectedIndex.ToString())
+                                    {
+                                        case "0":
+                                            try
+                                            {
+                                                var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
+                                                NewGridViewControl.ItemsSource = Newcollection;
+                                            }
+                                            catch
+                                            {
+                                                RefreshAccess();
+                                            }
+                                            ProgressRing.IsActive = false;
+                                            break;
+                                        case "1":
+                                            var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                            HotGridViewControl.ItemsSource = Hotcollection;
+                                            ProgressRing.IsActive = false;
+                                            break;
+                                        case "2":
+                                            var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
+                                            TopGridViewControl.ItemsSource = Topcollection;
+                                            ProgressRing.IsActive = false;
+                                            break;
+                                        case "3":
+                                            var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                            RisingGridViewControl.ItemsSource = Risingcollection;
+                                            var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                            ControversialGridViewControl.ItemsSource = Controversialcollection;
+                                            ProgressRing.IsActive = false;
+                                            ProgressRing.IsActive = false;
+                                            break;
+
+                                    }
                                 }
                             }
                         });
@@ -1768,12 +1836,12 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Post created (refresh to view)";
+                    UniversalPostTip.Title = "Post created (refreshing)";
                 }
                 else
                 {
-                    UniversalPageNotification.Show("Post created (refresh to view)", 3000);
-                }              
+                    UniversalPageNotification.Show("Post created (refreshing)", 3000);
+                }
             });
         }
 
@@ -1852,7 +1920,7 @@ namespace Appraisit.Views
                     Cakeday.Text = "Created/Cake Day: " + reddit.Account.Me.Created.ToString();
                     LinkKarma.Text = "Karma: " + reddit.Account.Me.LinkKarma;
                     CommentKarma.Text = "Comment Karma: " + reddit.Account.Me.CommentKarma;
-                });
+                    });
             });
         }
 

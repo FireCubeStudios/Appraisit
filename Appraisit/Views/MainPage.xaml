@@ -397,24 +397,8 @@
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
-                    <PivotItem Header="Explore">
-                        <controls:TabView CanCloseTabs="False" x:Name="ExtraNavigationView" x:Load="False">
-                          <!--  <controls:TabViewItem Header="Website">
-                                <Grid>
-                                    <WebView x:Name="webView" Source="https://www.reddit.com/r/appraisit/" NewWindowRequested="WebviewPanel_NewWindowRequested" >
-                                    </WebView>
-                                    <CommandBar VerticalAlignment="Bottom" OverflowButtonVisibility="Collapsed" Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
-                                        <AppBarButton Icon="Back" Click="OnGoBack"></AppBarButton>
-                                        <AppBarButton Icon="Forward" Click="OnGoForward"></AppBarButton>
-                                        <AppBarButton Icon="Refresh" Click="OnRefresh"></AppBarButton>
-                                        <AppBarButton Icon="globe" Click="OpenInBrowserButton_Click"></AppBarButton>
-                                        <AppBarSeparator/>
-                                        <AppBarButton Icon="Home" Click="HomeWeb_Click"></AppBarButton>
-                                    </CommandBar>
-                                </Grid>
-                            </controls:TabViewItem>-->
-                            <controls:TabViewItem Header="Rising">
-                                <Grid>
+                    <PivotItem Header="Rising">
+                        <Grid>
                                     <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
                                     <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
                                         
@@ -436,33 +420,32 @@
                                         
                                     </muxcontrols:RefreshContainer>
                                 </Grid>
-                            </controls:TabViewItem>
-                            <controls:TabViewItem Header="Controversial">
-                                <Grid>
-                                    <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                                    <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
 
-                                        <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="ControversialGridViewControl"
+                    </PivotItem>
+                    <PivotItem Header="Controversial">
+                        <Grid>
+                                <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
+                                <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
+
+                                    <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="ControversialGridViewControl"
     ItemHeight="200"
     DesiredWidth="500"
     ItemTemplate="{StaticResource PostsTemplate}"
     IsItemClickEnabled="True"
     ItemClick="UniversalGridViewControl_ItemClick">
-                                            <controls:AdaptiveGridView.Transitions>
-                                                <TransitionCollection>
-                                                    <EntranceThemeTransition/>
-                                                </TransitionCollection>
-                                            </controls:AdaptiveGridView.Transitions>
+                                        <controls:AdaptiveGridView.Transitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition/>
+                                            </TransitionCollection>
+                                        </controls:AdaptiveGridView.Transitions>
 
-                                            <controls:AdaptiveGridView.Footer>
-                                                <ProgressRing IsActive="True"/>
-                                            </controls:AdaptiveGridView.Footer>
-                                        </controls:AdaptiveGridView>
+                                        <controls:AdaptiveGridView.Footer>
+                                            <ProgressRing IsActive="True"/>
+                                        </controls:AdaptiveGridView.Footer>
+                                    </controls:AdaptiveGridView>
 
-                                    </muxcontrols:RefreshContainer>
-                                </Grid>
-                            </controls:TabViewItem>
-                        </controls:TabView>
+                                </muxcontrols:RefreshContainer>
+                            </Grid>
                     </PivotItem>
                     <Pivot.LeftHeader>
                         <Grid>
