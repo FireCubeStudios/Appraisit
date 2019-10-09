@@ -22,7 +22,8 @@
             <TextBlock
                 x:Name="FirstText"
                 IsTextSelectionEnabled="True"
-                TextWrapping="WrapWholeWords">
+                TextWrapping="WrapWholeWords"
+                x:Uid="FirstText">
                Login to reddit
                 <LineBreak/>
                 appraisit is powered by reddit
