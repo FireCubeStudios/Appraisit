@@ -121,7 +121,7 @@ namespace Appraisit.Views
                     }
                     MobileSignInBar.Visibility = Visibility.Visible;
                     UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
+                    UniversalPageTip.Title = "SignInTip".GetLocalized();
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Appraisit.Views
                 }
             }
 
-
+            TopOrder.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
 
             /*ProgressRing.IsActive = true;
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
@@ -270,11 +270,11 @@ namespace Appraisit.Views
                     if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     {
                         UniversalPostTip.IsOpen = true;
-                        UniversalPostTip.Title = "No internet connection";
+                        UniversalPostTip.Title = "NoInternetConnection".GetLocalized();
                     }
                     else
                     {
-                        UniversalPageNotification.Show("No internet connection");
+                        UniversalPageNotification.Show("NoInternetConnection".GetLocalized());
                     }                    
                 }
                
@@ -406,7 +406,7 @@ namespace Appraisit.Views
                         PostContentText.Visibility = Visibility.Visible;
                         LinkPostLink.Visibility = Visibility.Collapsed;
                         PostContentText.Text = S.SelfText;
-                        FlairText.Text = "Flair: " + S.Listing.LinkFlairText;
+                        FlairText.Text = string.Format("Flair".GetLocalized(), S.Listing.LinkFlairText);
                         LinkNavigator.IsEnabled = false;
                         ReferencePost = new OpenPosts()
                         {
@@ -831,7 +831,7 @@ namespace Appraisit.Views
                     Uri Link = new Uri(L.URL.ToString());
                     LinkPostLink.Visibility = Visibility.Visible;
                     PostContentText.Visibility = Visibility.Collapsed;
-                    FlairText.Text = "Flair: " + L.Listing.LinkFlairText;
+                    FlairText.Text = string.Format("Flair".GetLocalized(), L.Listing.LinkFlairText);
                     LinkPostLink.NavigateUri = Link;
                     ReferencePost = new OpenPosts()
                     {
@@ -1220,7 +1220,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant upvote without sign in";
+                UniversalPostTip.Title = "CantUpvoteWithoutSignin".GetLocalized();
             }
             else
             {
@@ -1228,11 +1228,11 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Upvoted";
+                    UniversalPostTip.Title = "Upvoted".GetLocalized();
                 }
                 else
                 {
-                    UniversalPostNotification.Show("Upvoted", 3000);
+                    UniversalPostNotification.Show("Upvoted".GetLocalized(), 3000);
                 }
                 await upvote.UpvoteAsync();
             }        
@@ -1243,7 +1243,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant downvote without sign in";
+                UniversalPostTip.Title = "CantDownvoteWithoutSignin".GetLocalized();
             }
             else
             {
@@ -1251,11 +1251,11 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Downvoted";
+                    UniversalPostTip.Title = "Downvoted".GetLocalized();
                 }
                 else
                 {
-                    UniversalPostNotification.Show("Downvoted", 3000);
+                    UniversalPostNotification.Show("Downvoted".GetLocalized(), 3000);
                 }
                 await downvote.UpvoteAsync();
             }
@@ -1339,8 +1339,8 @@ namespace Appraisit.Views
                                         {
                                             TitleText = post.Title,
                                             PostSelf = post,
-                                            PostAuthor = "by: " + post.Author,
-                                            PostDate = "Created: " + post.Created,
+                                            PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                                            PostDate = string.Format("PostCreated", post.Created),
                                             PostUpvotes = post.UpVotes.ToString(),
                                             PostDownvotes = post.DownVotes.ToString(),
                                             PostCommentCount = post.Comments.GetComments("new").Count.ToString()
@@ -1489,7 +1489,7 @@ namespace Appraisit.Views
 
                     if (isPinned)
                     {
-                        await new MessageDialog("If not you can manually pin the app to the taskbar", "You already have the app pinned in your taskbar").ShowAsync();
+                        await new MessageDialog("AlreadyPinnedDesc".GetLocalized(), "AlreadyPinnedTitle".GetLocalized()).ShowAsync();
                     }
                     else
                     {
@@ -1499,7 +1499,7 @@ namespace Appraisit.Views
 
                 else
                 {
-                    await new MessageDialog("Update your device to the Fall creators update or higher to pin this app", "Update your device").ShowAsync();
+                    await new MessageDialog("UpdateToPin".GetLocalized(), "UpdateDevice".GetLocalized()).ShowAsync();
                 }
             }
 
@@ -1511,24 +1511,24 @@ namespace Appraisit.Views
                 switch (t)
                 {
                     case "Windows.Desktop":
-                        await new MessageDialog("It seems you are using a computer. Group policy disabled pinning of app in taskbar", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog("GPODisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.Mobile":
-                        await new MessageDialog("It seems you are using a Windows 10 on ARM device or mobile device. Group policy disabled pinning of the app", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog("WoADisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.IoT":
-                        await new MessageDialog("It seems you are using a IoT device which doesn't support taskbar pin API", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog("IoTDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.Team":
                         break;
                     case "Windows.Holographic":
-                        await new MessageDialog("It seems you are using hololens. Hololens doesn't have a taskbar", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog("HololensDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.Xbox":
-                        await new MessageDialog("It seems you are using a xbox. Xbox doesn't have a taskbar", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog("XboxDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                     default:
-                        await new MessageDialog("It seems you are using a " + t + " device. This device does not support taskbar API or Group policy disabled pinning of the app", "Taskbar pin failed").ShowAsync();
+                        await new MessageDialog(string.Format("OtherDisabledPin".GetLocalized(), t), "TaskbarPinFailed".GetLocalized()).ShowAsync();
                         break;
                 }
             }
@@ -1549,7 +1549,7 @@ namespace Appraisit.Views
                     bool isPinned = await StartScreenManager.GetDefault().ContainsAppListEntryAsync(entry);
                     if (isPinned)
                     {
-                        await new MessageDialog("If not you can manually put the live tile on to the StartScreen", "You already have the live tile in your StartScreen").ShowAsync();
+                        await new MessageDialog("AlreadyTileDesc".GetLocalized(), "AlreadyTile".GetLocalized()).ShowAsync();
                     }
                     else
                     {
@@ -1558,7 +1558,7 @@ namespace Appraisit.Views
                 }
                 else
                 {
-                    await new MessageDialog("You need to update your device to enable automatic pinning", "Update your device").ShowAsync();
+                    await new MessageDialog("UpdateToTile".GetLocalized(), "UpdateDevice".GetLocalized()).ShowAsync();
                 }
             }
             else
@@ -1567,18 +1567,18 @@ namespace Appraisit.Views
                 switch (t)
                 {
                     case "Windows.IoT":
-                        await new MessageDialog("It seems you are using a IoT device which doesn't support Primary tile API", "live tile failed").ShowAsync();
+                        await new MessageDialog("IoTTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.Team":
                         break;
                     case "Windows.Holographic":
-                        await new MessageDialog("It seems you are using hololens. Hololens doesn't support live tile", "live tile failed").ShowAsync();
+                        await new MessageDialog("HololensTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
                         break;
                     case "Windows.Xbox":
-                        await new MessageDialog("It seems you are using a xbox. Xbox doesn't support live tile", "live tile failed").ShowAsync();
+                        await new MessageDialog("XboxTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
                         break;
                     default:
-                        await new MessageDialog("It seems you are using a " + t + " device. This device does not support Primary tile API", "live tile failed").ShowAsync();
+                        await new MessageDialog(string.Format("OtherTileFail".GetLocalized(), t), "LiveTileFailed".GetLocalized()).ShowAsync();
                         break;
                 }
             }
@@ -1768,11 +1768,11 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Post created (refresh to view)";
+                    UniversalPostTip.Title = "PostCreated".GetLocalized();
                 }
                 else
                 {
-                    UniversalPageNotification.Show("Post created (refresh to view)", 3000);
+                    UniversalPageNotification.Show("PostCreated".GetLocalized(), 3000);
                 }              
             });
         }
@@ -1791,27 +1791,27 @@ namespace Appraisit.Views
             {
                 var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
                 TopPostsClass TopGenerator = new TopPostsClass();
-                string newOrder = TopOrder.SelectedItem.ToString();
+                int newOrder = TopOrder.SelectedIndex;
                 switch (newOrder)
                 {
-                    case "all":
-                        TopGenerator.Order = newOrder;
+                    case 0:
+                        TopGenerator.Order = Helpers.TopOrder.All;
                         TopGridViewControl.ItemsSource = Topcollection;
                         break;
-                    case "year":
-                        TopGenerator.Order = newOrder;
+                    case 1:
+                        TopGenerator.Order = Helpers.TopOrder.Year;
                         TopGridViewControl.ItemsSource = Topcollection;
                         break;
-                    case "month":
-                        TopGenerator.Order = newOrder;
+                    case 2:
+                        TopGenerator.Order = Helpers.TopOrder.Month;
                         TopGridViewControl.ItemsSource = Topcollection;
                         break;
-                    case "week":
-                        TopGenerator.Order = newOrder;
+                    case 3:
+                        TopGenerator.Order = Helpers.TopOrder.Week;
                         TopGridViewControl.ItemsSource = Topcollection;
                         break;
-                    case "day":
-                        TopGenerator.Order = newOrder;
+                    case 4:
+                        TopGenerator.Order = Helpers.TopOrder.Day;
                         TopGridViewControl.ItemsSource = Topcollection;
                         break;
                 }
@@ -1848,10 +1848,10 @@ namespace Appraisit.Views
                 var reddit = new RedditAPI(appId, refreshToken, secret);
                 await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    UserName.Text = "Username: " + reddit.Account.Me.Name;
-                    Cakeday.Text = "Created/Cake Day: " + reddit.Account.Me.Created.ToString();
-                    LinkKarma.Text = "Karma: " + reddit.Account.Me.LinkKarma;
-                    CommentKarma.Text = "Comment Karma: " + reddit.Account.Me.CommentKarma;
+                    UserName.Text = string.Format("MyUsername".GetLocalized(), reddit.Account.Me.Name);
+                    Cakeday.Text = string.Format("MyCreated".GetLocalized(), reddit.Account.Me.Created.ToString());
+                    LinkKarma.Text = string.Format("MyKarma".GetLocalized(), reddit.Account.Me.LinkKarma);
+                    CommentKarma.Text = string.Format("MyCommentKarma".GetLocalized(), reddit.Account.Me.CommentKarma);
                 });
             });
         }
@@ -2108,7 +2108,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant reply without sign in";
+                UniversalPostTip.Title = "CantReplyWithoutSignin".GetLocalized();
             }
             else
             {
@@ -2122,7 +2122,7 @@ namespace Appraisit.Views
                         await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
                             UniversalPostTip.IsOpen = true;
-                            UniversalPostTip.Title = "Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)";
+                            UniversalPostTip.Title = "ReplySent".GetLocalized();
                             var reddit = new RedditAPI(appId, refreshToken, secret);
                             var subreddit = reddit.Subreddit("Appraisit");
                             await dse.CommentSelf.ReplyAsync(sender.Text);
@@ -2143,7 +2143,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant comment without sign in";
+                UniversalPostTip.Title = "CantCommentWithoutSign".GetLocalized();
             }
             else
             {
@@ -2152,7 +2152,7 @@ namespace Appraisit.Views
                 try
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Comment sent (refresh to view)";
+                    UniversalPostTip.Title = "CommentSent".GetLocalized();
 
                     var reddit = new RedditAPI(appId, refreshToken, secret);
                     var subreddit = reddit.Subreddit("Appraisit");
@@ -2188,7 +2188,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant upvote without sign in";
+                UniversalPostTip.Title = "CantUpvoteWithoutSignin".GetLocalized();
             }
             else
             {
@@ -2198,7 +2198,7 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Upvoted";
+                    UniversalPostTip.Title = "Upvoted".GetLocalized();
                     AppBarButton see = sender as AppBarButton;
                     var ll = see.Label;
                     ll = ll + 1;
@@ -2206,7 +2206,7 @@ namespace Appraisit.Views
                 }
                 else
                 {
-                    UniversalPostNotification.Show("Upvoted", 3000);
+                    UniversalPostNotification.Show("Upvoted".GetLocalized(), 3000);
                 }
                 await dse.CommentSelf.UpvoteAsync();
             }
@@ -2217,7 +2217,7 @@ namespace Appraisit.Views
             if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
             {
                 UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "Cant upvote without sign in";
+                UniversalPostTip.Title = "CantDownvoteWithoutSignin".GetLocalized();
             }
             else
             {
@@ -2227,13 +2227,13 @@ namespace Appraisit.Views
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "Downvoted";
+                    UniversalPostTip.Title = "Downvoted".GetLocalized();
                     AppBarButton see = sender as AppBarButton;
                     see.Label = "-1";
                 }
                 else
                 {
-                    UniversalPostNotification.Show("Downvoted", 3000);
+                    UniversalPostNotification.Show("Downvoted".GetLocalized(), 3000);
                 }
                 await dse.CommentSelf.DownvoteAsync();
             }
