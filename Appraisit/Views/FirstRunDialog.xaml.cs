@@ -13,10 +13,10 @@ namespace Appraisit.Views
             // TODO WTS: Update the contents of this dialog with any important information you want to show when the app is used for the first time.
             RequestedTheme = (Window.Current.Content as FrameworkElement).RequestedTheme;
             InitializeComponent();
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+           /* if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 FirstText.Text = "FirstTextOnMobile".GetLocalized();
-            }
+            }*/
         }
     }
 }
