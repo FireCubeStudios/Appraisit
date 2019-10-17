@@ -239,7 +239,7 @@ appraisit is powered by reddit</value>
     <value>It seems you are using a {0} device. This device does not support Primary tile API</value>
   </data>
   <data name="PostBy" xml:space="preserve">
-    <value>by: {0}</value>
+    <value>By: {0}</value>
   </data>
   <data name="PostCreated" xml:space="preserve">
     <value>Post created (refresh to view)</value>

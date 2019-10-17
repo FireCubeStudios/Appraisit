@@ -239,7 +239,7 @@ appraisit jest napędzany przez reddita</value>
     <value>Wygląda na to, że używasz urządzenia typu {0}, które nie obsługuje przypinania kafelków.</value>
   </data>
   <data name="PostBy" xml:space="preserve">
-    <value>przez: {0}</value>
+    <value>Przez: {0}</value>
   </data>
   <data name="PostCreated" xml:space="preserve">
     <value>Post dodany (odśwież, aby go zobaczyć)</value>

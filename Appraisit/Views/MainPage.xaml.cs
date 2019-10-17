@@ -12,13 +12,6 @@ using System.Linq;
 using System.Web;
 using Appraisit.Helpers;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel;
-using Appraisit.Services;
-using Windows.UI.Popups;
-using Windows.UI.StartScreen;
-using Windows.Foundation.Metadata;
-using Windows.UI.Shell;
-using Windows.System;
 using MUXC = Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -28,14 +21,13 @@ using System.Numerics;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.Graphics.Effects;
 using Windows.UI.Xaml.Input;
-using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Networking.Connectivity;
 using Windows.System.Profile;
-using Microsoft.Services.Store.Engagement;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
+using Windows.System;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Appraisit.Views
 {
@@ -68,7 +60,6 @@ namespace Appraisit.Views
         List<Comments> RandomCommentCollection;
         List<Comments> QACommentCollection;
         List<Comments> ReplyCollection;
-        private ElementTheme _elementTheme = ThemeSelectorService.Theme;
         public MainPage()
         {
             InitializeComponent();
@@ -166,21 +157,7 @@ namespace Appraisit.Views
             loginView.Navigate(targetUri);
             ProgressRing.IsActive = false;*/
         }
-        public ElementTheme ElementTheme
-        {
-            get { return _elementTheme; }
-
-            set { Set(ref _elementTheme, value); }
-        }
-
-        private string _versionDescription;
-
-        public string VersionDescription
-        {
-            get { return _versionDescription; }
-
-            set { Set(ref _versionDescription, value); }
-        }
+    
         public class OpenPosts
         {
             public Post PostSelf { get; set; }
@@ -390,7 +367,11 @@ namespace Appraisit.Views
             showAnimation.Duration = TimeSpan.FromMilliseconds(1500);
 
             _destinationSprite.StartAnimation("Opacity", showAnimation);
-            if (e.ClickedItem != null)
+               /* var Enfo = e.ClickedItem as Posts;
+                ConnectedAnimation ConnectedAnimation = NewGridViewControl.PrepareConnectedAnimation("forwardAnimation", Enfo, "Flair");
+                ConnectedAnimation.Configuration = new DirectConnectedAnimationConfiguration();
+                ConnectedAnimation.TryStart(destinationElement);*/
+                if (e.ClickedItem != null)
             {
                 try
                 {
@@ -546,33 +527,7 @@ namespace Appraisit.Views
                                     {
 
                                     }
-                                    /*var CommentReplies = commentObject.Replies;
-                                    if (CommentReplies.Count > 0)
-                                    {
-                                        foreach (UIElement ReplyObject in CommentReplies)
-                                        {
-                                            ReplyCollection.Add(new Comments()
-                                            {
-                                                CommentAuthor = commentObject.Author,
-                                                CommentDate = commentObject.Created.ToString(),
-                                                CommentText = commentObject.Body,
-                                            });
-                                            MUXC.TreeViewNode replyNode = new MUXC.TreeViewNode();
-                                            replyNode.Content = CommentCollection;
-                                            replyNode.Children.Add(replyNode);
-                                            MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                            rootNode.Content = CommentCollection;
-                                            UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                        }
-                                    }
-
-                                    else
-                                    {*/
-                                    // MUXC.TreeViewNode rootNode = new MUXC.TreeViewNode();
-                                    //   rootNode.Content = CommentCollection;
-                                    //   UniversalCommentTreeViewControl.RootNodes.Add(rootNode);
-                                    // }
-
+                               
                                 }
                                 TopCommentTreeViewControl.ItemsSource = TopCommentCollection;
                             }
@@ -1270,98 +1225,137 @@ namespace Appraisit.Views
 
         private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            await Task.Run(async () =>
-            {
+          /*  await Task.Run(async () =>
+            {*/
                 PostCollection = new List<Posts>();
-                var reddit = new RedditAPI(appId, refreshToken, secret);
-                var subreddit = reddit.Subreddit("Appraisit");
-                List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));
+            var reddit = new RedditAPI(appId, refreshToken, secret);
+            var subreddit = reddit.Subreddit("Appraisit");
+
+
+                var posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+
                 if (posts.Count == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                    foreach (Post post in posts)
-                    {
-                        var p = post as SelfPost;
-                        PostCollection.Add(new Posts()
-                        {
-                            TitleText = post.Title,
-                            PostSelf = post,
-                            PostAuthor = "by: " + post.Author,
-                            PostDate = "Created: " + post.Created,
-                            PostUpvotes = post.UpVotes.ToString(),
-                            PostDownvotes = post.DownVotes.ToString(),
-                            PostCommentCount = post.Comments.GetComments("new").Count.ToString()
-                        });
-                      
-                            SearchGridViewControl.ItemsSource = PostCollection;
-                      
+                        return;
                     }
-            });
-        }
-            });
+                    else
+                    {
+
+                        foreach (Post post in posts)
+                        {
+
+                            var p = post as SelfPost;
+                            PostCollection.Add(new Posts()
+                            {
+                                TitleText = post.Title,
+                                PostSelf = post,
+                                PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                                PostDate = string.Format("PostCreated", post.Created),
+                                PostUpvotes = post.UpVotes.ToString(),
+                                PostDownvotes = post.DownVotes.ToString(),
+                                PostCommentCount = post.Comments.GetComments("new").Count.ToString()
+                            });
+
+                            SearchGridViewControl.ItemsSource = PostCollection;
+
+                        }
+
+                    }
+                });
+
+       // });
 
         }
-
+        //removed auto suggest due to performance
         private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            await Task.Run(async () =>
-            {
-                Random number = new Random();
-                if (number.Next(1, 2) == 1)
+            PostCollection = new List<Posts>();
+            var reddit = new RedditAPI(appId, refreshToken, secret);
+            var subreddit = reddit.Subreddit("Appraisit");
+           // await Task.Run(async () =>
+            //{
+
+                var posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                   
-                        PostCollection = new List<Posts>();
-                        var reddit = new RedditAPI(appId, refreshToken, secret);
-                        var subreddit = reddit.Subreddit("Appraisit");
-                    await Task.Run(async () =>
+
+                    if (posts.Count == 0)
                     {
-                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                        {
-                            List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
-
-                        if (posts.Count == 0)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                       
-                            foreach (Post post in posts)
-                                {
-                                  
-                                        var p = post as SelfPost;
-                                        PostCollection.Add(new Posts()
-                                        {
-                                            TitleText = post.Title,
-                                            PostSelf = post,
-                                            PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
-                                            PostDate = string.Format("PostCreated", post.Created),
-                                            PostUpvotes = post.UpVotes.ToString(),
-                                            PostDownvotes = post.DownVotes.ToString(),
-                                            PostCommentCount = post.Comments.GetComments("new").Count.ToString()
-                                        });
-                                       
-                                            SearchGridViewControl.ItemsSource = PostCollection;
-                                      
-                                    }
-                        
+                        return;
                     }
-                    });
-                    });
-                }
-                else
-                {
-                    return;
-                }
-            });
-        }
+                    else
+                    {
 
-        private void LoginDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+                        foreach (Post post in posts)
+                        {
+
+                            var p = post as SelfPost;
+                            PostCollection.Add(new Posts()
+                            {
+                                TitleText = post.Title,
+                                PostSelf = post,
+                                PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                                PostDate = string.Format("PostCreated", post.Created),
+                                PostUpvotes = post.UpVotes.ToString(),
+                                PostDownvotes = post.DownVotes.ToString(),
+                                PostCommentCount = post.Comments.GetComments("new").Count.ToString()
+                            });
+
+                            SearchGridViewControl.ItemsSource = PostCollection;
+
+                        }
+
+                    }
+                });
+           // });
+        }
+            /* await Task.Run(async () =>
+             {
+                 await Task.Delay(1000);
+                 PostCollection = new List<Posts>();
+                         var reddit = new RedditAPI(appId, refreshToken, secret);
+                         var subreddit = reddit.Subreddit("Appraisit");
+                     await Task.Run(async () =>
+                     {
+                         await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, ()=>
+                         {
+                             List<Post> posts = reddit.Subreddit(subreddit).Search(new SearchGetSearchInput(SearchBox.Text));  // Search r/MySub
+
+                         if (posts.Count == 0)
+                         {
+                             return;
+                         }
+                         else
+                         {
+
+                             foreach (Post post in posts)
+                                 {
+
+                                         var p = post as SelfPost;
+                                         PostCollection.Add(new Posts()
+                                         {
+                                             TitleText = post.Title,
+                                             PostSelf = post,
+                                             PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                                             PostDate = string.Format("PostCreated", post.Created),
+                                             PostUpvotes = post.UpVotes.ToString(),
+                                             PostDownvotes = post.DownVotes.ToString(),
+                                             PostCommentCount = post.Comments.GetComments("new").Count.ToString()
+                                         });
+
+                                             SearchGridViewControl.ItemsSource = PostCollection;
+
+                                     }
+
+                     }
+                     });
+                     });
+             });
+         }*/
+
+            private void LoginDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
@@ -1413,7 +1407,7 @@ namespace Appraisit.Views
         private void SettingOpenButton_Click(object sender, RoutedEventArgs e)
         {
             FindName("SettingsPanel");
-            Initialize();
+           // Initialize();
         }
 
         public void MyFancyPanel_BackdropTapped(object sender, EventArgs e)
@@ -1422,167 +1416,13 @@ namespace Appraisit.Views
             UnloadObject(SettingsPanel);
 
         }
-        public void MyFancyPanel_BackdropClicked(object sender, RoutedEventArgs e)
+        public void MyFancyPanel_BackdropClicked()
         {
 
             UnloadObject(SettingsPanel);
 
         }
-        private void Initialize()
-        {
-            VersionDescription = GetVersionDescription();
-
-            if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported())
-            {
-                this.Feedbackbutton.IsEnabled = true;
-            }
-        }
-
-        private string GetVersionDescription()
-        {
-            var appName = "AppDisplayName".GetLocalized();
-            var package = Package.Current;
-            var packageId = package.Id;
-            var version = packageId.Version;
-
-            return $"{appName} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-        }
-
-        private async void ThemeChanged_CheckedAsync(object sender, RoutedEventArgs e)
-        {
-            var param = (sender as RadioButton)?.CommandParameter;
-
-            if (param != null)
-            {
-                await ThemeSelectorService.SetThemeAsync((ElementTheme)param);
-
-            }
-        }
-        private async void Whatsnew_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new WhatsNewDialog();
-            await dialog.ShowAsync();
-        }
-        private async void Welcome_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new FirstRunDialog();
-            await dialog.ShowAsync();
-        }
-        private async void FeedbackLink_Click(object sender, RoutedEventArgs e)
-        {
-            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
-            await launcher.LaunchAsync();
-        }
-        private async void Rate_Click(object sender, RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(
-    new Uri($"ms-windows-store://review/?PFN={Package.Current.Id.FamilyName}"));
-        }
-        private async void PinAppToTaskbar_Click(object sender, RoutedEventArgs e)
-        {
-            bool isPinningAllowed = TaskbarManager.GetDefault().IsPinningAllowed;
-            if (isPinningAllowed)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.Shell.TaskbarManager"))
-                {
-                    bool isPinned = await TaskbarManager.GetDefault().IsCurrentAppPinnedAsync();
-
-                    if (isPinned)
-                    {
-                        await new MessageDialog("AlreadyPinnedDesc".GetLocalized(), "AlreadyPinnedTitle".GetLocalized()).ShowAsync();
-                    }
-                    else
-                    {
-                        bool IsPinned = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
-                    }
-                }
-
-                else
-                {
-                    await new MessageDialog("UpdateToPin".GetLocalized(), "UpdateDevice".GetLocalized()).ShowAsync();
-                }
-            }
-
-
-
-            else
-            {
-                var t = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-                switch (t)
-                {
-                    case "Windows.Desktop":
-                        await new MessageDialog("GPODisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.Mobile":
-                        await new MessageDialog("WoADisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.IoT":
-                        await new MessageDialog("IoTDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.Team":
-                        break;
-                    case "Windows.Holographic":
-                        await new MessageDialog("HololensDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.Xbox":
-                        await new MessageDialog("XboxDisabledPin".GetLocalized(), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                    default:
-                        await new MessageDialog(string.Format("OtherDisabledPin".GetLocalized(), t), "TaskbarPinFailed".GetLocalized()).ShowAsync();
-                        break;
-                }
-            }
-        }
-        private async void LivePin(object sender, RoutedEventArgs e)
-        {
-            // Get your own app list entry
-            // (which is always the first app list entry assuming you are not a multi-app package)
-            AppListEntry entry = (await Package.Current.GetAppListEntriesAsync())[0];
-
-            // Check if Start supports your app
-            bool isSupported = StartScreenManager.GetDefault().SupportsAppListEntry(entry);
-            if (isSupported)
-            {
-                if (ApiInformation.IsTypePresent("Windows.UI.StartScreen.StartScreenManager"))
-                {
-                    // Primary tile API's supported!
-                    bool isPinned = await StartScreenManager.GetDefault().ContainsAppListEntryAsync(entry);
-                    if (isPinned)
-                    {
-                        await new MessageDialog("AlreadyTileDesc".GetLocalized(), "AlreadyTile".GetLocalized()).ShowAsync();
-                    }
-                    else
-                    {
-                        bool IsPinned = await StartScreenManager.GetDefault().RequestAddAppListEntryAsync(entry);
-                    }
-                }
-                else
-                {
-                    await new MessageDialog("UpdateToTile".GetLocalized(), "UpdateDevice".GetLocalized()).ShowAsync();
-                }
-            }
-            else
-            {
-                var t = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-                switch (t)
-                {
-                    case "Windows.IoT":
-                        await new MessageDialog("IoTTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.Team":
-                        break;
-                    case "Windows.Holographic":
-                        await new MessageDialog("HololensTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
-                        break;
-                    case "Windows.Xbox":
-                        await new MessageDialog("XboxTileFail".GetLocalized(), "LiveTileFailed".GetLocalized()).ShowAsync();
-                        break;
-                    default:
-                        await new MessageDialog(string.Format("OtherTileFail".GetLocalized(), t), "LiveTileFailed".GetLocalized()).ShowAsync();
-                        break;
-                }
-            }
-        }
+   
         public async void Refresh(object sender, RoutedEventArgs e)
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -1732,7 +1572,15 @@ namespace Appraisit.Views
                     }
                     catch
                     {
-
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        {
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
+                        }
+                        else
+                        {
+                            UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
+                        }
                     }
                 }
                 else
@@ -1762,7 +1610,15 @@ namespace Appraisit.Views
                     }
                     catch
                     {
-                        return;
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        {
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
+                        }
+                        else
+                        {
+                            UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or schedule the post (beta)", 3000);
+                        }
                     }
                 }
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
@@ -1839,6 +1695,7 @@ namespace Appraisit.Views
                 _destinationSprite = null;
 
             }
+            RepliesCommentTreeViewControl.ItemsSource = null;
         }
 
         private async void ProfileButton_Click(object sender, RoutedEventArgs e)
@@ -2273,7 +2130,13 @@ namespace Appraisit.Views
             loginView.Navigate(targetUri);
             ProgressRing.IsActive = false;
         }
-
+        private async void PostContentText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
+        {
+            if (Uri.TryCreate(e.Link, UriKind.Absolute, out Uri link))
+            {
+                await Launcher.LaunchUriAsync(link);
+            }
+        }
     }
 }
 

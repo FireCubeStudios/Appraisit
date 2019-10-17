@@ -1,4 +1,5 @@
 ﻿<UserControl
+    x:Name="UserSettings"
     x:Class="Appraisit.UserControls.BarFlyout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,10 +8,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:helpers="using:Appraisit.Helpers"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
+    <UserControl.Resources>
+        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme"/>
+    </UserControl.Resources>
     <Grid>
         <Grid Background="Black" Tapped="Backdrop_Tapped">
 
@@ -44,7 +49,95 @@
 
             <Grid Background="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}" Width="520">
 
-                <ContentPresenter x:Name="Presenter"/>
+                <Grid Margin="{StaticResource MediumLeftRightMargin}">
+                    <Pivot>
+                        <Pivot.LeftHeader>
+                            <CommandBar Background="Transparent" x:Name="SettingsLeftBar" IsOpen="False" DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed">
+                                <AppBarButton Icon="Back" Tapped="Backdrop_Tapped"></AppBarButton>
+                            </CommandBar>
+                        </Pivot.LeftHeader>
+                        <PivotItem Header="Settings" x:Uid="SettingsPi">
+                            <StackPanel x:Name="ContentPanel">
+                                <TextBlock
+                x:Uid="Settings_Personalization"
+                Style="{ThemeResource SubtitleTextBlockStyle}" />
+                                <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                                    <TextBlock
+                    x:Uid="Settings_Theme" />
+
+                                    <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                                        <RadioButton
+                                                    Content="Light"
+                        x:Uid="Settings_Theme_Light"
+                        GroupName="AppTheme" 
+                        Checked="ThemeChanged_CheckedAsync" 
+                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+                        FontSize="15">
+                                            <RadioButton.CommandParameter>
+                                                <media:ElementTheme>Light</media:ElementTheme>
+                                            </RadioButton.CommandParameter>
+                                        </RadioButton>
+                                        <RadioButton
+                                                    Content="Dark"
+                        x:Uid="Settings_Theme_Dark" 
+                        GroupName="AppTheme"
+                        Checked="ThemeChanged_CheckedAsync" 
+                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+                        FontSize="15">
+                                            <RadioButton.CommandParameter>
+                                                <media:ElementTheme>Dark</media:ElementTheme>
+                                            </RadioButton.CommandParameter>
+                                        </RadioButton>
+                                        <RadioButton
+                                                    Content="Default"
+                        x:Uid="Settings_Theme_Default"
+                        GroupName="AppTheme"
+                        Checked="ThemeChanged_CheckedAsync"
+                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
+                        FontSize="15">
+                                            <RadioButton.CommandParameter>
+                                                <media:ElementTheme>Default</media:ElementTheme>
+                                            </RadioButton.CommandParameter>
+                                        </RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Click="LivePin" Margin="10" x:Uid="LivePin">Pin to startscreen</Button>
+                                    <Button Click="PinAppToTaskbar_Click" Margin="10" x:Uid="PinAppToTaskbar">Pin to taskbar</Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Click="Rate_Click" Margin="10" x:Uid="Rate">Rate Appraisit</Button>
+                                    <Button IsEnabled="False" x:Name="Feedbackbutton" FontFamily="Segoe MDL2 Assets" Content="&#xE939;" Margin="10" Click="FeedbackLink_Click">
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </PivotItem>
+                        <PivotItem x:Uid="WhatsNewPI" Header="What's new">
+                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="Whatsnew" x:Uid="Whatsnew" Click="Whatsnew_Click" Margin="10" VerticalAlignment="Center">What's new</Button>
+                            </StackPanel>
+                        </PivotItem>
+                        <PivotItem x:Uid="AboutPI" Header="About">
+                            <StackPanel>
+                                <TextBlock
+                    x:Uid="Settings_About"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
+
+                                <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                                    <TextBlock
+                    Text="{x:Bind VersionDescription, Mode=OneWay}"
+                    Style="{ThemeResource BodyTextBlockStyle}" />
+                                    <!--x:Uid="Settings_AboutDescription"-->
+                                    <HyperlinkButton x:Uid="PrivacyHB"
+                    Content="Privacy Statement"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    NavigateUri="https://www.websitepolicies.com/policies/view/ti1U34qB"/>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </PivotItem>
+                    </Pivot>
+                </Grid>
 
             </Grid>
 
