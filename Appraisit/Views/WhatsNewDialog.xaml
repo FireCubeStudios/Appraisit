@@ -20,21 +20,9 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.14.10.0 (Universal):
+                Appraisit beta 1.0.0.0 -2 (Universal):
                 <LineBreak/>
-                -New rounded ui flair
-                <LineBreak/>
-                -Removed mobilebar (Mobile)
-                 <LineBreak/>
-                -Added mobile button to replace mobile bar, less intrusive more intuitive (mobile)
-                <LineBreak/>
-                -Low memory usage mode whne app goes to back ground
-                <LineBreak/>
-                -Fixed bug where opening link posts crashed the app
-                <LineBreak/>
-                -Fixed bug where pivot header would be changed when logged in
-                <LineBreak/>
-                -Possibly fixed bug where mobile users cant sign in
+          -Critical update to fix login bug and security issue, some experimental features are in this update so there might be bugs however this update also fixes many bugs
                 <LineBreak/>
             </TextBlock>
         </StackPanel> 

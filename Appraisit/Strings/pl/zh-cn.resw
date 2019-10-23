@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>Appraisit</value>
+    <comment>Application display name</comment>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Appraisit</value>
+    <comment>Application description</comment>
+  </data>
+  <data name="Main_Title.Text" xml:space="preserve">
+    <value>首页</value>
+    <comment>Page title for MainPage</comment>
+  </data>
+  <data name="FirstRun_Body.Text" xml:space="preserve">
+    <value />
+    <comment>First use prompt message body</comment>
+  </data>
+  <data name="FirstRunDialog.Title" xml:space="preserve">
+    <value>欢迎</value>
+    <comment>First use prompt message title</comment>
+  </data>
+  <data name="FirstRunDialog.PrimaryButtonText" xml:space="preserve">
+    <value>登录</value>
+    <comment>First use prompt message primary button text</comment>
+  </data>
+  <data name="WhatsNewDialog.Title" xml:space="preserve">
+    <value>此版本的新改动</value>
+    <comment>What's new prompt message title</comment>
+  </data>
+  <data name="WhatsNewDialog.PrimaryButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>What's new prompt message primary button text</comment>
+  </data>
+  <data name="AlreadyPinnedDesc" xml:space="preserve">
+    <value>如果失败，你可以手动固定到任务栏</value>
+  </data>
+  <data name="AlreadyPinnedTitle" xml:space="preserve">
+    <value>你已将app固定到任务栏</value>
+  </data>
+  <data name="AlreadyTile" xml:space="preserve">
+    <value>开始屏幕已有动态磁贴</value>
+  </data>
+  <data name="AlreadyTileDesc" xml:space="preserve">
+    <value>如果失败，你可以手动将磁贴固定到开始屏幕</value>
+  </data>
+  <data name="CantCommentWithoutSignin" xml:space="preserve">
+    <value>未登录不能评论</value>
+  </data>
+  <data name="CantDownvoteWithoutSignin" xml:space="preserve">
+    <value>未登录不能踩</value>
+  </data>
+  <data name="CantReplyWithoutSignin" xml:space="preserve">
+    <value>未登录不能回复</value>
+  </data>
+  <data name="CantUpvoteWithoutSignin" xml:space="preserve">
+    <value>未登录不能顶</value>
+  </data>
+  <data name="CommentSent" xml:space="preserve">
+    <value>评论已发送(刷新可见)</value>
+  </data>
+  <data name="Downvoted" xml:space="preserve">
+    <value>已踩</value>
+  </data>
+  <data name="FirstText.Text" xml:space="preserve">
+    <value>使用Reddit登录
+Appraisit由Reddit提供服务支持</value>
+  </data>
+  <data name="FirstTextOnMobile" xml:space="preserve">
+    <value>此App未在移动设备上测试。请通过反馈中心汇报bug、崩溃、需求等。</value>
+  </data>
+  <data name="Flair" xml:space="preserve">
+    <value>Flair: {0}</value>
+  </data>
+  <data name="GPODisabledPin" xml:space="preserve">
+    <value>你正在用电脑设备，组策略禁止固定到任务栏</value>
+  </data>
+  <data name="HololensDisabledPin" xml:space="preserve">
+    <value>你正在使用Hololens，Hololens没有任务栏</value>
+  </data>
+  <data name="HololensTileFail" xml:space="preserve">
+    <value>你正在使用Hololens，Hololens没有动态磁贴</value>
+  </data>
+  <data name="IoTDisabledPin" xml:space="preserve">
+    <value>你正在使用IoT设备，IoT设备没有任务栏</value>
+  </data>
+  <data name="IoTTileFail" xml:space="preserve">
+    <value>你正在使用IoT设备，IoT设备没有磁贴</value>
+  </data>
+  <data name="LiveTileFailed" xml:space="preserve">
+    <value>固定失败</value>
+  </data>
+  <data name="MyCommentKarma" xml:space="preserve">
+    <value>评论 Karma: {0}</value>
+  </data>
+  <data name="MyCreated" xml:space="preserve">
+    <value>创建日期/生日 {0}</value>
+  </data>
+  <data name="MyKarma" xml:space="preserve">
+    <value>Karma: {0}</value>
+  </data>
+  <data name="MyUsername" xml:space="preserve">
+    <value>用户名： {0}</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>无网络</value>
+  </data>
+  <data name="OtherDisabledPin" xml:space="preserve">
+    <value>你正在用{0}设备。此设备不支持固定到任务栏</value>
+  </data>
+  <data name="OtherTileFail" xml:space="preserve">
+    <value>你正在用{0}设备，此设备不支持磁贴</value>
+  </data>
+  <data name="PostBy" xml:space="preserve">
+    <value>创建者：{0}</value>
+  </data>
+  <data name="PostCreated" xml:space="preserve">
+    <value>博文已发表 (刷新可见)</value>
+  </data>
+  <data name="PostDate" xml:space="preserve">
+    <value>新建：{0}</value>
+  </data>
+  <data name="ReplySent" xml:space="preserve">
+    <value>回复已发送（暂不支持查看回复，请到网页版Appraist订阅查看）</value>
+  </data>
+  <data name="SignInTip" xml:space="preserve">
+    <value>登录以获取更多功能，比如亮主题，搜索，创建博文，评论，设置。</value>
+  </data>
+  <data name="TaskbarPinFailed" xml:space="preserve">
+    <value>固定到任务栏失败</value>
+  </data>
+  <data name="UpdateDevice" xml:space="preserve">
+    <value>升级你的设备</value>
+  </data>
+  <data name="UpdateToPin" xml:space="preserve">
+    <value>请升级至秋季创意者更新或者更高版本，以固定此App</value>
+  </data>
+  <data name="UpdateToTile" xml:space="preserve">
+    <value>你需要升级你的设备来启动自动固定</value>
+  </data>
+  <data name="Upvoted" xml:space="preserve">
+    <value>已顶</value>
+  </data>
+  <data name="WoAGPODisabledPin" xml:space="preserve">
+    <value>你正在用Windows 10版的ARM设备或手机，组策略不支持固定App</value>
+  </data>
+  <data name="XboxDisabledPin" xml:space="preserve">
+    <value>你正在用XBox设备，XBox没有任务栏</value>
+  </data>
+  <data name="XboxTileFail" xml:space="preserve">
+    <value>你正在用XBox设备，XBox不支持动态磁贴</value>
+  </data>
+  <data name="AboutPI.Header" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="BestPi.Header" xml:space="preserve">
+    <value>最好的</value>
+  </data>
+  <data name="CommentTextMessage.Header" xml:space="preserve">
+    <value>评论：</value>
+  </data>
+  <data name="CommentTextMessage.PlaceholderText" xml:space="preserve">
+    <value>这是一条评论</value>
+  </data>
+  <data name="ControversialPi.Header" xml:space="preserve">
+    <value>Controversial</value>
+  </data>
+  <data name="CreatePostDialog.CloseButtonText" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CreatePostSwipe.Text" xml:space="preserve">
+    <value>创建博文</value>
+  </data>
+  <data name="CreatePsotDialog.PrimaryButtonText" xml:space="preserve">
+    <value>发表</value>
+  </data>
+  <data name="DownvoteMFI.Text" xml:space="preserve">
+    <value>踩</value>
+  </data>
+  <data name="FlairLabel.Text" xml:space="preserve">
+    <value>Flair:</value>
+  </data>
+  <data name="LinkNavigator.Label" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="LinkPi.Header" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="LinkPostLink.Content" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="LivePi.Header" xml:space="preserve">
+    <value>实时</value>
+  </data>
+  <data name="LivePin.Content" xml:space="preserve">
+    <value>固定到开始屏幕</value>
+  </data>
+  <data name="NewPi.Header" xml:space="preserve">
+    <value>最新</value>
+  </data>
+  <data name="NewPostLink.Header" xml:space="preserve">
+    <value>链接：</value>
+  </data>
+  <data name="NewPostLink.PlaceholderText" xml:space="preserve">
+    <value>必须是有效链接</value>
+  </data>
+  <data name="OldPi.Header" xml:space="preserve">
+    <value>以前的</value>
+  </data>
+  <data name="OpenCreatePostDialog.Label" xml:space="preserve">
+    <value>新建博文</value>
+  </data>
+  <data name="Openinweb.Label" xml:space="preserve">
+    <value>浏览器</value>
+  </data>
+  <data name="OpenInWebMFI.Text" xml:space="preserve">
+    <value>用浏览器打开</value>
+  </data>
+  <data name="OpenSearchDialog.Label" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="PinAppToTaskbar.Content" xml:space="preserve">
+    <value>固定到任务栏</value>
+  </data>
+  <data name="PostDialog.CloseButtonText" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="PostText.Header" xml:space="preserve">
+    <value>文本：</value>
+  </data>
+  <data name="PostText.PlaceholderText" xml:space="preserve">
+    <value>记得输入版本号，链接可选</value>
+  </data>
+  <data name="PrivacyHB.Content" xml:space="preserve">
+    <value>隐私声明</value>
+  </data>
+  <data name="ProfileButton.Label" xml:space="preserve">
+    <value>个人资料</value>
+  </data>
+  <data name="QandAPi.Header" xml:space="preserve">
+    <value>Q and A</value>
+  </data>
+  <data name="Rate.Content" xml:space="preserve">
+    <value>评价 Appraisit</value>
+  </data>
+  <data name="RedditPi.Header" xml:space="preserve">
+    <value>Reddit</value>
+  </data>
+  <data name="Refresh.Label" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RefreshCommentsABB.Label" xml:space="preserve">
+    <value>刷新评论</value>
+  </data>
+  <data name="RefreshCommentsMFI.Text" xml:space="preserve">
+    <value>刷新评论</value>
+  </data>
+  <data name="RefreshSwipe.Text" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RepliesPi.Header" xml:space="preserve">
+    <value>回复（试验阶段）</value>
+  </data>
+  <data name="ReplyExpander.Header" xml:space="preserve">
+    <value>回复</value>
+  </data>
+  <data name="ReplyText.Header" xml:space="preserve">
+    <value>回复：</value>
+  </data>
+  <data name="ReplyText.PlaceholderText" xml:space="preserve">
+    <value>发送回复</value>
+  </data>
+  <data name="SB.Label" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SearchAppraisitABB.Label" xml:space="preserve">
+    <value>搜索 Appraisit</value>
+  </data>
+  <data name="SearchAppraisitMFI.Text" xml:space="preserve">
+    <value>搜索 Appraisit</value>
+  </data>
+  <data name="SearchBox.PlaceholderText" xml:space="preserve">
+    <value>搜索博文：</value>
+  </data>
+  <data name="SearchPostsSwipe.Text" xml:space="preserve">
+    <value>搜索博文</value>
+  </data>
+  <data name="SearchRedditABB.Label" xml:space="preserve">
+    <value>在Reddit上搜索</value>
+  </data>
+  <data name="SearchRedditMFI.Text" xml:space="preserve">
+    <value>在Reddit上搜索</value>
+  </data>
+  <data name="SearchStoreABB.Label" xml:space="preserve">
+    <value>在商店中搜索</value>
+  </data>
+  <data name="SearchStoreMFI.Text" xml:space="preserve">
+    <value>在商店中搜索</value>
+  </data>
+  <data name="SearchTip.Title" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SettingOpenButton.Label" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>暗</value>
+  </data>
+  <data name="Settings_Theme_Default.Content" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="Settings_Theme_Light.Content" xml:space="preserve">
+    <value>亮</value>
+  </data>
+  <data name="SignIn.Content" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="SignInABB.Label" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="SignOutButton.Content" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="StorePi.Header" xml:space="preserve">
+    <value>商店</value>
+  </data>
+  <data name="TextPi.Header" xml:space="preserve">
+    <value>文本</value>
+  </data>
+  <data name="TitlePost.Header" xml:space="preserve">
+    <value>标题：</value>
+  </data>
+  <data name="TitlePostText.PlaceholderText" xml:space="preserve">
+    <value>Appraisit 已升级至 3.0</value>
+  </data>
+  <data name="TopOrder.PlaceholderText" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="TopPi.Header" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="UpvoteMFI.Text" xml:space="preserve">
+    <value>顶</value>
+  </data>
+  <data name="WebBarButton.Label" xml:space="preserve">
+    <value>浏览器</value>
+  </data>
+  <data name="WebPi.Header" xml:space="preserve">
+    <value>浏览器</value>
+  </data>
+  <data name="Whatsnew.Content" xml:space="preserve">
+    <value>新改动</value>
+  </data>
+  <data name="WhatsNewPI.Header" xml:space="preserve">
+    <value>新改动</value>
+  </data>
+  <data name="ControversialTVI.Header" xml:space="preserve">
+    <value>Controversial</value>
+  </data>
+  <data name="ExplorePi.Header" xml:space="preserve">
+    <value>探索</value>
+  </data>
+  <data name="HotPi.Header" xml:space="preserve">
+    <value>最火</value>
+  </data>
+  <data name="RisingTVI.Header" xml:space="preserve">
+    <value>趋势</value>
+  </data>
+  <data name="SearchMFI.Text" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SettingsPi.Header" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="TopOrderItems" xml:space="preserve">
+    <value>所有|年|月|周|日</value>
+  </data>
+  <data name="SearchMicrosoftStoreButton.Content" xml:space="preserve">
+    <value>搜索微软商店</value>
+  </data>
+  <data name="SearchRedditWebButton.Content" xml:space="preserve">
+    <value>在网上搜索Reddit</value>
+  </data>
+</root>

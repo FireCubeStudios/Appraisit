@@ -167,7 +167,8 @@
                                     <TextBlock x:Name="PostAuthor" Text="{Binding PostAuthor}" TextWrapping="WrapWholeWords"></TextBlock>
                                 <TextBlock x:Name="PostCreated" Text="{Binding PostDate}" TextWrapping="WrapWholeWords"></TextBlock>
                                 <StackPanel Orientation="Horizontal">
-                                <AppBarButton Icon="LikeDislike" Label="{Binding PostUpvotes}" IsTapEnabled="False" IsFocusEngagementEnabled="False" IsHitTestVisible="False" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"></AppBarButton>
+                                    <AppBarButton Icon="Like" Label="{Binding PostUpvotes}" Click="LikeButton_Click"></AppBarButton>
+                                    <AppBarButton Icon="Dislike" Click="DisLikeButton_Click"></AppBarButton>
                                 <AppBarButton Icon="Comment" Label="{Binding PostCommentCount}" IsTapEnabled="False" IsFocusEngagementEnabled="False" IsHitTestVisible="False" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"></AppBarButton>
                             </StackPanel>
                             <FlyoutBase.AttachedFlyout>
@@ -289,7 +290,7 @@
                             <TextBlock x:Name="Author" FontSize="20" Text="{Binding CommentAuthor}" Margin="0, 0, 50, 0" TextWrapping="WrapWholeWords"></TextBlock>
                             <TextBlock x:Name="Date" Text="{Binding CommentDate}" TextWrapping="WrapWholeWords"></TextBlock>
                         </StackPanel>
-                        <TextBlock x:Name="Text" Text="{Binding CommentText}" TextWrapping="WrapWholeWords"></TextBlock>
+                        <controls:MarkdownTextBlock x:Name="Text" Text="{Binding CommentText}" TextWrapping="WrapWholeWords"></controls:MarkdownTextBlock>
                         <CommandBar Background='{ThemeResource SystemControlChromeLowAcrylicWindowBrush}' Margin="10" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right">
                             <AppBarButton x:Name="Upvotes" Icon="Like"  Label="{Binding CommentUpvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}' Click="Upvotes_Click"></AppBarButton>
                             <AppBarButton x:Name="Downvotes" Icon="Dislike" Label="{Binding CommentDownvotes}" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}' Click="Downvotes_Click"></AppBarButton>
@@ -318,7 +319,6 @@
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
             <Rectangle x:Name="hostForVisual" Fill="Transparent"/>
-            <Rectangle x:Name="WebBlockBar" VerticalAlignment="Bottom" Height="200" Canvas.ZIndex="500" Fill="Black" x:Load="False"></Rectangle>
             <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" RequestedTheme="Dark" x:Load="False"/>
             <Grid x:Name="ContentGrid" Canvas.ZIndex="0">
                 <Pivot HorizontalAlignment="Center" x:Name="PivotNavigator" SelectionChanged="Pivot_SelectionChanged" Foreground="Purple">
@@ -326,7 +326,7 @@
                         <Grid>
                             
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100">></AppBarButton>
-                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
+                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 50, 0, 0">
 
 
                                 <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="NewGridViewControl" ItemHeight="240" DesiredWidth="500" ItemTemplate="{StaticResource PostsTemplate}" Background='{ThemeResource SystemControlAcrylicWindowBrush}' IsItemClickEnabled="True" ItemClick="UniversalGridViewControl_ItemClick">
@@ -396,9 +396,7 @@
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
-                    <PivotItem Header="Explore">
-                        
-                    </PivotItem>
+                   
                     <PivotItem Header="Rising" x:Uid="RisingTVI">
                         <Grid>
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
@@ -562,8 +560,9 @@
                     <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText" x:Uid="TitlePostText" />
                     <Pivot Name="NewPostPivot">
                         <PivotItem Header="Text" x:Uid="TextPi">
-                            <StackPanel Orientation="Vertical" Margin="50" >
-                                <TextBox Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText" x:Uid="PostText" />
+                            <StackPanel Orientation="Vertical" Margin="25" >
+                                    <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind PostText}" Format="MarkDown" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'/>
+                                    <RichEditBox MinHeight="200" Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText" x:Uid="PostText" />
                             </StackPanel>
                         </PivotItem>
                         <PivotItem Header="Link" x:Uid="LinkPi">
@@ -594,6 +593,7 @@
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
                         <HyperlinkButton Content="Link" x:Name="LinkPostLink" x:Uid="LinkPostLink" Visibility="Collapsed"/>
                         <controls:MarkdownTextBlock x:Name="PostContentText"
+            Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'
             LinkClicked="PostContentText_LinkClicked"
             IsTextSelectionEnabled="True"
             TextWrapping="Wrap" />
