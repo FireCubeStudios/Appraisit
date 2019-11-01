@@ -239,7 +239,7 @@ namespace Appraisit.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void OnGoBack(object sender, RoutedEventArgs e)
+       /* private void OnGoBack(object sender, RoutedEventArgs e)
         {
             if (webView.CanGoBack == true)
             {
@@ -268,7 +268,7 @@ namespace Appraisit.Views
         private void WebviewPanel_NewWindowRequested(WebView sender, WebViewNewWindowRequestedEventArgs args)
         {
             webView.NavigateToString(webView.Source.ToString());
-        }
+        }*/
 
         private async void UniversalGridViewControl_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -1679,13 +1679,13 @@ namespace Appraisit.Views
             });
         }
 
-        private async void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
+       /* private async void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
         {
             var uriBing = new Uri(webView.Source.ToString());
 
             // Launch the URI
             await Windows.System.Launcher.LaunchUriAsync(uriBing);
-        }
+        }*/
 
         private async void TopComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -2116,6 +2116,7 @@ namespace Appraisit.Views
             localSettings.Values["refresh_token"] = null;
             refreshToken = null;
         }
+
     }
 }
 

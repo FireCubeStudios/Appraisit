@@ -20,13 +20,21 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.8.7.0(Universal + pc exclusive):
+                Appraisit beta 0.9.8.0(Universal + pc exclusive):
+                 <LineBreak/>
+                -New ui for windows 1803 + devices (pc)
+                <LineBreak/>
+                -New ui includes rounded corners, fabric ui styling, new radiobutton control designs, winui 2.2 and thinner edges (pc)
                 <LineBreak/>
                 -Support for non - ms store flair
                 <LineBreak/>
                 -Flair now uses templates
                 <LineBreak/>
-                -Removed one row mode from website mode
+                -Reduced memory usage by 75% and fixed memory leaks when navigating (pc)
+                <LineBreak/>
+                -Removed website mode
+                <LineBreak/>
+                -Acrylic improved
                 <LineBreak/>
                 -Mobile uses teaching tips instead
                 <LineBreak/>
