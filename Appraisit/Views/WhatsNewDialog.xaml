@@ -20,10 +20,47 @@
         <StackPanel>
             <TextBlock           
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 1.0.0.0 -2 (Universal):
+                Appraisit beta 0.9.8.0(Universal + pc exclusive):
+                 <LineBreak/>
+                -New ui for windows 1803 + devices (pc)
                 <LineBreak/>
-          -Critical update to fix login bug and security issue, some experimental features are in this update so there might be bugs however this update also fixes many bugs
+                -New ui includes rounded corners, fabric ui styling, new radiobutton control designs, winui 2.2 and thinner edges (pc)
                 <LineBreak/>
+                -Support for non - ms store flair
+                <LineBreak/>
+                -Flair now uses templates
+                <LineBreak/>
+                -Reduced memory usage by 75% and fixed memory leaks when navigating (pc)
+                <LineBreak/>
+                -Removed website mode
+                <LineBreak/>
+                -Acrylic improved
+                <LineBreak/>
+                -Mobile uses teaching tips instead
+                <LineBreak/>
+                -Image support
+                <LineBreak/>
+                -Fixed refresh container bug
+                <LineBreak/>
+                -Flair support (pc)
+                <LineBreak/>
+                -Removed navigation animation (pc)
+                <LineBreak/>
+                -Reply support, upvote, downvote replies and reply to replies (pc)
+                <LineBreak/>
+                -Swipe item colors (pc)
+                <LineBreak/>
+                -Changed hidden in app notification to a universal teaching tip
+                <LineBreak/>
+                -Search typing improvements
+                <LineBreak/>
+                -Acrylic changes (pc)
+                <LineBreak/>
+                -Theme transitions (pc)
+                <LineBreak/>
+                -Notifications and tips show for only a certain duration (pc)
+                <LineBreak/>
+                -Tips have light dismiss (pc)
             </TextBlock>
         </StackPanel> 
     </ScrollViewer>
