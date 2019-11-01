@@ -37,7 +37,7 @@ namespace Appraisit.Helpers
            
                 await Task.Run(async () =>
             {
-             string refreshToken = localSettings.Values["refresh_token"].ToString();
+                string refreshToken = localSettings.Values["refresh_token"].ToString();
           try
           {
               PostCollection = new List<Posts>();
@@ -58,8 +58,8 @@ namespace Appraisit.Helpers
                   {
                       TitleText = post.Title,
                       PostSelf = post,
-                      PostAuthor = "by: " + post.Author,
-                      PostDate = "Created: " + post.Created,
+                      PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                      PostDate = string.Format("PostDate".GetLocalized(), post.Created),
                       PostUpvotes = post.UpVotes.ToString(),
                       PostDownvotes = post.DownVotes.ToString(),
                       PostCommentCount = (post.Comments.GetComments("new").Count.ToString()),

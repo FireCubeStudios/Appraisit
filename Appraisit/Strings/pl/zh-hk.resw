@@ -126,386 +126,376 @@
     <comment>Application description</comment>
   </data>
   <data name="Main_Title.Text" xml:space="preserve">
-    <value>Main</value>
+    <value>首頁</value>
     <comment>Page title for MainPage</comment>
   </data>
   <data name="FirstRun_Body.Text" xml:space="preserve">
-    <value>Replace the content of this dialog with whatever content is appropriate to your app.
-You might want to explain key features or functionality.
-Don't feel restricted to just text. You can also include images and animations if you wish too.
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
-
-Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
-
-Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.</value>
+    <value />
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunDialog.Title" xml:space="preserve">
-    <value>Welcome</value>
+    <value>歡迎</value>
     <comment>First use prompt message title</comment>
   </data>
   <data name="FirstRunDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Login</value>
+    <value>登錄</value>
     <comment>First use prompt message primary button text</comment>
   </data>
   <data name="WhatsNewDialog.Title" xml:space="preserve">
-    <value>What's new in this version</value>
+    <value>此版本的新改動</value>
     <comment>What's new prompt message title</comment>
   </data>
   <data name="WhatsNewDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Ok</value>
+    <value>確定</value>
     <comment>What's new prompt message primary button text</comment>
   </data>
   <data name="AlreadyPinnedDesc" xml:space="preserve">
-    <value>If not you can manually pin the app to the taskbar</value>
+    <value>如果失敗，妳可以手動固定到任務欄</value>
   </data>
   <data name="AlreadyPinnedTitle" xml:space="preserve">
-    <value>You already have the app pinned in your taskbar</value>
+    <value>妳已將app固定到任務欄</value>
   </data>
   <data name="AlreadyTile" xml:space="preserve">
-    <value>You already have the live tile in your StartScreen</value>
+    <value>開始屏幕已有動態磁貼</value>
   </data>
   <data name="AlreadyTileDesc" xml:space="preserve">
-    <value>If not you can manually put the live tile on to the StartScreen</value>
+    <value>如果失敗，妳可以手動將磁貼固定到開始屏幕</value>
   </data>
   <data name="CantCommentWithoutSignin" xml:space="preserve">
-    <value>Cant comment without sign in</value>
+    <value>未登錄不能評論</value>
   </data>
   <data name="CantDownvoteWithoutSignin" xml:space="preserve">
-    <value>Cant downvote without sign in</value>
+    <value>未登錄不能踩</value>
   </data>
   <data name="CantReplyWithoutSignin" xml:space="preserve">
-    <value>Cant reply without sign in</value>
+    <value>未登錄不能回復</value>
   </data>
   <data name="CantUpvoteWithoutSignin" xml:space="preserve">
-    <value>Cant upvote without sign in</value>
+    <value>未登錄不能頂</value>
   </data>
   <data name="CommentSent" xml:space="preserve">
-    <value>Comment sent (refresh to view)</value>
+    <value>評論已發送(刷新可見)</value>
   </data>
   <data name="Downvoted" xml:space="preserve">
-    <value>Downvoted</value>
+    <value>已踩</value>
   </data>
   <data name="FirstText.Text" xml:space="preserve">
-    <value>Login to reddit
-appraisit is powered by reddit</value>
+    <value>使用Reddit登錄
+Appraisit由Reddit提供服務支持</value>
   </data>
   <data name="FirstTextOnMobile" xml:space="preserve">
-    <value>The app hasnt been tested on mobile; report bugs, crashes, requests in the feedback hub. Mobile beta</value>
+    <value>此App未在移動設備上測試。請通過反饋中心匯報bug、崩潰、需求等。</value>
   </data>
   <data name="Flair" xml:space="preserve">
     <value>Flair: {0}</value>
   </data>
   <data name="GPODisabledPin" xml:space="preserve">
-    <value>It seems you are using a computer. Group policy disabled pinning of app in taskbar</value>
+    <value>妳正在用電腦設備，組策略禁止固定到任務欄</value>
   </data>
   <data name="HololensDisabledPin" xml:space="preserve">
-    <value>It seems you are using hololens. Hololens doesn't have a taskbar</value>
+    <value>妳正在使用Hololens，Hololens沒有任務欄</value>
   </data>
   <data name="HololensTileFail" xml:space="preserve">
-    <value>It seems you are using hololens. Hololens doesn't support live tile</value>
+    <value>妳正在使用Hololens，Hololens沒有動態磁貼</value>
   </data>
   <data name="IoTDisabledPin" xml:space="preserve">
-    <value>It seems you are using a IoT device which doesn't support taskbar pin API</value>
+    <value>妳正在使用IoT設備，IoT設備沒有任務欄</value>
   </data>
   <data name="IoTTileFail" xml:space="preserve">
-    <value>It seems you are using a IoT device which doesn't support Primary tile API</value>
+    <value>妳正在使用IoT設備，IoT設備沒有磁貼</value>
   </data>
   <data name="LiveTileFailed" xml:space="preserve">
-    <value>live tile failed</value>
+    <value>固定失敗</value>
   </data>
   <data name="MyCommentKarma" xml:space="preserve">
-    <value>Comment Karma: {0}</value>
+    <value>評論 Karma: {0}</value>
   </data>
   <data name="MyCreated" xml:space="preserve">
-    <value>Created/Cake Day: {0}</value>
+    <value>創建日期/生日 {0}</value>
   </data>
   <data name="MyKarma" xml:space="preserve">
     <value>Karma: {0}</value>
   </data>
   <data name="MyUsername" xml:space="preserve">
-    <value>Username: {0}</value>
+    <value>用戶名： {0}</value>
   </data>
   <data name="NoInternetConnection" xml:space="preserve">
-    <value>No internet connection</value>
+    <value>無網絡</value>
   </data>
   <data name="OtherDisabledPin" xml:space="preserve">
-    <value>It seems you are using a {0} device. This device does not support taskbar API or Group policy disabled pinning of the app</value>
+    <value>妳正在用{0}設備。此設備不支持固定到任務欄</value>
   </data>
   <data name="OtherTileFail" xml:space="preserve">
-    <value>It seems you are using a {0} device. This device does not support Primary tile API</value>
+    <value>妳正在用{0}設備，此設備不支持磁貼</value>
   </data>
   <data name="PostBy" xml:space="preserve">
-    <value>By: {0}</value>
+    <value>創建者：{0}</value>
   </data>
   <data name="PostCreated" xml:space="preserve">
-    <value>Post created (refresh to view)</value>
+    <value>博文已發表 (刷新可見)</value>
   </data>
   <data name="PostDate" xml:space="preserve">
-    <value>Created: {0}</value>
+    <value>新建：{0}</value>
   </data>
   <data name="ReplySent" xml:space="preserve">
-    <value>Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)</value>
+    <value>回復已發送（暫不支持查看回復，請到網頁版Appraist訂閱查看）</value>
   </data>
   <data name="SignInTip" xml:space="preserve">
-    <value>Sign in to access more features such as light mode, search, create post, commenting and settings.</value>
+    <value>登錄以獲取更多功能，比如亮主題，搜索，創建博文，評論，設置。</value>
   </data>
   <data name="TaskbarPinFailed" xml:space="preserve">
-    <value>Taskbar pin failed</value>
+    <value>固定到任務欄失敗</value>
   </data>
   <data name="UpdateDevice" xml:space="preserve">
-    <value>Update your device</value>
+    <value>升級妳的設備</value>
   </data>
   <data name="UpdateToPin" xml:space="preserve">
-    <value>Update your device to the Fall creators update or higher to pin this app</value>
+    <value>請升級至秋季創意者更新或者更高版本，以固定此App</value>
   </data>
   <data name="UpdateToTile" xml:space="preserve">
-    <value>You need to update your device to enable automatic pinning</value>
+    <value>妳需要升級妳的設備來啟動自動固定</value>
   </data>
   <data name="Upvoted" xml:space="preserve">
-    <value>Upvoted</value>
+    <value>已頂</value>
   </data>
   <data name="WoAGPODisabledPin" xml:space="preserve">
-    <value>It seems you are using a Windows 10 on ARM device or mobile device. Group policy disabled pinning of the app</value>
+    <value>妳正在用Windows 10版的ARM設備或手機，組策略不支持固定App</value>
   </data>
   <data name="XboxDisabledPin" xml:space="preserve">
-    <value>It seems you are using a xbox. Xbox doesn't have a taskbar</value>
+    <value>妳正在用XBox設備，XBox沒有任務欄</value>
   </data>
   <data name="XboxTileFail" xml:space="preserve">
-    <value>It seems you are using a xbox. Xbox doesn't support live tile</value>
+    <value>妳正在用XBox設備，XBox不支持動態磁貼</value>
   </data>
   <data name="AboutPI.Header" xml:space="preserve">
-    <value>About</value>
+    <value>關於</value>
   </data>
   <data name="BestPi.Header" xml:space="preserve">
-    <value>Best</value>
+    <value>最好的</value>
   </data>
   <data name="CommentTextMessage.Header" xml:space="preserve">
-    <value>Comment:</value>
+    <value>評論：</value>
   </data>
   <data name="CommentTextMessage.PlaceholderText" xml:space="preserve">
-    <value>this is a comment</value>
+    <value>這壹條評論</value>
   </data>
   <data name="ControversialPi.Header" xml:space="preserve">
     <value>Controversial</value>
   </data>
   <data name="CreatePostDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>關閉</value>
   </data>
   <data name="CreatePostSwipe.Text" xml:space="preserve">
-    <value>Create post</value>
+    <value>創建博文</value>
   </data>
   <data name="CreatePsotDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Post</value>
+    <value>發表</value>
   </data>
   <data name="DownvoteMFI.Text" xml:space="preserve">
-    <value>Downvote</value>
+    <value>踩</value>
   </data>
   <data name="FlairLabel.Text" xml:space="preserve">
     <value>Flair:</value>
   </data>
   <data name="LinkNavigator.Label" xml:space="preserve">
-    <value>Link</value>
+    <value>鏈接</value>
   </data>
   <data name="LinkPi.Header" xml:space="preserve">
-    <value>Link</value>
+    <value>鏈接</value>
   </data>
   <data name="LinkPostLink.Content" xml:space="preserve">
-    <value>Link</value>
+    <value>鏈接</value>
   </data>
   <data name="LivePi.Header" xml:space="preserve">
-    <value>Live</value>
+    <value>實時</value>
   </data>
   <data name="LivePin.Content" xml:space="preserve">
-    <value>Pin to startscreen</value>
+    <value>固定到開始屏幕</value>
   </data>
   <data name="NewPi.Header" xml:space="preserve">
-    <value>New</value>
+    <value>最新</value>
   </data>
   <data name="NewPostLink.Header" xml:space="preserve">
-    <value>Link:</value>
+    <value>鏈接：</value>
   </data>
   <data name="NewPostLink.PlaceholderText" xml:space="preserve">
-    <value>Must be a valid link</value>
+    <value>必須是有效鏈接</value>
   </data>
   <data name="OldPi.Header" xml:space="preserve">
-    <value>Old</value>
+    <value>以前的</value>
   </data>
   <data name="OpenCreatePostDialog.Label" xml:space="preserve">
-    <value>Create post</value>
+    <value>新建博文</value>
   </data>
   <data name="Openinweb.Label" xml:space="preserve">
-    <value>Web</value>
+    <value>瀏覽器</value>
   </data>
   <data name="OpenInWebMFI.Text" xml:space="preserve">
-    <value>Open in web</value>
+    <value>用瀏覽器打開</value>
   </data>
   <data name="OpenSearchDialog.Label" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
   </data>
   <data name="PinAppToTaskbar.Content" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>固定到任務欄</value>
   </data>
   <data name="PostDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>關閉</value>
   </data>
   <data name="PostText.Header" xml:space="preserve">
-    <value>Text:</value>
+    <value>文本：</value>
   </data>
   <data name="PostText.PlaceholderText" xml:space="preserve">
-    <value>Remember to put version number, links are optional</value>
+    <value>記得輸入版本號，鏈接可選</value>
   </data>
   <data name="PrivacyHB.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>隱私聲明</value>
   </data>
   <data name="ProfileButton.Label" xml:space="preserve">
-    <value>Profile</value>
+    <value>個人資料</value>
   </data>
   <data name="QandAPi.Header" xml:space="preserve">
     <value>Q and A</value>
   </data>
   <data name="Rate.Content" xml:space="preserve">
-    <value>Rate Appraisit</value>
+    <value>評價 Appraisit</value>
   </data>
   <data name="RedditPi.Header" xml:space="preserve">
     <value>Reddit</value>
   </data>
   <data name="Refresh.Label" xml:space="preserve">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="RefreshCommentsABB.Label" xml:space="preserve">
-    <value>Refresh comments</value>
+    <value>刷新評論</value>
   </data>
   <data name="RefreshCommentsMFI.Text" xml:space="preserve">
-    <value>Refresh comments</value>
+    <value>刷新評論</value>
   </data>
   <data name="RefreshSwipe.Text" xml:space="preserve">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="RepliesPi.Header" xml:space="preserve">
-    <value>Replies (experimental)</value>
+    <value>回復（試驗階段）</value>
   </data>
   <data name="ReplyExpander.Header" xml:space="preserve">
-    <value>Reply</value>
+    <value>回復</value>
   </data>
   <data name="ReplyText.Header" xml:space="preserve">
-    <value>Reply:</value>
+    <value>回復：</value>
   </data>
   <data name="ReplyText.PlaceholderText" xml:space="preserve">
-    <value>Send a reply</value>
+    <value>發送回復</value>
   </data>
   <data name="SB.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>設置</value>
   </data>
   <data name="SearchAppraisitABB.Label" xml:space="preserve">
-    <value>Search appraisit</value>
+    <value>搜索 Appraisit</value>
   </data>
   <data name="SearchAppraisitMFI.Text" xml:space="preserve">
-    <value>Search appraisit</value>
+    <value>搜索 Appraisit</value>
   </data>
   <data name="SearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search posts:</value>
+    <value>搜索博文：</value>
   </data>
   <data name="SearchPostsSwipe.Text" xml:space="preserve">
-    <value>Search posts</value>
+    <value>搜索博文</value>
   </data>
   <data name="SearchRedditABB.Label" xml:space="preserve">
-    <value>Search on reddit</value>
+    <value>在Reddit上搜索</value>
   </data>
   <data name="SearchRedditMFI.Text" xml:space="preserve">
-    <value>Search on reddit</value>
+    <value>在Reddit上搜索</value>
   </data>
   <data name="SearchStoreABB.Label" xml:space="preserve">
-    <value>Search on store</value>
+    <value>在商店中搜索</value>
   </data>
   <data name="SearchStoreMFI.Text" xml:space="preserve">
-    <value>Search on store</value>
+    <value>在商店中搜索</value>
   </data>
   <data name="SearchTip.Title" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
   </data>
   <data name="SettingOpenButton.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>設置</value>
   </data>
   <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>暗</value>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>Default</value>
+    <value>默认</value>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>亮</value>
   </data>
   <data name="SignIn.Content" xml:space="preserve">
-    <value>Sign in</value>
+    <value>登錄</value>
   </data>
   <data name="SignInABB.Label" xml:space="preserve">
-    <value>Sign in</value>
+    <value>登錄</value>
   </data>
   <data name="SignOutButton.Content" xml:space="preserve">
-    <value>Sign out</value>
+    <value>登出</value>
   </data>
   <data name="StorePi.Header" xml:space="preserve">
-    <value>Store</value>
+    <value>商店</value>
   </data>
   <data name="TextPi.Header" xml:space="preserve">
-    <value>Text</value>
+    <value>文本</value>
   </data>
   <data name="TitlePost.Header" xml:space="preserve">
-    <value>Title:</value>
+    <value>標題：</value>
   </data>
   <data name="TitlePostText.PlaceholderText" xml:space="preserve">
-    <value>Appraisit updated to version 3.0</value>
+    <value>Appraisit 已升級至 3.0</value>
   </data>
   <data name="TopOrder.PlaceholderText" xml:space="preserve">
-    <value>all</value>
+    <value>所有</value>
   </data>
   <data name="TopPi.Header" xml:space="preserve">
-    <value>Top</value>
+    <value>置頂</value>
   </data>
   <data name="UpvoteMFI.Text" xml:space="preserve">
-    <value>Upvote</value>
+    <value>頂</value>
   </data>
   <data name="WebBarButton.Label" xml:space="preserve">
-    <value>Web</value>
+    <value>瀏覽器</value>
   </data>
   <data name="WebPi.Header" xml:space="preserve">
-    <value>Web</value>
+    <value>瀏覽器</value>
   </data>
   <data name="Whatsnew.Content" xml:space="preserve">
-    <value>What's new</value>
+    <value>新改動</value>
   </data>
   <data name="WhatsNewPI.Header" xml:space="preserve">
-    <value>What's new</value>
+    <value>新改動</value>
   </data>
   <data name="ControversialTVI.Header" xml:space="preserve">
     <value>Controversial</value>
   </data>
   <data name="ExplorePi.Header" xml:space="preserve">
-    <value>Explore</value>
+    <value>探索</value>
   </data>
   <data name="HotPi.Header" xml:space="preserve">
-    <value>Hot</value>
+    <value>最火</value>
   </data>
   <data name="RisingTVI.Header" xml:space="preserve">
-    <value>Rising</value>
+    <value>趨勢</value>
   </data>
   <data name="SearchMFI.Text" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
   </data>
   <data name="SettingsPi.Header" xml:space="preserve">
-    <value>Settings</value>
+    <value>設置</value>
   </data>
   <data name="TopOrderItems" xml:space="preserve">
-    <value>all|year|month|week|day</value>
+    <value>所有|年|月|周|日</value>
   </data>
   <data name="SearchMicrosoftStoreButton.Content" xml:space="preserve">
-    <value>Search Microsoft Store</value>
+    <value>搜索微軟商店</value>
   </data>
   <data name="SearchRedditWebButton.Content" xml:space="preserve">
-    <value>Search reddit on web</value>
+    <value>在網上搜索Reddit</value>
   </data>
 </root>

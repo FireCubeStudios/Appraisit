@@ -126,11 +126,11 @@
     <comment>Application description</comment>
   </data>
   <data name="Main_Title.Text" xml:space="preserve">
-    <value>Main</value>
+    <value>Strona główna</value>
     <comment>Page title for MainPage</comment>
   </data>
   <data name="FirstRun_Body.Text" xml:space="preserve">
-    <value>Replace the content of this dialog with whatever content is appropriate to your app.
+    <value>ąReplace the content of this dialog with whatever content is appropriate to your app.
 You might want to explain key features or functionality.
 Don't feel restricted to just text. You can also include images and animations if you wish too.
 
@@ -144,15 +144,15 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunDialog.Title" xml:space="preserve">
-    <value>Welcome</value>
+    <value>Witaj</value>
     <comment>First use prompt message title</comment>
   </data>
   <data name="FirstRunDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Login</value>
+    <value>Zaloguj się</value>
     <comment>First use prompt message primary button text</comment>
   </data>
   <data name="WhatsNewDialog.Title" xml:space="preserve">
-    <value>What's new in this version</value>
+    <value>Co nowego w tej wersji</value>
     <comment>What's new prompt message title</comment>
   </data>
   <data name="WhatsNewDialog.PrimaryButtonText" xml:space="preserve">
@@ -160,152 +160,152 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <comment>What's new prompt message primary button text</comment>
   </data>
   <data name="AlreadyPinnedDesc" xml:space="preserve">
-    <value>If not you can manually pin the app to the taskbar</value>
+    <value>Jeśli nie, możesz przypiąć ją ręcznie</value>
   </data>
   <data name="AlreadyPinnedTitle" xml:space="preserve">
-    <value>You already have the app pinned in your taskbar</value>
+    <value>Już przypiąłeś Appraisin do paska zadań</value>
   </data>
   <data name="AlreadyTile" xml:space="preserve">
-    <value>You already have the live tile in your StartScreen</value>
+    <value>Już przypiąłeś kafelek do menu Start</value>
   </data>
   <data name="AlreadyTileDesc" xml:space="preserve">
-    <value>If not you can manually put the live tile on to the StartScreen</value>
+    <value>Jeśli nie, możesz przypiąć go ręcznie</value>
   </data>
   <data name="CantCommentWithoutSignin" xml:space="preserve">
-    <value>Cant comment without sign in</value>
+    <value>Nie możesz komentować bez zalogowania się</value>
   </data>
   <data name="CantDownvoteWithoutSignin" xml:space="preserve">
-    <value>Cant downvote without sign in</value>
+    <value>Nie możesz dawać głosów w dół bez zalogowania się</value>
   </data>
   <data name="CantReplyWithoutSignin" xml:space="preserve">
-    <value>Cant reply without sign in</value>
+    <value>Nie możesz odpowiadać bez zalogowania się</value>
   </data>
   <data name="CantUpvoteWithoutSignin" xml:space="preserve">
-    <value>Cant upvote without sign in</value>
+    <value>Nie możesz dawać głosów w górę bez zalogowania się</value>
   </data>
   <data name="CommentSent" xml:space="preserve">
-    <value>Comment sent (refresh to view)</value>
+    <value>Komentarz wysłany (odśwież aby go zobaczyć)</value>
   </data>
   <data name="Downvoted" xml:space="preserve">
-    <value>Downvoted</value>
+    <value>Zagłosowano w dół</value>
   </data>
   <data name="FirstText.Text" xml:space="preserve">
-    <value>Login to reddit
-appraisit is powered by reddit</value>
+    <value>Zaloguj się do reddita
+appraisit jest napędzany przez reddita</value>
   </data>
   <data name="FirstTextOnMobile" xml:space="preserve">
-    <value>The app hasnt been tested on mobile; report bugs, crashes, requests in the feedback hub. Mobile beta</value>
+    <value>Ta aplikacja nie była testowana na telefonie; zgłaszaj błędy, crashe i pomysły.</value>
   </data>
   <data name="Flair" xml:space="preserve">
-    <value>Flair: {0}</value>
+    <value>Znaczek: {0}</value>
   </data>
   <data name="GPODisabledPin" xml:space="preserve">
-    <value>It seems you are using a computer. Group policy disabled pinning of app in taskbar</value>
+    <value>Wygląda na to że używasz komputera, na którym polisy grupowe zablokowały przypinanie aplikacji do paska zadań</value>
   </data>
   <data name="HololensDisabledPin" xml:space="preserve">
-    <value>It seems you are using hololens. Hololens doesn't have a taskbar</value>
+    <value>Wygląda na to, że używasz HoloLens. HoloLens nie ma paska zadań.</value>
   </data>
   <data name="HololensTileFail" xml:space="preserve">
-    <value>It seems you are using hololens. Hololens doesn't support live tile</value>
+    <value>Wygląda na to, że używasz HoloLens. HoloLens nie obsługuje żywych kafelków.</value>
   </data>
   <data name="IoTDisabledPin" xml:space="preserve">
-    <value>It seems you are using a IoT device which doesn't support taskbar pin API</value>
+    <value>Wygląda na to, że używasz urządzenia IoT, które nie obsługuje przypinania do paska zadań.</value>
   </data>
   <data name="IoTTileFail" xml:space="preserve">
-    <value>It seems you are using a IoT device which doesn't support Primary tile API</value>
+    <value>Wygląda na to, że używasz urządzenia IoT, które nie obsługuje żywych kafelków.</value>
   </data>
   <data name="LiveTileFailed" xml:space="preserve">
-    <value>live tile failed</value>
+    <value>Nie udało się przypiąć kafelka</value>
   </data>
   <data name="MyCommentKarma" xml:space="preserve">
-    <value>Comment Karma: {0}</value>
+    <value>Karma komentarzy: {0}</value>
   </data>
   <data name="MyCreated" xml:space="preserve">
-    <value>Created/Cake Day: {0}</value>
+    <value>Utworzono: {0}</value>
   </data>
   <data name="MyKarma" xml:space="preserve">
     <value>Karma: {0}</value>
   </data>
   <data name="MyUsername" xml:space="preserve">
-    <value>Username: {0}</value>
+    <value>Nazwa użytkownika: {0}</value>
   </data>
   <data name="NoInternetConnection" xml:space="preserve">
-    <value>No internet connection</value>
+    <value>Brak dostępu do internetu</value>
   </data>
   <data name="OtherDisabledPin" xml:space="preserve">
-    <value>It seems you are using a {0} device. This device does not support taskbar API or Group policy disabled pinning of the app</value>
+    <value>Wygląda na to, że używasz urządzenia typu {0}, które nie obsługuje przypinania do paska zadań lub zostało to wyłączone.</value>
   </data>
   <data name="OtherTileFail" xml:space="preserve">
-    <value>It seems you are using a {0} device. This device does not support Primary tile API</value>
+    <value>Wygląda na to, że używasz urządzenia typu {0}, które nie obsługuje przypinania kafelków.</value>
   </data>
   <data name="PostBy" xml:space="preserve">
-    <value>By: {0}</value>
+    <value>Przez: {0}</value>
   </data>
   <data name="PostCreated" xml:space="preserve">
-    <value>Post created (refresh to view)</value>
+    <value>Post dodany (odśwież, aby go zobaczyć)</value>
   </data>
   <data name="PostDate" xml:space="preserve">
-    <value>Created: {0}</value>
+    <value>Utworzono: {0}</value>
   </data>
   <data name="ReplySent" xml:space="preserve">
-    <value>Reply sent (viewing replies isnt supported, go to appraisit subreddit on web to view)</value>
+    <value>Odpowiedź wysłana</value>
   </data>
   <data name="SignInTip" xml:space="preserve">
-    <value>Sign in to access more features such as light mode, search, create post, commenting and settings.</value>
+    <value>Zaloguj się, aby uzyskać dostęp do większej liczby funkcji takich jak tryb jasny, szukanie, dodawanie postów, komentowanie i ustawienia.</value>
   </data>
   <data name="TaskbarPinFailed" xml:space="preserve">
-    <value>Taskbar pin failed</value>
+    <value>Przypinanie się nie powiodło</value>
   </data>
   <data name="UpdateDevice" xml:space="preserve">
-    <value>Update your device</value>
+    <value>Zaktualizuj swoje urządzenie</value>
   </data>
   <data name="UpdateToPin" xml:space="preserve">
-    <value>Update your device to the Fall creators update or higher to pin this app</value>
+    <value>Musisz zaktualizować swoje urządzenie co najmniej do Jesiennej Aktualizacji dla Twórców, aby móc przypiąć tę aplikację.</value>
   </data>
   <data name="UpdateToTile" xml:space="preserve">
-    <value>You need to update your device to enable automatic pinning</value>
+    <value>Musisz zaktualizować swoje urządzenie, aby skorzystać z tej funkcji.</value>
   </data>
   <data name="Upvoted" xml:space="preserve">
-    <value>Upvoted</value>
+    <value>Zagłosowano w górę</value>
   </data>
   <data name="WoAGPODisabledPin" xml:space="preserve">
-    <value>It seems you are using a Windows 10 on ARM device or mobile device. Group policy disabled pinning of the app</value>
+    <value>Wygląda na to, że używasz Windows 10 na urządzeniu ARM lub na telefonie. Polisy grupy zablokowały przypinanie do ekranu startowego.</value>
   </data>
   <data name="XboxDisabledPin" xml:space="preserve">
-    <value>It seems you are using a xbox. Xbox doesn't have a taskbar</value>
+    <value>Wygląda na to, że używasz Xboksa. Xbox nie posiada paska zadań.</value>
   </data>
   <data name="XboxTileFail" xml:space="preserve">
-    <value>It seems you are using a xbox. Xbox doesn't support live tile</value>
+    <value>Wygląda na to, że używasz Xboksa. Xbox nie posiada obsługi żywych kafelków.</value>
   </data>
   <data name="AboutPI.Header" xml:space="preserve">
-    <value>About</value>
+    <value>O programie</value>
   </data>
   <data name="BestPi.Header" xml:space="preserve">
-    <value>Best</value>
+    <value>Najlepsze</value>
   </data>
   <data name="CommentTextMessage.Header" xml:space="preserve">
-    <value>Comment:</value>
+    <value>Komentarz:</value>
   </data>
   <data name="CommentTextMessage.PlaceholderText" xml:space="preserve">
-    <value>this is a comment</value>
+    <value>to jest komentarz</value>
   </data>
   <data name="ControversialPi.Header" xml:space="preserve">
-    <value>Controversial</value>
+    <value>Kontrowersyjne</value>
   </data>
   <data name="CreatePostDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Zamknij</value>
   </data>
   <data name="CreatePostSwipe.Text" xml:space="preserve">
-    <value>Create post</value>
+    <value>Stwórz post</value>
   </data>
   <data name="CreatePsotDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Post</value>
+    <value>Wyślij</value>
   </data>
   <data name="DownvoteMFI.Text" xml:space="preserve">
-    <value>Downvote</value>
+    <value>Zagłosuj w dół</value>
   </data>
   <data name="FlairLabel.Text" xml:space="preserve">
-    <value>Flair:</value>
+    <value>Znaczek:</value>
   </data>
   <data name="LinkNavigator.Label" xml:space="preserve">
     <value>Link</value>
@@ -317,195 +317,195 @@ appraisit is powered by reddit</value>
     <value>Link</value>
   </data>
   <data name="LivePi.Header" xml:space="preserve">
-    <value>Live</value>
+    <value>Link</value>
   </data>
   <data name="LivePin.Content" xml:space="preserve">
-    <value>Pin to startscreen</value>
+    <value>Przypnij do menu Start</value>
   </data>
   <data name="NewPi.Header" xml:space="preserve">
-    <value>New</value>
+    <value>Nowe</value>
   </data>
   <data name="NewPostLink.Header" xml:space="preserve">
     <value>Link:</value>
   </data>
   <data name="NewPostLink.PlaceholderText" xml:space="preserve">
-    <value>Must be a valid link</value>
+    <value>Musi to być poprawny link</value>
   </data>
   <data name="OldPi.Header" xml:space="preserve">
-    <value>Old</value>
+    <value>Stare</value>
   </data>
   <data name="OpenCreatePostDialog.Label" xml:space="preserve">
-    <value>Create post</value>
+    <value>Stwórz post</value>
   </data>
   <data name="Openinweb.Label" xml:space="preserve">
-    <value>Web</value>
+    <value>Przeglądaj</value>
   </data>
   <data name="OpenInWebMFI.Text" xml:space="preserve">
-    <value>Open in web</value>
+    <value>Otwórz w przeglądarce</value>
   </data>
   <data name="OpenSearchDialog.Label" xml:space="preserve">
-    <value>Search</value>
+    <value>Szukaj</value>
   </data>
   <data name="PinAppToTaskbar.Content" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>Przypnij do paska zadań</value>
   </data>
   <data name="PostDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Zamknij</value>
   </data>
   <data name="PostText.Header" xml:space="preserve">
-    <value>Text:</value>
+    <value>Tekst</value>
   </data>
   <data name="PostText.PlaceholderText" xml:space="preserve">
-    <value>Remember to put version number, links are optional</value>
+    <value>Pamiętaj aby podać numer wersji, linki są opcjonalne</value>
   </data>
   <data name="PrivacyHB.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>Polityka prywatności</value>
   </data>
   <data name="ProfileButton.Label" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
   </data>
   <data name="QandAPi.Header" xml:space="preserve">
-    <value>Q and A</value>
+    <value>Q&amp;A</value>
   </data>
   <data name="Rate.Content" xml:space="preserve">
-    <value>Rate Appraisit</value>
+    <value>Oceń Appraisit</value>
   </data>
   <data name="RedditPi.Header" xml:space="preserve">
     <value>Reddit</value>
   </data>
   <data name="Refresh.Label" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Odśwież</value>
   </data>
   <data name="RefreshCommentsABB.Label" xml:space="preserve">
-    <value>Refresh comments</value>
+    <value>Odśwież komentarze</value>
   </data>
   <data name="RefreshCommentsMFI.Text" xml:space="preserve">
-    <value>Refresh comments</value>
+    <value>Odśwież komentarze</value>
   </data>
   <data name="RefreshSwipe.Text" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Odśwież</value>
   </data>
   <data name="RepliesPi.Header" xml:space="preserve">
-    <value>Replies (experimental)</value>
+    <value>Odpowiedzi (eksperymentalne)</value>
   </data>
   <data name="ReplyExpander.Header" xml:space="preserve">
-    <value>Reply</value>
+    <value>Odpowiedz</value>
   </data>
   <data name="ReplyText.Header" xml:space="preserve">
-    <value>Reply:</value>
+    <value>Odpowiedź:</value>
   </data>
   <data name="ReplyText.PlaceholderText" xml:space="preserve">
-    <value>Send a reply</value>
+    <value>Wyślij odpowiedź</value>
   </data>
   <data name="SB.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="SearchAppraisitABB.Label" xml:space="preserve">
-    <value>Search appraisit</value>
+    <value>Przeszukaj appraisit</value>
   </data>
   <data name="SearchAppraisitMFI.Text" xml:space="preserve">
-    <value>Search appraisit</value>
+    <value>Przeszukaj appraisit</value>
   </data>
   <data name="SearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search posts:</value>
+    <value>Szukaj postów:</value>
   </data>
   <data name="SearchPostsSwipe.Text" xml:space="preserve">
-    <value>Search posts</value>
+    <value>Szukaj postów</value>
   </data>
   <data name="SearchRedditABB.Label" xml:space="preserve">
-    <value>Search on reddit</value>
+    <value>Szukaj na reddicie</value>
   </data>
   <data name="SearchRedditMFI.Text" xml:space="preserve">
-    <value>Search on reddit</value>
+    <value>Szukaj na reddicie</value>
   </data>
   <data name="SearchStoreABB.Label" xml:space="preserve">
-    <value>Search on store</value>
+    <value>Szukaj w sklepie</value>
   </data>
   <data name="SearchStoreMFI.Text" xml:space="preserve">
-    <value>Search on store</value>
+    <value>Szukaj w sklepie</value>
   </data>
   <data name="SearchTip.Title" xml:space="preserve">
-    <value>Search</value>
+    <value>Szukaj</value>
   </data>
   <data name="SettingOpenButton.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>Ciemny</value>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>Default</value>
+    <value>Domyślny</value>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>Jasny</value>
   </data>
   <data name="SignIn.Content" xml:space="preserve">
-    <value>Sign in</value>
+    <value>Zaloguj się</value>
   </data>
   <data name="SignInABB.Label" xml:space="preserve">
-    <value>Sign in</value>
+    <value>Zaloguj się</value>
   </data>
   <data name="SignOutButton.Content" xml:space="preserve">
-    <value>Sign out</value>
+    <value>Wyloguj się</value>
   </data>
   <data name="StorePi.Header" xml:space="preserve">
-    <value>Store</value>
+    <value>Sklep</value>
   </data>
   <data name="TextPi.Header" xml:space="preserve">
-    <value>Text</value>
+    <value>Tekst</value>
   </data>
   <data name="TitlePost.Header" xml:space="preserve">
-    <value>Title:</value>
+    <value>Tytuł</value>
   </data>
   <data name="TitlePostText.PlaceholderText" xml:space="preserve">
-    <value>Appraisit updated to version 3.0</value>
+    <value>np. Appraisit zaktualizowany do wersji 3.0</value>
   </data>
   <data name="TopOrder.PlaceholderText" xml:space="preserve">
-    <value>all</value>
+    <value>z zawsze</value>
   </data>
   <data name="TopPi.Header" xml:space="preserve">
-    <value>Top</value>
+    <value>Najwyżej punktowane</value>
   </data>
   <data name="UpvoteMFI.Text" xml:space="preserve">
-    <value>Upvote</value>
+    <value>Zagłosuj w górę</value>
   </data>
   <data name="WebBarButton.Label" xml:space="preserve">
-    <value>Web</value>
+    <value>Przeglądaj</value>
   </data>
   <data name="WebPi.Header" xml:space="preserve">
-    <value>Web</value>
+    <value>Przeglądaj</value>
   </data>
   <data name="Whatsnew.Content" xml:space="preserve">
-    <value>What's new</value>
+    <value>Co nowego</value>
   </data>
   <data name="WhatsNewPI.Header" xml:space="preserve">
-    <value>What's new</value>
+    <value>Co nowego</value>
   </data>
   <data name="ControversialTVI.Header" xml:space="preserve">
-    <value>Controversial</value>
+    <value>Kontrowersyjne</value>
   </data>
   <data name="ExplorePi.Header" xml:space="preserve">
-    <value>Explore</value>
+    <value>Eksploruj</value>
   </data>
   <data name="HotPi.Header" xml:space="preserve">
-    <value>Hot</value>
+    <value>Gorące</value>
   </data>
   <data name="RisingTVI.Header" xml:space="preserve">
-    <value>Rising</value>
+    <value>Rosnące</value>
   </data>
   <data name="SearchMFI.Text" xml:space="preserve">
-    <value>Search</value>
+    <value>Szukaj</value>
   </data>
   <data name="SettingsPi.Header" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="TopOrderItems" xml:space="preserve">
-    <value>all|year|month|week|day</value>
+    <value>z zawsze|z ostatniego roku|z ostatniego miesiąca|z ostatniego tygodnia|dzisiaj</value>
   </data>
   <data name="SearchMicrosoftStoreButton.Content" xml:space="preserve">
-    <value>Search Microsoft Store</value>
+    <value>Szukaj w Sklepie Microsoft</value>
   </data>
   <data name="SearchRedditWebButton.Content" xml:space="preserve">
-    <value>Search reddit on web</value>
+    <value>Szukaj na reddicie</value>
   </data>
 </root>

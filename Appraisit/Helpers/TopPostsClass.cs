@@ -11,10 +11,19 @@ using System.Threading.Tasks;
 
 namespace Appraisit.Helpers
 {
+    public enum TopOrder
+    {
+        All,
+        Year,
+        Month,
+        Week,
+        Day
+    }
+
     public class TopPostsClass : IIncrementalSource<Posts>
     {
         public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        public string Order = "all";
+        public TopOrder Order = TopOrder.All;
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string appId = "-bL9o_t7kgNNmA";
         List<Posts> PostCollection;
@@ -28,7 +37,7 @@ namespace Appraisit.Helpers
                 PostCollection = new List<Posts>();
                 var reddit = new RedditAPI(appId, refreshToken, secret);
                 var subreddit = reddit.Subreddit("Appraisit");
-                var posts = subreddit.Posts.GetTop(new TimedCatSrListingInput(t: "all", limit: limit)).Skip(skipInt);
+                var posts = subreddit.Posts.GetTop(new TimedCatSrListingInput(t: TopOrderToString(Order), limit: limit)).Skip(skipInt);
                 limit = limit + 10;
                 
                     foreach (Post post in posts)
@@ -42,8 +51,8 @@ namespace Appraisit.Helpers
                         {
                             TitleText = post.Title,
                             PostSelf = post,
-                            PostAuthor = "by: " + post.Author,
-                            PostDate = "Created: " + post.Created,
+                            PostAuthor = string.Format("PostBy".GetLocalized(), post.Author),
+                            PostDate = string.Format("PostDate".GetLocalized(), post.Created),
                             PostUpvotes = post.UpVotes.ToString(),
                             PostDownvotes = post.DownVotes.ToString(),
                             PostCommentCount = post.Comments.GetComments("new").Count.ToString(),
@@ -61,6 +70,19 @@ namespace Appraisit.Helpers
             return PostCollection;
 
 
+        }
+
+        private string TopOrderToString(TopOrder to)
+        {
+            switch (to)
+            {
+                case TopOrder.All: return "all";
+                case TopOrder.Day: return "day";
+                case TopOrder.Month: return "month";
+                case TopOrder.Week: return "week";
+                case TopOrder.Year: return "year";
+                default: return "all";
+            }
         }
     }
 }
