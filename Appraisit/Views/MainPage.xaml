@@ -319,6 +319,7 @@
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
             <Rectangle x:Name="hostForVisual" Fill="Transparent"/>
+            <Rectangle Fill="Black" VerticalAlignment="Top" Width="9999" Height="120" x:Name="Wblock" x:Load="False" Canvas.ZIndex="10000"/>
             <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" RequestedTheme="Dark" x:Load="False"/>
             <Grid x:Name="ContentGrid" Canvas.ZIndex="0">
                 <Pivot HorizontalAlignment="Center" x:Name="PivotNavigator" SelectionChanged="Pivot_SelectionChanged" Foreground="Purple">
@@ -448,44 +449,67 @@
                         </PivotItem>
                         <Pivot.LeftHeader>
                         <Grid>
-                            <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="PivotBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right" x:Load="True">
-                                <!--<AppBarButton Icon="AddFriend" x:Name="LoginDialogOpen" Click="LoginDialogOpen_Click"></AppBarButton>-->
-                                <AppBarButton Icon="Setting" x:Uid="SettingOpenButton" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
-                                <AppBarButton Icon="Globe" Label="Web" x:Uid="WebBarButton" Click="WebBarButton_Click"/>
-                                <AppBarButton Icon="AddFriend" Label="Profile" x:Uid="ProfileButton" Click="ProfileButton_Click">
-                                    <AppBarButton.Flyout>
-                                        <Flyout>
-                                            <StackPanel>
-                                                <TextBlock x:Name="UserName" Margin="0,0,0,12" />
-                                                <TextBlock x:Name="Cakeday" Margin="0, 0, 0, 12"/>
-                                                <TextBlock x:Name="LinkKarma" Margin="0, 0, 0, 12"/>
-                                                <TextBlock x:Name="CommentKarma" Margin="0, 0, 0, 12"/>
-                                                <Button x:Uid="SignOutButton" Click="SignOutButton_Click">Sign out</Button>
-                                            </StackPanel>
-                                        </Flyout>
-                                    </AppBarButton.Flyout>
-                                </AppBarButton>
-                                <AppBarButton Icon="Refresh" Label="Refresh" x:Uid="Refresh" Click="Refresh"/>
-                                <AppBarButton Icon="Find" Label="Search" x:Uid="OpenSearchDialog" Click="OpenSearchDialog_Click"/>
-                                <AppBarButton Icon="Add" Label="Create post" x:Uid="OpenCreatePostDialog" Click="OpenCreatePostDialog"/>
-                            </CommandBar>
-                            <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="SignInBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right">
-                                <AppBarButton Icon="AddFriend" Label="Sign in" x:Uid="SignInABB">
-                                    <AppBarButton.Flyout>
-                                        <Flyout>
-                                            <StackPanel>
-                                                <Button x:Name="SignIn" x:Uid="SignIn" Click="SignIn_Click">Sign in</Button>
-                                            </StackPanel>
-                                        </Flyout>
-                                    </AppBarButton.Flyout>
-                                </AppBarButton>
-                            </CommandBar>
+                           
                             <AppBarButton Icon="Setting" Label="Settings" x:Name="SB" x:Uid="SB" x:Load="False" Click="SettingOpenButton_Click"/>
                         </Grid>
                    
                     </Pivot.LeftHeader>
                 </Pivot>
+                <controls:DropShadowPanel Canvas.ZIndex="20"
+                          Grid.Row="1"
+                           BlurRadius="10.0"
+                           ShadowOpacity="0.30"
+                           Color="Black"
+                           OffsetX="5"
+                           OffsetY="5"
+                           Margin="24"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom">
+                    <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="PivotBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right" Style="{ThemeResource CommandBarRevealStyle}" x:Load="True">
 
+                        <!--<AppBarButton Icon="AddFriend" x:Name="LoginDialogOpen" Click="LoginDialogOpen_Click"></AppBarButton>-->
+
+                        <AppBarButton Icon="Setting" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
+
+                        <AppBarButton Icon="Globe" Label="Web" Click="WebBarButton_Click"/>
+
+                        <AppBarButton Icon="AddFriend" Label="Profile" Click="ProfileButton_Click">
+
+                            <AppBarButton.Flyout>
+
+                                <Flyout>
+
+                                    <StackPanel>
+
+                                        <TextBlock x:Name="UserName" Margin="0,0,0,12" />
+
+                                        <TextBlock x:Name="Cakeday" Margin="0, 0, 0, 12"/>
+
+                                        <TextBlock x:Name="LinkKarma" Margin="0, 0, 0, 12"/>
+
+                                        <TextBlock x:Name="CommentKarma" Margin="0, 0, 0, 12"/>
+
+                                        <Button Click="SignOutButton_Click">Sign out</Button>
+
+                                    </StackPanel>
+
+                                </Flyout>
+
+                            </AppBarButton.Flyout>
+
+                        </AppBarButton>
+
+                        <AppBarButton Icon="Refresh" Label="Refresh" Click="Refresh"/>
+
+                        <AppBarButton Icon="Find" Label="Search" Click="OpenSearchDialog_Click"/>
+
+                        <AppBarButton Icon="Add" Label="Create post" Click="OpenCreatePostDialog"/>
+
+                    </CommandBar>
+
+
+
+                </controls:DropShadowPanel>
                 <usercontrol:BarFlyout Canvas.ZIndex="500" HorizontalAlignment="Left" Margin="10,10,10,10" x:Name="SettingsPanel" x:Load="False" BackdropTapped="MyFancyPanel_BackdropTapped"/>
                 <controls:InAppNotification x:Name="UniversalPageNotification" >
                     <!-- InAppNotification content -->

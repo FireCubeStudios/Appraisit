@@ -1390,34 +1390,40 @@ namespace Appraisit.Views
                 }
                 else
                 {
+                    UnloadObject(Wblock);
                 }
                 UnloadObject(loginView);
 
             }
-            else if (args.Uri.AbsoluteUri == "https://www.reddit.com/coins/")
+            else if (args.Uri.ToString() == "https://www.reddit.com/coins/")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
+                UnloadObject(Wblock);
             }
             else if (args.Uri.AbsoluteUri.Contains("https://play.google.com/store/apps/details?id=com.reddit.frontpage"))
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
+                UnloadObject(Wblock);
             }
-            else if (args.Uri.AbsoluteUri == "https://www.reddit.com/premium/")
+            else if (args.Uri.ToString() == "https://www.reddit.com/premium/")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
+                UnloadObject(Wblock);
             }
-            else if (args.Uri.AbsoluteUri == "https://www.redditgifts.com/")
+            else if (args.Uri.ToString() == "https://www.redditgifts.com/")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
+                UnloadObject(Wblock);
             }
-            else if (args.Uri.AbsoluteUri == "https://apps.apple.com/us/app/reddit-the-official-app/id1064216828")
+            else if (args.Uri.ToString() == "https://apps.apple.com/us/app/reddit-the-official-app/id1064216828")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
+                UnloadObject(Wblock);
             }
             else
             {
@@ -2162,6 +2168,13 @@ namespace Appraisit.Views
             FindName("loginView");
             loginView.Navigate(targetUri);
             ProgressRing.IsActive = false;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+            }
+            else
+            {
+                FindName("Wblock");
+            }
         }
         private async void PostContentText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
         {
