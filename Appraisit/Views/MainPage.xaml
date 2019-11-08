@@ -75,9 +75,9 @@
 
                             </VisualStateManager.VisualStateGroups>
                             <!--DropShadowPanel-->
-                            <controls:DropShadowPanel  
-                                    Margin="{TemplateBinding Margin}" 
-                                    BlurRadius="14" ShadowOpacity="0.5" OffsetX="10" OffsetY="14" 
+                            <controls:DropShadowPanel
+                                    Margin="{TemplateBinding Margin}"
+                                    BlurRadius="14" ShadowOpacity="0.5" OffsetX="10" OffsetY="14"
                                     HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalContentAlignment="Stretch" VerticalAlignment="Center">
                                 <Ellipse x:Name="EllipseBackground" Width="60" Height="60"
                                        Margin="{TemplateBinding Margin}"
@@ -162,34 +162,34 @@
                             <StackPanel RightTapped="StackPanel_RightTapped" DoubleTapped="StackPanel_DoubleTapped" Holding="StackPanel_Holding" AllowFocusOnInteraction='True' Orientation="Vertical" Margin="20">
                                 <TextBlock x:Name="Header" FontSize="20" Text="{Binding TitleText}" TextWrapping="WrapWholeWords"></TextBlock>
                                 <Grid CornerRadius="20" Background="{ThemeResource SystemControlAcrylicWindowBrush}" BorderBrush="{ThemeResource SystemControlHighlightListMediumBrush}" HorizontalAlignment="Left" Padding="10, 5, 10, 5">
-                                        <TextBlock x:Name="Flair" Text="{Binding PostFlair}" Foreground="{Binding PostFlairColor}" TextWrapping="WrapWholeWords"></TextBlock>
-                                    </Grid>
-                                    <TextBlock x:Name="PostAuthor" Text="{Binding PostAuthor}" TextWrapping="WrapWholeWords"></TextBlock>
+                                    <TextBlock x:Name="Flair" Text="{Binding PostFlair}" Foreground="{Binding PostFlairColor}" TextWrapping="WrapWholeWords"></TextBlock>
+                                </Grid>
+                                <TextBlock x:Name="PostAuthor" Text="{Binding PostAuthor}" TextWrapping="WrapWholeWords"></TextBlock>
                                 <TextBlock x:Name="PostCreated" Text="{Binding PostDate}" TextWrapping="WrapWholeWords"></TextBlock>
                                 <StackPanel Orientation="Horizontal">
                                     <AppBarButton Icon="Like" Label="{Binding PostUpvotes}" Click="LikeButton_Click"></AppBarButton>
                                     <AppBarButton Icon="Dislike" Click="DisLikeButton_Click"></AppBarButton>
-                                <AppBarButton Icon="Comment" Label="{Binding PostCommentCount}" IsTapEnabled="False" IsFocusEngagementEnabled="False" IsHitTestVisible="False" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"></AppBarButton>
+                                    <AppBarButton Icon="Comment" Label="{Binding PostCommentCount}" IsTapEnabled="False" IsFocusEngagementEnabled="False" IsHitTestVisible="False" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"></AppBarButton>
+                                </StackPanel>
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="OpenInWebMFI" Text="Open in web" Icon="Globe" Click="PostInWebClickLocal"/>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem x:Uid="UpvoteMFI" Text="Upvote" Icon="Like" Click="Upvotes_Click"/>
+                                        <MenuFlyoutItem x:Uid="DownvoteMFI" Text="Downvote" Icon="Dislike" Click="Downvotes_Click"/>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutSubItem Text="Search" x:Uid="SearchMFI">
+                                            <MenuFlyoutItem x:Uid="SearchAppraisitMFI" Text="Search appraisit" Icon="Find" Click="MenuFlyoutItem_Click_1"/>
+                                            <MenuFlyoutItem x:Uid="SearchRedditMFI" Text="Search on reddit" Icon="Find" Click="MenuFlyoutItem_Click_2"/>
+                                            <MenuFlyoutItem x:Uid="SearchStoreMFI" Text="Search on store" Icon="Find" Click="MenuFlyoutItem_Click"/>
+                                        </MenuFlyoutSubItem>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem x:Uid="RefreshCommentsMFI" Text="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
                             </StackPanel>
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem x:Uid="OpenInWebMFI" Text="Open in web" Icon="Globe" Click="PostInWebClickLocal"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem x:Uid="UpvoteMFI" Text="Upvote" Icon="Like" Click="Upvotes_Click"/>
-                                    <MenuFlyoutItem x:Uid="DownvoteMFI" Text="Downvote" Icon="Dislike" Click="Downvotes_Click"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutSubItem Text="Search" x:Uid="SearchMFI">
-                                        <MenuFlyoutItem x:Uid="SearchAppraisitMFI" Text="Search appraisit" Icon="Find" Click="MenuFlyoutItem_Click_1"/>
-                                        <MenuFlyoutItem x:Uid="SearchRedditMFI" Text="Search on reddit" Icon="Find" Click="MenuFlyoutItem_Click_2"/>
-                                        <MenuFlyoutItem x:Uid="SearchStoreMFI" Text="Search on store" Icon="Find" Click="MenuFlyoutItem_Click"/>
-                                    </MenuFlyoutSubItem>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem x:Uid="RefreshCommentsMFI" Text="Refresh comments" Icon="Refresh" Click="MenuFlyoutItem_Click_3"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
-                        </StackPanel>
-                    </Grid>
-                  </controls:DropShadowPanel>
+                        </Grid>
+                    </controls:DropShadowPanel>
                 </muxcontrols:SwipeControl>
                 <Interactivity:Interaction.Behaviors>
                     <CoreInteractions:EventTriggerBehavior EventName="PointerEntered">
@@ -305,16 +305,16 @@
             </muxcontrols:TreeViewItem>
         </DataTemplate>
         <!--ItemContainerStyle -->
-    
+
 
     </Page.Resources>
     <Grid
         x:Name="ContentArea" Background='{ThemeResource SystemControlAcrylicWindowBrush}'>
         <Grid x:Name="TitleGrid" Background="{ThemeResource SystemControlAcrylicWindowBrush}"></Grid>
-       
+
         <Grid
             x:Name="ContentGridS"
-            Grid.Row="1" 
+            Grid.Row="1"
             Background='{ThemeResource SystemControlAcrylicWindowBrush}'>
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
@@ -325,13 +325,13 @@
                 <Pivot HorizontalAlignment="Center" x:Name="PivotNavigator" SelectionChanged="Pivot_SelectionChanged" Foreground="Purple">
                     <PivotItem Header="New" x:Name="NewPivotItem" x:Uid="NewPi">
                         <Grid>
-                            
+
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100">></AppBarButton>
                             <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 50, 0, 0">
 
 
                                 <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" Name="NewGridViewControl" ItemHeight="240" DesiredWidth="500" ItemTemplate="{StaticResource PostsTemplate}" Background='{ThemeResource SystemControlAcrylicWindowBrush}' IsItemClickEnabled="True" ItemClick="UniversalGridViewControl_ItemClick">
-                                            <controls:AdaptiveGridView.Footer>
+                                    <controls:AdaptiveGridView.Footer>
                                         <ProgressRing IsActive="True"/>
                                     </controls:AdaptiveGridView.Footer>
                                     <controls:AdaptiveGridView.Transitions>
@@ -340,8 +340,8 @@
                                         </TransitionCollection>
                                     </controls:AdaptiveGridView.Transitions>
                                 </controls:AdaptiveGridView>
-                                    
-                           
+
+
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
@@ -351,16 +351,16 @@
                             <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
 
                                 <controls:AdaptiveGridView x:Load="False" animations:ReorderGridAnimation.Duration="250" Name="HotGridViewControl" ItemHeight="240" DesiredWidth="500" ItemTemplate="{StaticResource PostsTemplate}" Background='{ThemeResource SystemControlAcrylicWindowBrush}' IsItemClickEnabled="True" ItemClick="UniversalGridViewControl_ItemClick">
-                                        <controls:AdaptiveGridView.Footer>
-                                            <ProgressRing IsActive="True"/>
-                                        </controls:AdaptiveGridView.Footer>
+                                    <controls:AdaptiveGridView.Footer>
+                                        <ProgressRing IsActive="True"/>
+                                    </controls:AdaptiveGridView.Footer>
                                     <controls:AdaptiveGridView.Transitions>
                                         <TransitionCollection>
                                             <EntranceThemeTransition/>
                                         </TransitionCollection>
                                     </controls:AdaptiveGridView.Transitions>
                                 </controls:AdaptiveGridView>
-                                
+
                             </muxcontrols:RefreshContainer>
                         </Grid>
 
@@ -376,28 +376,28 @@
                             </ComboBox>
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100" HorizontalAlignment="Right"></AppBarButton>
                             <muxcontrols:RefreshContainer Margin="0, 40, 0, 0" RefreshRequested="RefreshContainer_RefreshRequested">
-                           
-                                    <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" x:Load="False" Name="TopGridViewControl"
-                                                               Background='{ThemeResource SystemControlAcrylicWindowBrush}'
-    ItemHeight="200"
-    DesiredWidth="500"
-    ItemTemplate="{StaticResource PostsTemplate}"
-    IsItemClickEnabled="True"
-    ItemClick="UniversalGridViewControl_ItemClick">
+
+                                <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" x:Load="False" Name="TopGridViewControl"
+                                                           Background='{ThemeResource SystemControlAcrylicWindowBrush}'
+ItemHeight="200"
+DesiredWidth="500"
+ItemTemplate="{StaticResource PostsTemplate}"
+IsItemClickEnabled="True"
+ItemClick="UniversalGridViewControl_ItemClick">
                                     <controls:AdaptiveGridView.Transitions>
                                         <TransitionCollection>
                                             <EntranceThemeTransition/>
                                         </TransitionCollection>
                                     </controls:AdaptiveGridView.Transitions>
                                     <controls:AdaptiveGridView.Footer>
-                                            <ProgressRing IsActive="True"/>
-                                        </controls:AdaptiveGridView.Footer>
-                                    </controls:AdaptiveGridView>
-                                
+                                        <ProgressRing IsActive="True"/>
+                                    </controls:AdaptiveGridView.Footer>
+                                </controls:AdaptiveGridView>
+
                             </muxcontrols:RefreshContainer>
                         </Grid>
                     </PivotItem>
-                   
+
                     <PivotItem Header="Rising" x:Uid="RisingTVI">
                         <Grid>
                             <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
@@ -423,36 +423,45 @@
                         </Grid>
                     </PivotItem>
                     <PivotItem Header="Controversial" x:Uid="ControversialTVI">
-                            <Grid>
-                                <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                                <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
-
-                                    <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="240" Name="ControversialGridViewControl"
-    ItemHeight="200"
-    DesiredWidth="500"
-    ItemTemplate="{StaticResource PostsTemplate}"
-    IsItemClickEnabled="True"
-    ItemClick="UniversalGridViewControl_ItemClick">
-                                        <controls:AdaptiveGridView.Transitions>
-                                            <TransitionCollection>
-                                                <EntranceThemeTransition/>
-                                            </TransitionCollection>
-                                        </controls:AdaptiveGridView.Transitions>
-
-                                        <controls:AdaptiveGridView.Footer>
-                                            <ProgressRing IsActive="True"/>
-                                        </controls:AdaptiveGridView.Footer>
-                                    </controls:AdaptiveGridView>
-
-                                </muxcontrols:RefreshContainer>
-                            </Grid>
-                        </PivotItem>
-                        <Pivot.LeftHeader>
                         <Grid>
-                           
+                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
+                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
+
+                                <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="240" Name="ControversialGridViewControl"
+ItemHeight="200"
+DesiredWidth="500"
+ItemTemplate="{StaticResource PostsTemplate}"
+IsItemClickEnabled="True"
+ItemClick="UniversalGridViewControl_ItemClick">
+                                    <controls:AdaptiveGridView.Transitions>
+                                        <TransitionCollection>
+                                            <EntranceThemeTransition/>
+                                        </TransitionCollection>
+                                    </controls:AdaptiveGridView.Transitions>
+
+                                    <controls:AdaptiveGridView.Footer>
+                                        <ProgressRing IsActive="True"/>
+                                    </controls:AdaptiveGridView.Footer>
+                                </controls:AdaptiveGridView>
+
+                            </muxcontrols:RefreshContainer>
+                        </Grid>
+                    </PivotItem>
+                    <Pivot.LeftHeader>
+                        <Grid>
+                            <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="SignInBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right">
+                                <AppBarButton Icon="AddFriend" Label="Sign in" x:Uid="SignInABB">
+                                    <AppBarButton.Flyout>
+                                        <Flyout>
+                                            <StackPanel>
+                                                <Button x:Name="SignIn" x:Uid="SignIn" Click="SignIn_Click">Sign in</Button>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </AppBarButton.Flyout>
+                                </AppBarButton>
+                            </CommandBar>
                             <AppBarButton Icon="Setting" Label="Settings" x:Name="SB" x:Uid="SB" x:Load="False" Click="SettingOpenButton_Click"/>
                         </Grid>
-                   
                     </Pivot.LeftHeader>
                 </Pivot>
                 <controls:DropShadowPanel Canvas.ZIndex="20"
@@ -463,16 +472,12 @@
                            OffsetX="5"
                            OffsetY="5"
                            Margin="24"
-                           HorizontalAlignment="Right"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Bottom">
                     <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="PivotBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right" Style="{ThemeResource CommandBarRevealStyle}" x:Load="True">
-
                         <!--<AppBarButton Icon="AddFriend" x:Name="LoginDialogOpen" Click="LoginDialogOpen_Click"></AppBarButton>-->
-
-                        <AppBarButton Icon="Setting" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
-
-                        <AppBarButton Icon="Globe" Label="Web" Click="WebBarButton_Click"/>
-
+                        <AppBarButton Icon="Add" Label="Create post" Click="OpenCreatePostDialog" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                        <AppBarButton Icon="Find" Label="Search" Click="OpenSearchDialog_Click"/>
                         <AppBarButton Icon="AddFriend" Label="Profile" Click="ProfileButton_Click">
 
                             <AppBarButton.Flyout>
@@ -498,13 +503,16 @@
                             </AppBarButton.Flyout>
 
                         </AppBarButton>
-
                         <AppBarButton Icon="Refresh" Label="Refresh" Click="Refresh"/>
-
-                        <AppBarButton Icon="Find" Label="Search" Click="OpenSearchDialog_Click"/>
-
-                        <AppBarButton Icon="Add" Label="Create post" Click="OpenCreatePostDialog"/>
-
+                        <AppBarButton Icon="Globe" Label="Web" Click="WebBarButton_Click"/>
+                        <AppBarButton Icon="Setting" Label="Settings" x:Name="SettingOpenButton" Click="SettingOpenButton_Click"/>
+                        <AppBarButton Icon="Accept" Label="Sidebar" x:Name="Sidebarbutton" Click="Sidebarbutton_Click">
+                            <AppBarButton.Flyout>
+                                <Flyout>
+                                    <Frame Content="side" x:Name="Sidebar"></Frame>
+                                </Flyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
                     </CommandBar>
 
 
@@ -581,21 +589,21 @@
                 x:Load="False">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText" x:Uid="TitlePostText" />
-                    <Pivot Name="NewPostPivot">
-                        <PivotItem Header="Text" x:Uid="TextPi">
-                            <StackPanel Orientation="Vertical" Margin="25" >
+                        <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText" x:Uid="TitlePostText" />
+                        <Pivot Name="NewPostPivot">
+                            <PivotItem Header="Text" x:Uid="TextPi">
+                                <StackPanel Orientation="Vertical" Margin="25" >
                                     <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind PostText}" Format="MarkDown" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'/>
                                     <RichEditBox MinHeight="200" Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText" x:Uid="PostText" />
-                            </StackPanel>
-                        </PivotItem>
-                        <PivotItem Header="Link" x:Uid="LinkPi">
-                            <StackPanel Orientation="Vertical" Margin="50">
-                                <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink" x:Uid="NewPostLink" />
-                            </StackPanel>
-                        </PivotItem>
-                    </Pivot>
-                    <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}" x:Uid="FlairLabel" />
+                                </StackPanel>
+                            </PivotItem>
+                            <PivotItem Header="Link" x:Uid="LinkPi">
+                                <StackPanel Orientation="Vertical" Margin="50">
+                                    <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink" x:Uid="NewPostLink" />
+                                </StackPanel>
+                            </PivotItem>
+                        </Pivot>
+                        <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}" x:Uid="FlairLabel" />
                         <RadioButton Content="Update" IsChecked="True" Checked="UniversalRadioButton_Checked"/>
                         <RadioButton Content="Price Drop" Checked="UniversalRadioButton_Checked"/>
                         <RadioButton Content="New Release" Checked="UniversalRadioButton_Checked"/>
@@ -616,7 +624,7 @@
                 <ScrollViewer>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
                         <HyperlinkButton Content="Link" x:Name="LinkPostLink" x:Uid="LinkPostLink" Visibility="Collapsed"/>
-                        <controls:MarkdownTextBlock x:Name="PostContentText"
+                        <controls:MarkdownTextBlock x:Name="PostContentText" ImageResolving="MarkdownText_OnImageResolving"
             Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'
             LinkClicked="PostContentText_LinkClicked"
             IsTextSelectionEnabled="True"
@@ -644,7 +652,7 @@
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
                         <StackPanel Orientation="Vertical" Margin="20">
-                            <AutoSuggestBox Header="Comment:" PlaceholderText="this is a comment"  x:Name="CommentTextMessage" x:Uid="CommentTextMessage" QueryIcon="Comment" QuerySubmitted="CommentTextMessage_QuerySubmitted"></AutoSuggestBox>
+                            <AutoSuggestBox Header="Comment:" PlaceholderText="this is a comment" x:Name="CommentTextMessage" x:Uid="CommentTextMessage" QueryIcon="Comment" QuerySubmitted="CommentTextMessage_QuerySubmitted"></AutoSuggestBox>
                         </StackPanel>
                         <!--<controls:AdaptiveGridView  Name="UniversalCommentGridViewControl" ItemHeight="200" IsItemClickEnabled="False" MaxHeight="600" DesiredWidth="500" ItemTemplate="{StaticResource CommentsTemplate}">
                     </controls:AdaptiveGridView>-->
@@ -652,7 +660,7 @@
                             <!-- InAppNotification content -->
                         </controls:InAppNotification>
                         <muxcontrols:TeachingTip x:Name="UniversalPostTip" IsOpen="False" VerticalAlignment="Bottom" IsLightDismissEnabled="True">
-                            
+
                         </muxcontrols:TeachingTip>
                         <Pivot>
                             <PivotItem Header="Best" x:Uid="BestPi">
@@ -704,7 +712,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </ContentDialog>
-         
+
             <muxcontrols:TeachingTip x:Name="SearchTip"
                                  Title="Search"
                                      x:Load="False"
@@ -734,7 +742,7 @@
                         </PivotItem>
                         <PivotItem Header="Store" x:Uid="StorePi">
                             <Button x:Uid="SearchMicrosoftStoreButton" Content="Search Microsoft Store" Click="SearchMSButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                
+
                             </Button>
                         </PivotItem>
                         <PivotItem Header="Web" x:Uid="WebPi">
@@ -743,10 +751,10 @@
                             </Button>
                         </PivotItem>
                     </Pivot>
-                    
+
                 </StackPanel>
             </muxcontrols:TeachingTip>
         </Grid>
     </Grid>
-    
+
 </Page>

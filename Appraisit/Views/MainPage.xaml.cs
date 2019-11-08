@@ -29,6 +29,9 @@ using Windows.UI.Xaml.Media;
 using Windows.System;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Text;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Popups;
 
 namespace Appraisit.Views
 {
@@ -45,9 +48,9 @@ namespace Appraisit.Views
         // string backupRefreshToken = "209908787246-qLtBfs46Ci9dWAcesPmmCZt-lz0";
         public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public string refreshToken;
-        public string BackuprefreshToken = "344019503430-vIqovAQ5eVORrnpqlnyI3ScgOkE";
+        public string BackuprefreshToken = "387967562864-jQyY5b8B4Ln2Cm5mNiyX65NteNo";
         public string accessToken;
-        public string backupaccessToken = "344019503430-BUX_uSW3ZfNr9wqbcWU5GMp8qfU";
+        public string backupbackuprefreshToken = "";
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
         public string FlairTemplate;
@@ -61,19 +64,69 @@ namespace Appraisit.Views
         List<Comments> RandomCommentCollection;
         List<Comments> QACommentCollection;
         List<Comments> ReplyCollection;
+          /*  AdaptiveGridView TopGridViewControl;
+            AdaptiveGridView HotGridViewControl;
+            AdaptiveGridView NewGridViewControl;
+            AdaptiveGridView RisingGridViewControl;
+            AdaptiveGridView SearchGridViewControl;
+            MUXC.TreeView QACommentTreeViewControl;
+        MUXC.TreeView OldCommentTreeViewControl;
+        MUXC.TreeView LiveCommentTreeViewControl;
+        MUXC.TreeView NewCommentTreeViewControl;
+        AdaptiveGridView ControversialGridViewControl;
+        MUXC.TreeView ControversialCommentTreeViewControl;
+        MUXC.TreeView RandomCommentTreeViewControl;
+        MUXC.TreeView UniversalCommentTreeViewControl;
+        MUXC.TreeView TopCommentTreeViewControl;
+        MUXC.TreeView RepliesCommentTreeViewControl;*/
         public MainPage()
         {
             InitializeComponent();
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(TitleGrid);
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                 {
                     refreshToken = BackuprefreshToken;
+                    MobileSignInBar.Visibility = Visibility.Visible;
+                    UniversalPageTip.IsOpen = true;
+                    UniversalPageTip.Title = "SignInTip".GetLocalized();
                     PivotBar.Visibility = Visibility.Collapsed;
+                   //FindName("SB");
+                    FindName("MobileBar");
+                }
+                else
+                {
 
+                    if ((string)localSettings.Values["refresh_token"] == null)
+                    {
+                        refreshToken = BackuprefreshToken;
+                        localSettings.Values["refresh_token"] = BackuprefreshToken;
+                        MobileSignInBar.Visibility = Visibility.Visible;
+                        UnloadObject(MobileBar);
+                        UniversalPageTip.IsOpen = true;
+                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                        PivotBar.Visibility = Visibility.Collapsed;
+                        //FindName("SB");
+                        FindName("MobileBar");
+                    }
+                    else
+                    {
+                        refreshToken = localSettings.Values["refresh_token"].ToString();
+                        MobileSignInBar.Visibility = Visibility.Collapsed;
+                            PivotBar.Visibility = Visibility.Collapsed;
+                            FindName("SB");
+                            FindName("MobileBar");
+                    }
+                }
+            }
+            else
+            {
+                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                {
+                    refreshToken = BackuprefreshToken;
                     SignInBar.Visibility = Visibility.Visible;
                     UniversalPageTip.IsOpen = true;
                     UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
@@ -85,65 +138,19 @@ namespace Appraisit.Views
                     {
                         refreshToken = BackuprefreshToken;
                         localSettings.Values["refresh_token"] = BackuprefreshToken;
-                        PivotBar.Visibility = Visibility.Collapsed;
                         SignInBar.Visibility = Visibility.Visible;
 
                         UniversalPageTip.IsOpen = true;
-                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                        UniversalPageTip.Title = "Sign in to access more features such as upvote, downvote and more!";
                     }
                     else
                     {
                         refreshToken = localSettings.Values["refresh_token"].ToString();
-                        PivotBar.Visibility = Visibility.Visible;
-                        SignInBar.Visibility = Visibility.Collapsed;
+                        SignInBar.Visibility = Visibility.Visible;
 
                     }
                 }
-            }
-            else
-            {
-                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-                {
-                    refreshToken = BackuprefreshToken;
-                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                    {
-                        MobileSignInBar.Visibility = Visibility.Visible;
-                        UnloadObject(SB);
-                        UnloadObject(MobileBar);
-                    }
-                    MobileSignInBar.Visibility = Visibility.Visible;
-                    UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "SignInTip".GetLocalized();
-                }
-                else
-                {
 
-                    if ((string)localSettings.Values["refresh_token"] == null)
-                    {
-                        refreshToken = BackuprefreshToken;
-                        localSettings.Values["refresh_token"] = BackuprefreshToken;
-
-                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                        {
-                            MobileSignInBar.Visibility = Visibility.Visible;
-                            UnloadObject(SB);
-                            UnloadObject(MobileBar);
-                        }
-                        UniversalPageTip.IsOpen = true;
-                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
-                    }
-                    else
-                    {
-                        refreshToken = localSettings.Values["refresh_token"].ToString();
-                        MobileSignInBar.Visibility = Visibility.Collapsed;
-                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                        {
-                            PivotBar.Visibility = Visibility.Collapsed;
-                            FindName("SB");
-                            FindName("MobileBar");
-                        }
-                    }
-                }
             }
 
             TopOrder.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
@@ -1381,6 +1388,7 @@ namespace Appraisit.Views
                 ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 PivotBar.Visibility = Visibility.Visible;
                 SignInBar.Visibility = Visibility.Collapsed;
+                NewPivotItem.Header = refreshToken;
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     FindName("MobileBar");
@@ -1589,86 +1597,101 @@ namespace Appraisit.Views
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                if (NewPostPivot.SelectedIndex == 0)
-                {
-                    try
+                    if (NewPostPivot.SelectedIndex == 0)
                     {
-                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        try
                         {
-                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                             {
-                                return;
-                            }
-                            else
-                            {
-                                string TITLETEST = TitlePostText.Text.ToString();
-                                var reddit = new RedditAPI(appId, refreshToken, secret);
-                                var subreddit = reddit.Subreddit("Appraisit");
-                                subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Document.Selection.Text).Submit().SetFlair(flairTemplateId: FlairTemplate);
-                                TitlePostText.Text = "";
-                                PostText.Document.SetText(TextSetOptions.None, String.Empty);
-                            }
-                        });
-                    }
-                    catch
-                    {
-                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                        {
-                            UniversalPostTip.IsOpen = true;
-                            UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
-                        }
-                        else
-                        {
-                            UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
-                        }
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                        {
-                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
-                            {
-                                return;
-                            }
-                            else
-                            {
-                                Uri Link = new Uri(NewPostLink.Text.ToString());
-                                if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
+                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                                {
+                                    return;
+                                }
+                                else
                                 {
                                     string TITLETEST = TitlePostText.Text.ToString();
                                     var reddit = new RedditAPI(appId, refreshToken, secret);
                                     var subreddit = reddit.Subreddit("Appraisit");
-                                    subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                    subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Document.Selection.Text).Submit().SetFlair(flairTemplateId: FlairTemplate);
                                     TitlePostText.Text = "";
                                     PostText.Document.SetText(TextSetOptions.None, String.Empty);
                                 }
+                            });
+                        }
+                        catch
+                        {
+                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                            {
+                                UniversalPostTip.IsOpen = true;
+                                UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
                             }
-                        });
+                            else
+                            {
+                                UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
+                            }
+                        }
                     }
-                    catch
+                    else
                     {
-                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        try
                         {
-                            UniversalPostTip.IsOpen = true;
-                            UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
+                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                            {
+                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    Uri Link = new Uri(NewPostLink.Text.ToString());
+                                    if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
+                                    {
+                                        string TITLETEST = TitlePostText.Text.ToString();
+                                        var reddit = new RedditAPI(appId, refreshToken, secret);
+                                        var subreddit = reddit.Subreddit("Appraisit");
+                                        subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                        TitlePostText.Text = "";
+                                        PostText.Document.SetText(TextSetOptions.None, String.Empty);
+                                    }
+                                }
+                            });
                         }
-                        else
+                        catch
                         {
-                            UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or schedule the post (beta)", 3000);
+                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                            {
+                                UniversalPostTip.IsOpen = true;
+                                UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
+                            }
+                            else
+                            {
+                                UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or use web", 3000);
+                            }
                         }
                     }
-                }
-                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                 {
-                    UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "PostCreated".GetLocalized();
+                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                    {
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "Post created. Sign in to use custom username";
+                    }
+                    else
+                    {
+                        UniversalPageNotification.Show("Post created. Sign in to use custom username", 3000);
+                    }
                 }
                 else
                 {
-                    UniversalPageNotification.Show("PostCreated".GetLocalized(), 3000);
+                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                    {
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "PostCreated".GetLocalized();
+                    }
+                    else
+                    {
+                        UniversalPageNotification.Show("PostCreated".GetLocalized(), 3000);
+                    }
                 }
             });
         }
@@ -1886,22 +1909,18 @@ namespace Appraisit.Views
 
         private async void SwipeItem_Invoked_1(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
-            await Task.Run(async () =>
-            {
                 FindName("SearchTip");
                 SearchTip.IsOpen = false;
                 FindName("CreatePostDialog");
                 await CreatePostDialog.ShowAsync();
-            });
         }
 
-        private async void SwipeItem_Invoked_2(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
+        private void SwipeItem_Invoked_2(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
-            await Task.Run(() =>
-            {
+
                 FindName("SearchTip");
                 SearchTip.IsOpen = true;
-            });
+
         }
 
         private async void SwipeItem_Invoked_3(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
@@ -2002,13 +2021,6 @@ namespace Appraisit.Views
 
         private async void ReplyText_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-            {
-                UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "CantReplyWithoutSignin".GetLocalized();
-            }
-            else
-            {
                 var s = (FrameworkElement)sender;
                 var D = s.DataContext;
                 var dse = D as Comments;
@@ -2018,8 +2030,16 @@ namespace Appraisit.Views
                     {
                         await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            UniversalPostTip.IsOpen = true;
-                            UniversalPostTip.Title = "ReplySent".GetLocalized();
+                            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                            {
+                                UniversalPostTip.IsOpen = true;
+                                UniversalPostTip.Title = "Reply sent. Sign in to use custom username";
+                            }
+                            else
+                            {
+                                UniversalPostTip.IsOpen = true;
+                                UniversalPostTip.Title = "ReplySent".GetLocalized();
+                            }
                             var reddit = new RedditAPI(appId, refreshToken, secret);
                             var subreddit = reddit.Subreddit("Appraisit");
                             await dse.CommentSelf.ReplyAsync(sender.Text);
@@ -2032,25 +2052,25 @@ namespace Appraisit.Views
                         return;
                     }
                 });
-            }
+            
         }
 
         private async void CommentTextMessage_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-            {
-                UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "CantCommentWithoutSign".GetLocalized();
-            }
-            else
-            {
                 await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    UniversalPostTip.IsOpen = true;
-                    UniversalPostTip.Title = "CommentSent".GetLocalized();
-
+                    if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                    {
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "Comment sent. Sign in to use custom username";
+                    }
+                    else
+                    {
+                        UniversalPostTip.IsOpen = true;
+                        UniversalPostTip.Title = "CommentSent".GetLocalized();
+                    }
                     var reddit = new RedditAPI(appId, refreshToken, secret);
                     var subreddit = reddit.Subreddit("Appraisit");
                     Post NewComment = ReferencePost.PostSelf;
@@ -2078,7 +2098,7 @@ namespace Appraisit.Views
                     return;
                 }
             });
-            }
+            
         }
         private async void UpvoteComment_Click(object sender, RoutedEventArgs e)
         {
@@ -2136,18 +2156,29 @@ namespace Appraisit.Views
             }
         }
 
-        private void SignOutButton_Click(object sender, RoutedEventArgs e)
+        private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            refreshToken = BackuprefreshToken;
-            localSettings.Values["refresh_token"] = BackuprefreshToken;
-            /*LoginHelper loginHelper = new LoginHelper(appId, secret);
-            var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
-            accessToken = result.AccessToken;
-            refreshToken = result.RefreshToken;*/
-            FindName("ContentGrid");
-            ProgressRing.IsActive = false;
-            PivotBar.Visibility = Visibility.Collapsed;
-            SignInBar.Visibility = Visibility.Visible;
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+            {
+                UniversalPageTip.IsOpen = true;
+                UniversalPageTip.Title = "User not signed in error message: Cant sign out because no";
+            }
+            else
+            {
+                UniversalPostTip.IsOpen = true;
+                UniversalPostTip.Title = "ReplySent".GetLocalized();
+
+                refreshToken = BackuprefreshToken;
+                localSettings.Values["refresh_token"] = BackuprefreshToken;
+                /*LoginHelper loginHelper = new LoginHelper(appId, secret);
+                var result = await loginHelper.Login_Refresh((string)localSettings.Values["refresh_token"]);
+                accessToken = result.AccessToken;
+                refreshToken = result.RefreshToken;*/
+                FindName("ContentGrid");
+                ProgressRing.IsActive = false;
+                SignInBar.Visibility = Visibility.Visible;
+                await WebView.ClearTemporaryWebDataAsync();
+            }
         }
 
         private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -2158,7 +2189,7 @@ namespace Appraisit.Views
 
         }
 
-        private void SignIn_Click(object sender, RoutedEventArgs e)
+        private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
             ProgressRing.IsActive = true;
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
@@ -2170,6 +2201,8 @@ namespace Appraisit.Views
             ProgressRing.IsActive = false;
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
+                var messageDialog = new MessageDialog("Web page might not load on mobile");
+                await messageDialog.ShowAsync();
             }
             else
             {
@@ -2237,6 +2270,16 @@ namespace Appraisit.Views
             }
         }
 
+        private void Sidebarbutton_Click(object sender, RoutedEventArgs e)
+        {
+            Sidebar.Navigate(typeof(Sidebar));
+        }
+        private void MarkdownText_OnImageResolving(object sender, ImageResolvingEventArgs e)
+        {
+            // This is basically the default implementation
+            e.Image = new BitmapImage(new Uri(e.Url));
+            e.Handled = true;
+        }
     }
 }
 

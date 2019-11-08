@@ -18,50 +18,26 @@
     </ContentDialog.TitleTemplate>
     <ScrollViewer>
         <StackPanel>
-            <TextBlock           
+            <TextBlock
                 TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
-                Appraisit beta 0.9.8.0(Universal + pc exclusive):
-                 <LineBreak/>
-                -New ui for windows 1803 + devices (pc)
+                Appraisit beta pre 1.0.0.0(Universal + pc exclusive):
                 <LineBreak/>
-                -New ui includes rounded corners, fabric ui styling, new radiobutton control designs, winui 2.2 and thinner edges (pc)
+                -Fixed swipe crashing
                 <LineBreak/>
-                -Support for non - ms store flair
+                -New redesign changes
                 <LineBreak/>
-                -Flair now uses templates
+                -New sidebar featuree (pc)
                 <LineBreak/>
-                -Reduced memory usage by 75% and fixed memory leaks when navigating (pc)
+                -New flying commandbar (pc)
                 <LineBreak/>
-                -Removed website mode
+                -View subscribers, Join as subscirber, view currently online, rules and about (pc)
                 <LineBreak/>
-                -Acrylic improved
+                -Possibly fixed mobile login bug
                 <LineBreak/>
-                -Mobile uses teaching tips instead
+                -Create posts, reply and comment wihtout account
                 <LineBreak/>
-                -Image support
-                <LineBreak/>
-                -Fixed refresh container bug
-                <LineBreak/>
-                -Flair support (pc)
-                <LineBreak/>
-                -Removed navigation animation (pc)
-                <LineBreak/>
-                -Reply support, upvote, downvote replies and reply to replies (pc)
-                <LineBreak/>
-                -Swipe item colors (pc)
-                <LineBreak/>
-                -Changed hidden in app notification to a universal teaching tip
-                <LineBreak/>
-                -Search typing improvements
-                <LineBreak/>
-                -Acrylic changes (pc)
-                <LineBreak/>
-                -Theme transitions (pc)
-                <LineBreak/>
-                -Notifications and tips show for only a certain duration (pc)
-                <LineBreak/>
-                -Tips have light dismiss (pc)
+                -Working on new login experience
             </TextBlock>
-        </StackPanel> 
+        </StackPanel>
     </ScrollViewer>
 </ContentDialog>
