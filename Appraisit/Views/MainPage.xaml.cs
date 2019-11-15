@@ -64,21 +64,35 @@ namespace Appraisit.Views
         List<Comments> RandomCommentCollection;
         List<Comments> QACommentCollection;
         List<Comments> ReplyCollection;
-          /*  AdaptiveGridView TopGridViewControl;
-            AdaptiveGridView HotGridViewControl;
-            AdaptiveGridView NewGridViewControl;
-            AdaptiveGridView RisingGridViewControl;
-            AdaptiveGridView SearchGridViewControl;
-            MUXC.TreeView QACommentTreeViewControl;
-        MUXC.TreeView OldCommentTreeViewControl;
-        MUXC.TreeView LiveCommentTreeViewControl;
-        MUXC.TreeView NewCommentTreeViewControl;
-        AdaptiveGridView ControversialGridViewControl;
+       /* MainPage TopGridViewControl;
+        MainPage HotGridViewControl;
+        MainPage NewGridViewControl;
+        MainPage RisingGridViewControl;
+        MainPage SearchGridViewControl;
+        readonly MainPage QACommentTreeViewControl;
+        MainPage OldCommentTreeViewControl;
+        MainPage LiveCommentTreeViewControl;
+        MainPage NewCommentTreeViewControl;
+        MainPage ControversialGridViewControl;
         MUXC.TreeView ControversialCommentTreeViewControl;
         MUXC.TreeView RandomCommentTreeViewControl;
         MUXC.TreeView UniversalCommentTreeViewControl;
         MUXC.TreeView TopCommentTreeViewControl;
         MUXC.TreeView RepliesCommentTreeViewControl;*/
+        /*AdaptiveGridView HotGridViewControl;
+        AdaptiveGridView NewGridViewControl;
+        AdaptiveGridView RisingGridViewControl;
+        AdaptiveGridView SearchGridViewControl;
+        MUXC.TreeView QACommentTreeViewControl;
+    MUXC.TreeView OldCommentTreeViewControl;
+    MUXC.TreeView LiveCommentTreeViewControl;
+    MUXC.TreeView NewCommentTreeViewControl;
+    AdaptiveGridView ControversialGridViewControl;
+    MUXC.TreeView ControversialCommentTreeViewControl;
+    MUXC.TreeView RandomCommentTreeViewControl;
+    MUXC.TreeView UniversalCommentTreeViewControl;
+    MUXC.TreeView TopCommentTreeViewControl;
+    MUXC.TreeView RepliesCommentTreeViewControl;*/
         public MainPage()
         {
             InitializeComponent();
@@ -94,7 +108,7 @@ namespace Appraisit.Views
                     UniversalPageTip.IsOpen = true;
                     UniversalPageTip.Title = "SignInTip".GetLocalized();
                     PivotBar.Visibility = Visibility.Collapsed;
-                   //FindName("SB");
+                    //FindName("SB");
                     FindName("MobileBar");
                 }
                 else
@@ -107,7 +121,7 @@ namespace Appraisit.Views
                         MobileSignInBar.Visibility = Visibility.Visible;
                         UnloadObject(MobileBar);
                         UniversalPageTip.IsOpen = true;
-                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
+                        UniversalPageTip.Title = "Sign in to access more features such as upvoting!";
                         PivotBar.Visibility = Visibility.Collapsed;
                         //FindName("SB");
                         FindName("MobileBar");
@@ -116,9 +130,9 @@ namespace Appraisit.Views
                     {
                         refreshToken = localSettings.Values["refresh_token"].ToString();
                         MobileSignInBar.Visibility = Visibility.Collapsed;
-                            PivotBar.Visibility = Visibility.Collapsed;
-                            FindName("SB");
-                            FindName("MobileBar");
+                        PivotBar.Visibility = Visibility.Collapsed;
+                        FindName("SB");
+                        FindName("MobileBar");
                     }
                 }
             }
@@ -129,7 +143,7 @@ namespace Appraisit.Views
                     refreshToken = BackuprefreshToken;
                     SignInBar.Visibility = Visibility.Visible;
                     UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
+                    UniversalPageTip.Title = "Sign in to access more features such as Upvoting";
                 }
                 else
                 {
@@ -1388,7 +1402,7 @@ namespace Appraisit.Views
                 ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 PivotBar.Visibility = Visibility.Visible;
                 SignInBar.Visibility = Visibility.Collapsed;
-                NewPivotItem.Header = refreshToken;
+                //NewPivotItem.Header = refreshToken;
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
                     FindName("MobileBar");
@@ -1403,31 +1417,31 @@ namespace Appraisit.Views
                 UnloadObject(loginView);
 
             }
-            else if (args.Uri.ToString() == "https://www.reddit.com/coins/")
+            else if (args.Uri.ToString() == "https://www.reddit.com/coins/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
                 UnloadObject(Wblock);
             }
-            else if (args.Uri.AbsoluteUri.Contains("https://play.google.com/store/apps/details?id=com.reddit.frontpage"))
+            else if (args.Uri.AbsoluteUri.Contains("https://play.google.com/store/apps/details?id=com.reddit.frontpage") && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
                 UnloadObject(Wblock);
             }
-            else if (args.Uri.ToString() == "https://www.reddit.com/premium/")
+            else if (args.Uri.ToString() == "https://www.reddit.com/premium/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
                 UnloadObject(Wblock);
             }
-            else if (args.Uri.ToString() == "https://www.redditgifts.com/")
+            else if (args.Uri.ToString() == "https://www.redditgifts.com/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
                 UnloadObject(Wblock);
             }
-            else if (args.Uri.ToString() == "https://apps.apple.com/us/app/reddit-the-official-app/id1064216828")
+            else if (args.Uri.ToString() == "https://apps.apple.com/us/app/reddit-the-official-app/id1064216828" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 ContentGrid.Visibility = Visibility.Visible;
@@ -1597,78 +1611,78 @@ namespace Appraisit.Views
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                    if (NewPostPivot.SelectedIndex == 0)
+                if (NewPostPivot.SelectedIndex == 0)
+                {
+                    try
                     {
-                        try
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
                             {
-                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
-                                {
-                                    return;
-                                }
-                                else
+                                return;
+                            }
+                            else
+                            {
+                                string TITLETEST = TitlePostText.Text.ToString();
+                                var reddit = new RedditAPI(appId, refreshToken, secret);
+                                var subreddit = reddit.Subreddit("Appraisit");
+                                subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Document.Selection.Text).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                TitlePostText.Text = "";
+                                PostText.Document.SetText(TextSetOptions.None, String.Empty);
+                            }
+                        });
+                    }
+                    catch
+                    {
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                        {
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
+                        }
+                        else
+                        {
+                            UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                Uri Link = new Uri(NewPostLink.Text.ToString());
+                                if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
                                 {
                                     string TITLETEST = TitlePostText.Text.ToString();
                                     var reddit = new RedditAPI(appId, refreshToken, secret);
                                     var subreddit = reddit.Subreddit("Appraisit");
-                                    subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Document.Selection.Text).Submit().SetFlair(flairTemplateId: FlairTemplate);
+                                    subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
                                     TitlePostText.Text = "";
                                     PostText.Document.SetText(TextSetOptions.None, String.Empty);
                                 }
-                            });
-                        }
-                        catch
-                        {
-                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
                             }
-                            else
-                            {
-                                UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
-                            }
-                        }
+                        });
                     }
-                    else
+                    catch
                     {
-                        try
+                        if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                         {
-                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                            {
-                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    Uri Link = new Uri(NewPostLink.Text.ToString());
-                                    if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
-                                    {
-                                        string TITLETEST = TitlePostText.Text.ToString();
-                                        var reddit = new RedditAPI(appId, refreshToken, secret);
-                                        var subreddit = reddit.Subreddit("Appraisit");
-                                        subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
-                                        TitlePostText.Text = "";
-                                        PostText.Document.SetText(TextSetOptions.None, String.Empty);
-                                    }
-                                }
-                            });
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
                         }
-                        catch
+                        else
                         {
-                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
-                            }
-                            else
-                            {
-                                UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or use web", 3000);
-                            }
+                            UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or use web", 3000);
                         }
                     }
+                }
                 if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                 {
                     if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
@@ -1909,17 +1923,17 @@ namespace Appraisit.Views
 
         private async void SwipeItem_Invoked_1(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
-                FindName("SearchTip");
-                SearchTip.IsOpen = false;
-                FindName("CreatePostDialog");
-                await CreatePostDialog.ShowAsync();
+            FindName("SearchTip");
+            SearchTip.IsOpen = false;
+            FindName("CreatePostDialog");
+            await CreatePostDialog.ShowAsync();
         }
 
         private void SwipeItem_Invoked_2(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
 
-                FindName("SearchTip");
-                SearchTip.IsOpen = true;
+            FindName("SearchTip");
+            SearchTip.IsOpen = true;
 
         }
 
@@ -2021,43 +2035,43 @@ namespace Appraisit.Views
 
         private async void ReplyText_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-                var s = (FrameworkElement)sender;
-                var D = s.DataContext;
-                var dse = D as Comments;
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            var s = (FrameworkElement)sender;
+            var D = s.DataContext;
+            var dse = D as Comments;
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
                 {
-                    try
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                         {
-                            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reply sent. Sign in to use custom username";
-                            }
-                            else
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "ReplySent".GetLocalized();
-                            }
-                            var reddit = new RedditAPI(appId, refreshToken, secret);
-                            var subreddit = reddit.Subreddit("Appraisit");
-                            await dse.CommentSelf.ReplyAsync(sender.Text);
-                            sender.Text = "";
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reply sent. Sign in to use custom username";
+                        }
+                        else
+                        {
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "ReplySent".GetLocalized();
+                        }
+                        var reddit = new RedditAPI(appId, refreshToken, secret);
+                        var subreddit = reddit.Subreddit("Appraisit");
+                        await dse.CommentSelf.ReplyAsync(sender.Text);
+                        sender.Text = "";
 
-                        });
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                });
-            
+                    });
+                }
+                catch
+                {
+                    return;
+                }
+            });
+
         }
 
         private async void CommentTextMessage_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
@@ -2098,7 +2112,7 @@ namespace Appraisit.Views
                     return;
                 }
             });
-            
+
         }
         private async void UpvoteComment_Click(object sender, RoutedEventArgs e)
         {
@@ -2272,7 +2286,7 @@ namespace Appraisit.Views
 
         private void Sidebarbutton_Click(object sender, RoutedEventArgs e)
         {
-            Sidebar.Navigate(typeof(Sidebar));
+            Sidebar.Navigate(typeof(FlyoutBar));
         }
         private void MarkdownText_OnImageResolving(object sender, ImageResolvingEventArgs e)
         {
