@@ -13,22 +13,15 @@
     <Grid>
         <StackPanel Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <StackPanel Margin="20" Orientation="Horizontal">
-                <Border BorderBrush="Purple" BorderThickness="1">
-                    <TextBlock x:Name="Joined">
-
-                    </TextBlock>
-                </Border>
-                <Border BorderBrush="Purple" BorderThickness="1">
-                    <TextBlock x:Name="Online">
-
-                    </TextBlock>
-                </Border>
-            </StackPanel>
-            <Border BorderBrush="Purple" BorderThickness="1">
-                <TextBlock Text="Cakeday: Apr 20, 2019">
+                <TextBlock x:Name="Joined">
 
                 </TextBlock>
-            </Border>
+                <TextBlock x:Name="Online">
+
+                </TextBlock>
+            </StackPanel>
+            <TextBlock Text="Cakeday: Apr 20, 2019">
+            </TextBlock>
             <Button HorizontalAlignment="Center" Margin="3">
                 Join
             </Button>

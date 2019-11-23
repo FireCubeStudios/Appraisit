@@ -1,0 +1,41 @@
+﻿<ContentDialog
+    x:Class="Appraisit.Views.AddPostDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Appraisit.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    x:Name="CreatePostDialog"
+    x:Uid="CreatePostDialog"
+    CloseButtonText="Cancel"
+    PrimaryButtonText="Post"
+    PrimaryButtonClick="CreatePostDialog_PrimaryButtonClick"
+    DefaultButton="Primary"
+    Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'
+    mc:Ignorable="d">
+      <ScrollViewer>
+        <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBox Header="Title:" PlaceholderText="Appraisit updated to version 3.0" x:Name="TitlePostText" x:Uid="TitlePostText" />
+            <Pivot Name="NewPostPivot">
+                <PivotItem Header="Text" x:Uid="TextPi">
+                    <StackPanel Orientation="Vertical" Margin="25" >
+                        <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind PostText}" Format="MarkDown" Background='{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}'/>
+                        <RichEditBox MinHeight="200" Header="Text:" PlaceholderText="Remember to put version number, links are optional" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" x:Name="PostText" x:Uid="PostText" />
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem Header="Link" x:Uid="LinkPi">
+                    <StackPanel Orientation="Vertical" Margin="50">
+                        <TextBox Header="Link:" PlaceholderText="Must be a valid link" x:Name="NewPostLink" x:Uid="NewPostLink" />
+                    </StackPanel>
+                </PivotItem>
+            </Pivot>
+            <TextBlock Text="Flair:" Style="{ThemeResource BaseTextBlockStyle}" x:Uid="FlairLabel" />
+            <RadioButton Content="Update" IsChecked="True" Checked="UniversalRadioButton_Checked"/>
+            <RadioButton Content="Price Drop" Checked="UniversalRadioButton_Checked"/>
+            <RadioButton Content="New Release" Checked="UniversalRadioButton_Checked"/>
+            <RadioButton Content="Discover" Checked="UniversalRadioButton_Checked"/>
+            <RadioButton x:Uid="7284e7d0-b889-11e9-aeb1-0e11aefa7bba" Content="Non ms store app" Checked="UniversalRadioButton_Checked"/>
+        </StackPanel>
+   </ScrollViewer>
+</ContentDialog>

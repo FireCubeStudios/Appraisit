@@ -39,7 +39,7 @@ namespace Appraisit.Views
             var reddit = new RedditAPI(appId, localSettings.Values["refresh_token"].ToString(), secret);
             var subreddit = reddit.Subreddit("Appraisit");
             Joined.Text = subreddit.Subscribers.ToString() + "160+ Reddit Subscribers";
-            Online.Text = subreddit.ActiveUserCount.ToString() + "error Online";
+            Online.Text = subreddit.ActiveUserCount.ToString() + "10+ Online";
             About.Text = " Discover new apps and games. Learn about improvements to your favorites and help them get discovered. You decide who rises to the top!";
         }
     }
