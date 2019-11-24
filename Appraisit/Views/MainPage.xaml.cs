@@ -64,72 +64,90 @@ namespace Appraisit.Views
         List<Comments> RandomCommentCollection;
         List<Comments> QACommentCollection;
         List<Comments> ReplyCollection;
-          /*  AdaptiveGridView TopGridViewControl;
-            AdaptiveGridView HotGridViewControl;
-            AdaptiveGridView NewGridViewControl;
-            AdaptiveGridView RisingGridViewControl;
-            AdaptiveGridView SearchGridViewControl;
-            MUXC.TreeView QACommentTreeViewControl;
-        MUXC.TreeView OldCommentTreeViewControl;
-        MUXC.TreeView LiveCommentTreeViewControl;
-        MUXC.TreeView NewCommentTreeViewControl;
-        AdaptiveGridView ControversialGridViewControl;
-        MUXC.TreeView ControversialCommentTreeViewControl;
-        MUXC.TreeView RandomCommentTreeViewControl;
-        MUXC.TreeView UniversalCommentTreeViewControl;
-        MUXC.TreeView TopCommentTreeViewControl;
-        MUXC.TreeView RepliesCommentTreeViewControl;*/
+        /* MainPage TopGridViewControl;
+         MainPage HotGridViewControl;
+         MainPage NewGridViewControl;
+         MainPage RisingGridViewControl;
+         MainPage SearchGridViewControl;
+         readonly MainPage QACommentTreeViewControl;
+         MainPage OldCommentTreeViewControl;
+         MainPage LiveCommentTreeViewControl;
+         MainPage NewCommentTreeViewControl;
+         MainPage ControversialGridViewControl;
+         MUXC.TreeView ControversialCommentTreeViewControl;
+         MUXC.TreeView RandomCommentTreeViewControl;
+         MUXC.TreeView UniversalCommentTreeViewControl;
+         MUXC.TreeView TopCommentTreeViewControl;
+         MUXC.TreeView RepliesCommentTreeViewControl;*/
+        /* AdaptiveGridView TopGridViewControl;
+         AdaptiveGridView HotGridViewControl;
+         AdaptiveGridView NewGridViewControl;
+         AdaptiveGridView RisingGridViewControl;
+         AdaptiveGridView SearchGridViewControl;
+         MUXC.TreeView QACommentTreeViewControl;
+     MUXC.TreeView OldCommentTreeViewControl;
+     MUXC.TreeView LiveCommentTreeViewControl;
+     MUXC.TreeView NewCommentTreeViewControl;
+     AdaptiveGridView ControversialGridViewControl;
+     MUXC.TreeView ControversialCommentTreeViewControl;
+     MUXC.TreeView RandomCommentTreeViewControl;
+     MUXC.TreeView UniversalCommentTreeViewControl;
+     MUXC.TreeView TopCommentTreeViewControl;
+     MUXC.TreeView RepliesCommentTreeViewControl;*/
+        public static InAppNotification UniversalPageNotificationPost { get; set; }
+        public static MUXC.TeachingTip UniversalTipPost{ get; set; }
         public MainPage()
         {
             InitializeComponent();
+            UniversalPageNotificationPost = UniversalPageNotification;
+            UniversalTipPost = UniversalPageTip;
+            // CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            // Window.Current.SetTitleBar(TitleGrid);
+            /* if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+             {
+                 if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                 {
+                     refreshToken = BackuprefreshToken;
+                     MobileSignInBar.Visibility = Visibility.Visible;
+                     UniversalPageTip.IsOpen = true;
+                     UniversalPageTip.Title = "SignInTip".GetLocalized();
+                     PivotBar.Visibility = Visibility.Collapsed;
+                     //FindName("SB");
+                     FindName("MobileBar");
+                 }
+                 else
+                 {
 
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(TitleGrid);
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-            {
-                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-                {
-                    refreshToken = BackuprefreshToken;
-                    MobileSignInBar.Visibility = Visibility.Visible;
-                    UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "SignInTip".GetLocalized();
-                    PivotBar.Visibility = Visibility.Collapsed;
-                   //FindName("SB");
-                    FindName("MobileBar");
-                }
-                else
-                {
-
-                    if ((string)localSettings.Values["refresh_token"] == null)
-                    {
-                        refreshToken = BackuprefreshToken;
-                        localSettings.Values["refresh_token"] = BackuprefreshToken;
-                        MobileSignInBar.Visibility = Visibility.Visible;
-                        UnloadObject(MobileBar);
-                        UniversalPageTip.IsOpen = true;
-                        UniversalPageTip.Title = "Sign in to access more features such as search, create post, commenting and more!";
-                        PivotBar.Visibility = Visibility.Collapsed;
-                        //FindName("SB");
-                        FindName("MobileBar");
-                    }
-                    else
-                    {
-                        refreshToken = localSettings.Values["refresh_token"].ToString();
-                        MobileSignInBar.Visibility = Visibility.Collapsed;
-                            PivotBar.Visibility = Visibility.Collapsed;
-                            FindName("SB");
-                            FindName("MobileBar");
-                    }
-                }
-            }
-            else
-            {
-                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
+                     if ((string)localSettings.Values["refresh_token"] == null)
+                     {
+                         refreshToken = BackuprefreshToken;
+                         localSettings.Values["refresh_token"] = BackuprefreshToken;
+                         MobileSignInBar.Visibility = Visibility.Visible;
+                         UnloadObject(MobileBar);
+                         UniversalPageTip.IsOpen = true;
+                         UniversalPageTip.Title = "Sign in to access more features such as upvoting!";
+                         PivotBar.Visibility = Visibility.Collapsed;
+                         //FindName("SB");
+                         FindName("MobileBar");
+                     }
+                     else
+                     {
+                         refreshToken = localSettings.Values["refresh_token"].ToString();
+                         MobileSignInBar.Visibility = Visibility.Collapsed;
+                         PivotBar.Visibility = Visibility.Collapsed;
+                         FindName("SB");
+                         FindName("MobileBar");
+                     }
+                 }
+             }
+             else
+             {*/
+            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                 {
                     refreshToken = BackuprefreshToken;
                     SignInBar.Visibility = Visibility.Visible;
                     UniversalPageTip.IsOpen = true;
-                    UniversalPageTip.Title = "Sign in to access more features such as light mode, search, create post, commenting and settings.";
+                    UniversalPageTip.Title = "Sign in to access more features such as Upvoting";
                 }
                 else
                 {
@@ -146,14 +164,12 @@ namespace Appraisit.Views
                     else
                     {
                         refreshToken = localSettings.Values["refresh_token"].ToString();
-                        SignInBar.Visibility = Visibility.Visible;
+                        SignInBar.Visibility = Visibility.Collapsed;
 
                     }
                 }
 
-            }
-
-            TopOrder.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
+            // TopSort.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
 
             /*ProgressRing.IsActive = true;
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
@@ -164,6 +180,7 @@ namespace Appraisit.Views
             FindName("WebBlockBar");
             loginView.Navigate(targetUri);
             ProgressRing.IsActive = false;*/
+            SortBox.SelectedItem = "New";  
         }
 
         public class OpenPosts
@@ -180,7 +197,7 @@ namespace Appraisit.Views
             public string CommentDownvotes { get; set; }
             public Comment CommentSelf { get; set; }
         }
-        private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
@@ -209,13 +226,14 @@ namespace Appraisit.Views
                          transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
                                           initialBounds,                                  // the initial size and position
                                                     finalBounds);*/
-                        switch (PivotNavigator.SelectedIndex.ToString())
+                        switch (SortBox.SelectedItem.ToString())
                         {
-                            case "0":
+                            case "New":
                                 try
                                 {
                                     var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                                    NewGridViewControl.ItemsSource = Newcollection;
+                                    UniversalGridViewControl.ItemsSource = Newcollection;
+                                    UnloadObject(TopSort);
                                 }
                                 catch
                                 {
@@ -223,28 +241,31 @@ namespace Appraisit.Views
                                 }
                                 ProgressRing.IsActive = false;
                                 break;
-                            case "1":
-                                FindName("HotGridViewControl");
+                            case "Hot":
                                 var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                                HotGridViewControl.ItemsSource = Hotcollection;
+                                UniversalGridViewControl.ItemsSource = Hotcollection;
+                                UnloadObject(TopSort);
                                 ProgressRing.IsActive = false;
                                 break;
-                            case "2":
-                                FindName("TopGridViewControl");
+                            case "Top":
                                 var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
-                                TopGridViewControl.ItemsSource = Topcollection;
+                                UniversalGridViewControl.ItemsSource = Topcollection;
+                                FindName("TopSort");
+                                TopSort.SelectedItem = "Day";
                                 ProgressRing.IsActive = false;
                                 break;
-                            case "3":
-                                FindName("ExtraNavigationView");
+                            case "Rising":
                                 var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                                RisingGridViewControl.ItemsSource = Risingcollection;
-                                var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                                ControversialGridViewControl.ItemsSource = Controversialcollection;
-                                ProgressRing.IsActive = false;
+                                UniversalGridViewControl.ItemsSource = Risingcollection;
+                                UnloadObject(TopSort);
                                 ProgressRing.IsActive = false;
                                 break;
-
+                            case "Controversial":
+                                var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                                UniversalGridViewControl.ItemsSource = Controversialcollection;
+                                UnloadObject(TopSort);
+                                ProgressRing.IsActive = false;
+                                break;
                         }
                         ProgressRing.IsActive = false;
                         // the area to fill over the animation duration
@@ -1363,85 +1384,18 @@ namespace Appraisit.Views
          });
      }*/
 
-        private void LoginDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+       /* private void LoginDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
             Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
             ContentGrid.Visibility = Visibility.Collapsed;
-            loginView.Visibility = Visibility.Visible;
+           // loginView.Visibility = Visibility.Visible;
 
-            loginView.Navigate(targetUri);
-
-        }
-        private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
-        {
-
-            LoginHelper loginHelper = new LoginHelper(appId, secret);
-            if (args.Uri.AbsoluteUri.Contains("http://127.0.0.1:3000/reddit_callback"))
-            {
-                var result = await loginHelper.Login_Stage2(args.Uri);
-                accessToken = result.AccessToken;
-                refreshToken = result.RefreshToken;
-                // NewPivotItem.Header = result.RefreshToken;
-                localSettings.Values["refresh_token"] = result.RefreshToken;
-                ContentGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                PivotBar.Visibility = Visibility.Visible;
-                SignInBar.Visibility = Visibility.Collapsed;
-                NewPivotItem.Header = refreshToken;
-                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                {
-                    FindName("MobileBar");
-                    FindName("SB");
-                    PivotBar.Visibility = Visibility.Collapsed;
-                    MobileSignInBar.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    UnloadObject(Wblock);
-                }
-                UnloadObject(loginView);
-
-            }
-            else if (args.Uri.ToString() == "https://www.reddit.com/coins/")
-            {
-                UnloadObject(loginView);
-                ContentGrid.Visibility = Visibility.Visible;
-                UnloadObject(Wblock);
-            }
-            else if (args.Uri.AbsoluteUri.Contains("https://play.google.com/store/apps/details?id=com.reddit.frontpage"))
-            {
-                UnloadObject(loginView);
-                ContentGrid.Visibility = Visibility.Visible;
-                UnloadObject(Wblock);
-            }
-            else if (args.Uri.ToString() == "https://www.reddit.com/premium/")
-            {
-                UnloadObject(loginView);
-                ContentGrid.Visibility = Visibility.Visible;
-                UnloadObject(Wblock);
-            }
-            else if (args.Uri.ToString() == "https://www.redditgifts.com/")
-            {
-                UnloadObject(loginView);
-                ContentGrid.Visibility = Visibility.Visible;
-                UnloadObject(Wblock);
-            }
-            else if (args.Uri.ToString() == "https://apps.apple.com/us/app/reddit-the-official-app/id1064216828")
-            {
-                UnloadObject(loginView);
-                ContentGrid.Visibility = Visibility.Visible;
-                UnloadObject(Wblock);
-            }
-            else
-            {
-                return;
-            }
-
-
+           // loginView.Navigate(targetUri);
 
         }
-
+   */
         private async void RefreshToken()
         {
             LoginHelper loginHelper = new LoginHelper(appId, secret);
@@ -1476,13 +1430,13 @@ namespace Appraisit.Views
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ProgressRing.IsActive = true;
-                switch (PivotNavigator.SelectedIndex.ToString())
+                switch (SortBox.SelectedItem.ToString())
                 {
                     case "0":
                         try
                         {
                             var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                            NewGridViewControl.ItemsSource = Newcollection;
+                            UniversalGridViewControl.ItemsSource = Newcollection;
                         }
                         catch
                         {
@@ -1492,20 +1446,17 @@ namespace Appraisit.Views
                         break;
                     case "1":
                         var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        HotGridViewControl.ItemsSource = Hotcollection;
+                        UniversalGridViewControl.ItemsSource = Hotcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "2":
                         var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "3":
                         var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        RisingGridViewControl.ItemsSource = Risingcollection;
-                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        ControversialGridViewControl.ItemsSource = Controversialcollection;
-                        ProgressRing.IsActive = false;
+                        UniversalGridViewControl.ItemsSource = Risingcollection;
                         ProgressRing.IsActive = false;
                         break;
 
@@ -1518,13 +1469,13 @@ namespace Appraisit.Views
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ProgressRing.IsActive = true;
-                switch (PivotNavigator.SelectedIndex.ToString())
+                switch (SortBox.SelectedItem.ToString())
                 {
                     case "0":
                         try
                         {
                             var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                            NewGridViewControl.ItemsSource = Newcollection;
+                            UniversalGridViewControl.ItemsSource = Newcollection;
                         }
                         catch
                         {
@@ -1534,20 +1485,17 @@ namespace Appraisit.Views
                         break;
                     case "1":
                         var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        HotGridViewControl.ItemsSource = Hotcollection;
+                        UniversalGridViewControl.ItemsSource = Hotcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "2":
                         var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "3":
                         var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        RisingGridViewControl.ItemsSource = Risingcollection;
-                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        ControversialGridViewControl.ItemsSource = Controversialcollection;
-                        ProgressRing.IsActive = false;
+                        UniversalGridViewControl.ItemsSource = Risingcollection;
                         ProgressRing.IsActive = false;
                         break;
 
@@ -1563,138 +1511,16 @@ namespace Appraisit.Views
             await Windows.System.Launcher.LaunchUriAsync(uriBing);
         }
 
-        private void UniversalRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            switch (rb.Content.ToString())
-            {
-                case "Update":
-                    FlairTemplate = "89cc3e84-8ba2-11e9-b1b0-0ecce5ed8ed0";
-                    break;
-                case "Price Drop":
-                    FlairTemplate = "5944e7c0-8ba2-11e9-940b-0e44c05763c0";
-                    break;
-                case "Non ms store app":
-                    FlairTemplate = "7284e7d0-b889-11e9-aeb1-0e11aefa7bba";
-                    break;
-                case "New Release":
-                    FlairTemplate = "0beabbbe-6765-11e9-a21c-0e06ff2b8078";
-                    break;
-                case "Discover":
-                    FlairTemplate = "29f854ac-8ba2-11e9-aaa1-0e0ea830c7ec";
-                    break;
-            }
 
-        }
         private async void OpenCreatePostDialog(object sender, RoutedEventArgs e)
         {
             FindName("SearchTip");
             SearchTip.IsOpen = false;
             FindName("CreatePostDialog");
-            await CreatePostDialog.ShowAsync();
+            var PostDialog = new AddPostDialog();
+            await PostDialog.ShowAsync();
         }
-        private async void CreatePostDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                    if (NewPostPivot.SelectedIndex == 0)
-                    {
-                        try
-                        {
-                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                            {
-                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    string TITLETEST = TitlePostText.Text.ToString();
-                                    var reddit = new RedditAPI(appId, refreshToken, secret);
-                                    var subreddit = reddit.Subreddit("Appraisit");
-                                    subreddit.SelfPost(title: TitlePostText.Text.ToString(), selfText: PostText.Document.Selection.Text).Submit().SetFlair(flairTemplateId: FlairTemplate);
-                                    TitlePostText.Text = "";
-                                    PostText.Document.SetText(TextSetOptions.None, String.Empty);
-                                }
-                            });
-                        }
-                        catch
-                        {
-                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit.";
-                            }
-                            else
-                            {
-                                UniversalPageNotification.Show("Reddit api limit. try again in 10 min. unfortunately i cant stop this however this limit will go away once you get some karma on appraisit", 3000);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                            {
-                                if (String.IsNullOrEmpty(TitlePostText.Text.ToString()))
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    Uri Link = new Uri(NewPostLink.Text.ToString());
-                                    if (Uri.IsWellFormedUriString(Link.ToString(), UriKind.Absolute) == true)
-                                    {
-                                        string TITLETEST = TitlePostText.Text.ToString();
-                                        var reddit = new RedditAPI(appId, refreshToken, secret);
-                                        var subreddit = reddit.Subreddit("Appraisit");
-                                        subreddit.LinkPost(title: TitlePostText.Text.ToString(), url: Link.ToString()).Submit().SetFlair(flairTemplateId: FlairTemplate);
-                                        TitlePostText.Text = "";
-                                        PostText.Document.SetText(TextSetOptions.None, String.Empty);
-                                    }
-                                }
-                            });
-                        }
-                        catch
-                        {
-                            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reddit api limit message: You are posting too much try again in x minutes";
-                            }
-                            else
-                            {
-                                UniversalPageNotification.Show("Reddit posting limit. Try again in 7 minutes or use web", 3000);
-                            }
-                        }
-                    }
-                if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-                {
-                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                    {
-                        UniversalPostTip.IsOpen = true;
-                        UniversalPostTip.Title = "Post created. Sign in to use custom username";
-                    }
-                    else
-                    {
-                        UniversalPageNotification.Show("Post created. Sign in to use custom username", 3000);
-                    }
-                }
-                else
-                {
-                    if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                    {
-                        UniversalPostTip.IsOpen = true;
-                        UniversalPostTip.Title = "PostCreated".GetLocalized();
-                    }
-                    else
-                    {
-                        UniversalPageNotification.Show("PostCreated".GetLocalized(), 3000);
-                    }
-                }
-            });
-        }
+      
 
         /* private async void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
          {
@@ -1710,28 +1536,28 @@ namespace Appraisit.Views
             {
                 var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
                 TopPostsClass TopGenerator = new TopPostsClass();
-                int newOrder = TopOrder.SelectedIndex;
+                int newOrder = TopSort.SelectedIndex;
                 switch (newOrder)
                 {
                     case 0:
                         TopGenerator.Order = Helpers.TopOrder.All;
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         break;
                     case 1:
                         TopGenerator.Order = Helpers.TopOrder.Year;
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         break;
                     case 2:
                         TopGenerator.Order = Helpers.TopOrder.Month;
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         break;
                     case 3:
                         TopGenerator.Order = Helpers.TopOrder.Week;
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         break;
                     case 4:
                         TopGenerator.Order = Helpers.TopOrder.Day;
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         break;
                 }
             });
@@ -1909,17 +1735,18 @@ namespace Appraisit.Views
 
         private async void SwipeItem_Invoked_1(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
-                FindName("SearchTip");
-                SearchTip.IsOpen = false;
-                FindName("CreatePostDialog");
-                await CreatePostDialog.ShowAsync();
+            FindName("SearchTip");
+            SearchTip.IsOpen = false;
+            FindName("CreatePostDialog");
+            var PostDialog = new AddPostDialog();
+            await PostDialog.ShowAsync();
         }
 
         private void SwipeItem_Invoked_2(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs args)
         {
 
-                FindName("SearchTip");
-                SearchTip.IsOpen = true;
+            FindName("SearchTip");
+            SearchTip.IsOpen = true;
 
         }
 
@@ -1928,13 +1755,13 @@ namespace Appraisit.Views
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ProgressRing.IsActive = true;
-                switch (PivotNavigator.SelectedIndex.ToString())
+                switch (SortBox.SelectedItem.ToString())
                 {
                     case "0":
                         try
                         {
                             var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
-                            NewGridViewControl.ItemsSource = Newcollection;
+                            UniversalGridViewControl.ItemsSource = Newcollection;
                         }
                         catch
                         {
@@ -1944,20 +1771,17 @@ namespace Appraisit.Views
                         break;
                     case "1":
                         var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        HotGridViewControl.ItemsSource = Hotcollection;
+                        UniversalGridViewControl.ItemsSource = Hotcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "2":
                         var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
-                        TopGridViewControl.ItemsSource = Topcollection;
+                        UniversalGridViewControl.ItemsSource = Topcollection;
                         ProgressRing.IsActive = false;
                         break;
                     case "3":
                         var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        RisingGridViewControl.ItemsSource = Risingcollection;
-                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
-                        ControversialGridViewControl.ItemsSource = Controversialcollection;
-                        ProgressRing.IsActive = false;
+                        UniversalGridViewControl.ItemsSource = Risingcollection;
                         ProgressRing.IsActive = false;
                         break;
 
@@ -1972,92 +1796,56 @@ namespace Appraisit.Views
             {
                 if (view == 1)
                 {
-                    switch (PivotNavigator.SelectedIndex.ToString())
-                    {
-                        case "0":
-                            NewGridViewControl.OneRowModeEnabled = true;
-                            view = view + 1;
-                            break;
-                        case "1":
-                            HotGridViewControl.OneRowModeEnabled = true;
-                            view = view + 1;
-                            break;
-                        case "2":
-                            TopGridViewControl.OneRowModeEnabled = true;
-                            view = view + 1;
-                            break;
-                        case "3":
-                            RisingGridViewControl.OneRowModeEnabled = true;
-                            ControversialGridViewControl.OneRowModeEnabled = true;
-                            view = view + 1;
-                            break;
-                    }
+                    UniversalGridViewControl.OneRowModeEnabled = true;
+                    view = view + 1;
                 }
                 else
                 {
-                    switch (PivotNavigator.SelectedIndex.ToString())
-                    {
-                        case "0":
-                            NewGridViewControl.OneRowModeEnabled = false;
-                            view = view - 1;
-                            break;
-                        case "1":
-                            HotGridViewControl.OneRowModeEnabled = false;
-                            view = view - 1;
-                            break;
-                        case "2":
-                            TopGridViewControl.OneRowModeEnabled = false;
-                            view = view - 1;
-                            break;
-                        case "3":
-                            RisingGridViewControl.OneRowModeEnabled = false;
-                            ControversialGridViewControl.OneRowModeEnabled = false;
-                            view = view - 1;
-                            break;
-                    }
+                    UniversalGridViewControl.OneRowModeEnabled = false;
+                    view = view - 1;
                 }
             });
         }
 
         private async void ReplyText_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-                var s = (FrameworkElement)sender;
-                var D = s.DataContext;
-                var dse = D as Comments;
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            var s = (FrameworkElement)sender;
+            var D = s.DataContext;
+            var dse = D as Comments;
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
                 {
-                    try
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
                         {
-                            if ((string)localSettings.Values["refresh_token"] == BackuprefreshToken)
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "Reply sent. Sign in to use custom username";
-                            }
-                            else
-                            {
-                                UniversalPostTip.IsOpen = true;
-                                UniversalPostTip.Title = "ReplySent".GetLocalized();
-                            }
-                            var reddit = new RedditAPI(appId, refreshToken, secret);
-                            var subreddit = reddit.Subreddit("Appraisit");
-                            await dse.CommentSelf.ReplyAsync(sender.Text);
-                            sender.Text = "";
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "Reply sent. Sign in to use custom username";
+                        }
+                        else
+                        {
+                            UniversalPostTip.IsOpen = true;
+                            UniversalPostTip.Title = "ReplySent".GetLocalized();
+                        }
+                        var reddit = new RedditAPI(appId, refreshToken, secret);
+                        var subreddit = reddit.Subreddit("Appraisit");
+                        await dse.CommentSelf.ReplyAsync(sender.Text);
+                        sender.Text = "";
 
-                        });
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                });
-            
+                    });
+                }
+                catch
+                {
+                    return;
+                }
+            });
+
         }
 
         private async void CommentTextMessage_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
@@ -2098,7 +1886,7 @@ namespace Appraisit.Views
                     return;
                 }
             });
-            
+
         }
         private async void UpvoteComment_Click(object sender, RoutedEventArgs e)
         {
@@ -2165,8 +1953,8 @@ namespace Appraisit.Views
             }
             else
             {
-                UniversalPostTip.IsOpen = true;
-                UniversalPostTip.Title = "ReplySent".GetLocalized();
+                UniversalPageTip.IsOpen = true;
+                UniversalPageTip.Title = "Signed out";
 
                 refreshToken = BackuprefreshToken;
                 localSettings.Values["refresh_token"] = BackuprefreshToken;
@@ -2191,23 +1979,8 @@ namespace Appraisit.Views
 
         private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            ProgressRing.IsActive = true;
-            var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
-            var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
-            Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
-            ContentGrid.Visibility = Visibility.Collapsed;
-            FindName("loginView");
-            loginView.Navigate(targetUri);
-            ProgressRing.IsActive = false;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-            {
-                var messageDialog = new MessageDialog("Web page might not load on mobile");
-                await messageDialog.ShowAsync();
-            }
-            else
-            {
-                FindName("Wblock");
-            }
+            var dialog = new LoginDialog();
+            await dialog.ShowAsync();
         }
         private async void PostContentText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
         {
@@ -2282,4 +2055,3 @@ namespace Appraisit.Views
         }
     }
 }
-

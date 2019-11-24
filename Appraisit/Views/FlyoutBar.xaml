@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Appraisit.Views.FlyoutBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Appraisit.Views"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxcontrols="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid>
+            <StackPanel Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                <StackPanel Margin="20" Orientation="Horizontal">
+                    <Border BorderBrush="Purple" BorderThickness="1">
+                        <TextBlock x:Name="Joined">
+
+                        </TextBlock>
+                    </Border>
+                    <Border BorderBrush="Purple" BorderThickness="1">
+                        <TextBlock x:Name="Online">
+
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+                <Border BorderBrush="Purple" BorderThickness="1">
+                    <TextBlock Text="Cakeday: Apr 20, 2019">
+
+                    </TextBlock>
+                </Border>
+                <Button HorizontalAlignment="Center" Margin="3">
+                    Join
+                </Button>
+                <Button HorizontalAlignment="Center" Margin="3">
+                    Create post
+                </Button>
+                <controls:HeaderedContentControl Header="About:">
+                    <TextBlock x:Name="About" Width="300" TextWrapping="WrapWholeWords" HorizontalAlignment="Center">
+
+                    </TextBlock>
+                </controls:HeaderedContentControl>
+                <TextBlock Text="Submission Rules:"/>
+                <controls:Expander Width="300" Header="1. Posting rule" Margin="3" IsExpanded="False">
+                    <TextBlock Text="Do not post content unrelated to the subreddit. Posts must be about a Microsoft store app or desktop app in windows."/>
+                </controls:Expander>
+                <controls:Expander Width="300" Header="2. Flair rule" Margin="3" IsExpanded="False">
+                    <TextBlock Text="if your app is not an ms storeapp then flair it with non - ms store flair."/>
+                </controls:Expander>
+                <controls:Expander Width="300" Header="3. no links to the google play store or apple app store. Posts with these links will be removed." Margin="3" IsExpanded="False">
+                    <TextBlock Text="This is because Microsoft will remove appraisit from the store if it has these links">
+
+                    </TextBlock>
+                </controls:Expander>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

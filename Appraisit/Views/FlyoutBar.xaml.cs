@@ -21,7 +21,7 @@ namespace Appraisit.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Sidebar : Page
+    public sealed partial class FlyoutBar : Page
     {
         public string appId = "-bL9o_t7kgNNmA";
         // string backupRefreshToken = "209908787246-qLtBfs46Ci9dWAcesPmmCZt-lz0";
@@ -32,15 +32,17 @@ namespace Appraisit.Views
         public string backupaccessToken = "344019503430-BUX_uSW3ZfNr9wqbcWU5GMp8qfU";
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
-        public Sidebar()
+
+        public FlyoutBar()
         {
             this.InitializeComponent();
             refreshToken = localSettings.Values["refresh_token"].ToString();
             var reddit = new RedditAPI(appId, localSettings.Values["refresh_token"].ToString(), secret);
             var subreddit = reddit.Subreddit("Appraisit");
             Joined.Text = subreddit.Subscribers.ToString() + "160+ Reddit Subscribers";
-            Online.Text = subreddit.ActiveUserCount.ToString() + "10+ Online";
+            Online.Text = subreddit.ActiveUserCount.ToString() + "error Online";
             About.Text = " Discover new apps and games. Learn about improvements to your favorites and help them get discovered. You decide who rises to the top!";
-        }
+    }
+
     }
 }
