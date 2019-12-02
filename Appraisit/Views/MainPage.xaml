@@ -323,7 +323,7 @@
                 <CommandBar VerticalAlignment="Top" Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="MainBar" OverflowButtonVisibility="Visible" DefaultLabelPosition="Right" Style="{ThemeResource CommandBarRevealStyle}" x:Load="True">
                     <CommandBar.Content>
                         <StackPanel Orientation="Horizontal" Margin="0,0,30,0">
-                            <AppBarButton Icon="Home" Click="OpenCreatePostDialog" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                            <!--<AppBarButton Icon="Home" Click="OpenCreatePostDialog" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>-->
                             <CommandBar Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="SignInBar" OverflowButtonVisibility="Collapsed" DefaultLabelPosition="Right">
                                 <AppBarButton Icon="AddFriend" Label="Sign in" x:Uid="SignInABB">
                                     <AppBarButton.Flyout>
@@ -366,121 +366,6 @@
                         </controls:AdaptiveGridView.Transitions>
                     </controls:AdaptiveGridView>
                 </muxcontrols:RefreshContainer>
-                <!--<Pivot HorizontalAlignment="Center" x:Name="PivotNavigator" SelectionChanged="Pivot_SelectionChanged" Foreground="Purple">
-                    <PivotItem Header="New" x:Name="NewPivotItem" x:Uid="NewPi">
-                        <Grid>
-
-                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100">></AppBarButton>
-                 
-                        </Grid>
-                    </PivotItem>
-                    <PivotItem Header="Hot" x:Uid="HotPi">
-                        <Grid>
-                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
-
-                                <controls:AdaptiveGridView x:Load="False" animations:ReorderGridAnimation.Duration="250" Name="HotGridViewControl" ItemHeight="240" DesiredWidth="500" ItemTemplate="{StaticResource PostsTemplate}" Background='{ThemeResource SystemControlAcrylicWindowBrush}' IsItemClickEnabled="True" ItemClick="UniversalGridViewControl_ItemClick">
-                                    <controls:AdaptiveGridView.Footer>
-                                        <ProgressRing IsActive="True"/>
-                                    </controls:AdaptiveGridView.Footer>
-                                    <controls:AdaptiveGridView.Transitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition/>
-                                        </TransitionCollection>
-                                    </controls:AdaptiveGridView.Transitions>
-                                </controls:AdaptiveGridView>
-
-                            </muxcontrols:RefreshContainer>
-                        </Grid>
-
-                    </PivotItem>
-                    <PivotItem Header="Top" x:Uid="TopPi">
-                        <Grid>
-                            <ComboBox SelectionChanged="TopComboBox_SelectionChanged" x:Name="TopOrder" x:Uid="TopOrder"  Canvas.ZIndex="100" PlaceholderText="all" Width="200">
-                                <x:String>all</x:String>
-                                <x:String>year</x:String>
-                                <x:String>month</x:String>
-                                <x:String>week</x:String>
-                                <x:String>day</x:String>
-                            </ComboBox>
-                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100" HorizontalAlignment="Right"></AppBarButton>
-                            <muxcontrols:RefreshContainer Margin="0, 40, 0, 0" RefreshRequested="RefreshContainer_RefreshRequested">
-
-                                <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="250" x:Load="False" Name="TopGridViewControl"
-                                                           Background='{ThemeResource SystemControlAcrylicWindowBrush}'
-ItemHeight="200"
-DesiredWidth="500"
-ItemTemplate="{StaticResource PostsTemplate}"
-IsItemClickEnabled="True"
-ItemClick="UniversalGridViewControl_ItemClick">
-                                    <controls:AdaptiveGridView.Transitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition/>
-                                        </TransitionCollection>
-                                    </controls:AdaptiveGridView.Transitions>
-                                    <controls:AdaptiveGridView.Footer>
-                                        <ProgressRing IsActive="True"/>
-                                    </controls:AdaptiveGridView.Footer>
-                                </controls:AdaptiveGridView>
-
-                            </muxcontrols:RefreshContainer>
-                        </Grid>
-                    </PivotItem>
-
-                    <PivotItem Header="Rising" x:Uid="RisingTVI">
-                        <Grid>
-                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
-
-                                <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="240" Name="RisingGridViewControl"
-    ItemHeight="200"
-    DesiredWidth="500"
-    ItemTemplate="{StaticResource PostsTemplate}"
-    IsItemClickEnabled="True"
-    ItemClick="UniversalGridViewControl_ItemClick">
-                                    <controls:AdaptiveGridView.Transitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition/>
-                                        </TransitionCollection>
-                                    </controls:AdaptiveGridView.Transitions>
-                                    <controls:AdaptiveGridView.Footer>
-                                        <ProgressRing IsActive="True"/>
-                                    </controls:AdaptiveGridView.Footer>
-                                </controls:AdaptiveGridView>
-
-                            </muxcontrols:RefreshContainer>
-                        </Grid>
-                    </PivotItem>
-                    <PivotItem Header="Controversial" x:Uid="ControversialTVI">
-                        <Grid>
-                            <AppBarButton Icon="Switch" Click="UniversalZoomButton_Click" Height="40" Canvas.ZIndex="100"></AppBarButton>
-                            <muxcontrols:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested" Margin="0, 40, 0, 0">
-
-                                <controls:AdaptiveGridView animations:ReorderGridAnimation.Duration="240" Name="ControversialGridViewControl"
-ItemHeight="200"
-DesiredWidth="500"
-ItemTemplate="{StaticResource PostsTemplate}"
-IsItemClickEnabled="True"
-ItemClick="UniversalGridViewControl_ItemClick">
-                                    <controls:AdaptiveGridView.Transitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition/>
-                                        </TransitionCollection>
-                                    </controls:AdaptiveGridView.Transitions>
-
-                                    <controls:AdaptiveGridView.Footer>
-                                        <ProgressRing IsActive="True"/>
-                                    </controls:AdaptiveGridView.Footer>
-                                </controls:AdaptiveGridView>
-
-                            </muxcontrols:RefreshContainer>
-                        </Grid>
-                    </PivotItem>
-                    <Pivot.LeftHeader>
-                        <Grid>
-                           
-                    </Pivot.LeftHeader>
-                </Pivot>-->
                 <controls:DropShadowPanel Canvas.ZIndex="20"
                           Grid.Row="1"
                            BlurRadius="10.0"
@@ -589,7 +474,7 @@ ItemClick="UniversalGridViewControl_ItemClick">
 
                     <SymbolIcon Symbol="AddFriend"></SymbolIcon>
                 </Button>
-                <ProgressRing IsActive="False" x:Name="ProgressRing" Canvas.ZIndex="100" Width="50" Height="50"/>
+                <ProgressRing IsActive="False" x:Name="ProgressRing" Width="50" Height="50"/>
                 <Grid x:Name="destinationElement" HorizontalAlignment="Center" VerticalAlignment="Center" Width="370" Height="295"/>
             </Grid>
             <ContentDialog
