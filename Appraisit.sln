@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29424.173
+VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appraisit.Core", "Appraisit.Core\Appraisit.Core.csproj", "{1F055B6A-B8D2-464D-93BF-9930E4EFEA31}"
 EndProject

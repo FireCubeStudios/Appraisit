@@ -168,9 +168,7 @@ namespace Appraisit.Views
 
                     }
                 }
-
-            // TopSort.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
-
+          
             /*ProgressRing.IsActive = true;
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
@@ -251,6 +249,7 @@ namespace Appraisit.Views
                                 var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
                                 UniversalGridViewControl.ItemsSource = Topcollection;
                                 FindName("TopSort");
+                                TopSort.ItemsSource = "TopOrderItems".GetLocalized().Split('|');
                                 TopSort.SelectedItem = "Day";
                                 ProgressRing.IsActive = false;
                                 break;
@@ -1432,11 +1431,12 @@ namespace Appraisit.Views
                 ProgressRing.IsActive = true;
                 switch (SortBox.SelectedItem.ToString())
                 {
-                    case "0":
+                    case "New":
                         try
                         {
                             var Newcollection = new IncrementalLoadingCollection<NewPostsClass, Posts>();
                             UniversalGridViewControl.ItemsSource = Newcollection;
+                            UnloadObject(TopSort);
                         }
                         catch
                         {
@@ -1444,22 +1444,31 @@ namespace Appraisit.Views
                         }
                         ProgressRing.IsActive = false;
                         break;
-                    case "1":
+                    case "Hot":
                         var Hotcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
                         UniversalGridViewControl.ItemsSource = Hotcollection;
+                        UnloadObject(TopSort);
                         ProgressRing.IsActive = false;
                         break;
-                    case "2":
+                    case "Top":
                         var Topcollection = new IncrementalLoadingCollection<TopPostsClass, Posts>();
                         UniversalGridViewControl.ItemsSource = Topcollection;
+                        FindName("TopSort");
+                        TopSort.SelectedItem = "Day";
                         ProgressRing.IsActive = false;
                         break;
-                    case "3":
+                    case "Rising":
                         var Risingcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
                         UniversalGridViewControl.ItemsSource = Risingcollection;
+                        UnloadObject(TopSort);
                         ProgressRing.IsActive = false;
                         break;
-
+                    case "Controversial":
+                        var Controversialcollection = new IncrementalLoadingCollection<HotPostsClass, Posts>();
+                        UniversalGridViewControl.ItemsSource = Controversialcollection;
+                        UnloadObject(TopSort);
+                        ProgressRing.IsActive = false;
+                        break;
                 }
                 ProgressRing.IsActive = false;
             });

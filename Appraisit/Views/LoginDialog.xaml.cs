@@ -39,6 +39,10 @@ namespace Appraisit.Views
         }
         private async void StartUp()
         {
+           
+            FindName("Fail");
+            FindName("Block");
+            UnloadObject(Wblock);
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
             Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
@@ -52,6 +56,7 @@ namespace Appraisit.Views
             {
                 FindName("Wblock");
             }
+            UnloadObject(loginView);
         }
      
         private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
