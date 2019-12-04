@@ -36,13 +36,11 @@ namespace Appraisit.Views
         {
             this.InitializeComponent();
             StartUp();
+         //  this.Width = Window.Current.Bounds.Width;
         }
         private async void StartUp()
         {
-           
-            FindName("Fail");
-            FindName("Block");
-            UnloadObject(Wblock);
+            //UnloadObject(Wblock);
             var scopes = Constants.Constants.scopeList.Aggregate("", (acc, x) => acc + " " + x);
             var urlParams = "client_id=" + appId + "&response_type=code&state=uyagsjgfhjs&duration=permanent&redirect_uri=" + HttpUtility.UrlEncode("http://127.0.0.1:3000/reddit_callback") + "&scope=" + HttpUtility.UrlEncode(scopes);
             Uri targetUri = new Uri(Constants.Constants.redditApiBaseUrl + "authorize?" + urlParams);
@@ -56,7 +54,7 @@ namespace Appraisit.Views
             {
                 FindName("Wblock");
             }
-            UnloadObject(loginView);
+          //  UnloadObject(loginView);
         }
      
         private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -96,6 +94,20 @@ namespace Appraisit.Views
                 UnloadObject(Wblock);
             }
             else if (args.Uri.ToString() == "https://www.reddit.com/premium/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UnloadObject(loginView);
+                FindName("Fail");
+                FindName("Block");
+                UnloadObject(Wblock);
+            }
+            else if (args.Uri.ToString() == "https://old.reddit.com/premium/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                UnloadObject(loginView);
+                FindName("Fail");
+                FindName("Block");
+                UnloadObject(Wblock);
+            }
+            else if (args.Uri.ToString() == "https://old.reddit.com/coins/" && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 UnloadObject(loginView);
                 FindName("Fail");

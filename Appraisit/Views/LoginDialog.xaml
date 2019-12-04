@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     Title="Login"
     Height="1000"
-    CloseButtonText="Close">
+    CloseButtonText="Close"
+    MaxWidth="1500">
 
     <Grid>
         <TextBlock x:Name="Fail" x:Load="False" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="60">Login unavailable: new login experience is being made due to microsoft store issues</TextBlock>
