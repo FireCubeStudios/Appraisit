@@ -170,8 +170,8 @@
     <Compile Include="Views\AddPostDialog.xaml.cs">
       <DependentUpon>AddPostDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoginDialog.xaml.cs">
-      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SideBar.xaml.cs">
       <DependentUpon>SideBar.xaml</DependentUpon>
@@ -221,7 +221,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LoginDialog.xaml">
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

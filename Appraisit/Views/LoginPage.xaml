@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="Appraisit.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Appraisit.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid>
+            <TextBlock x:Name="Fail" x:Load="False" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="60">Login unavailable: new login experience is being made due to microsoft store issues</TextBlock>
+            <TextBlock x:Name="Success" x:Load="False" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="60">Login completed - close and open up the app again to complete login process</TextBlock>
+            <Rectangle Fill="Black" VerticalAlignment="Top" Width="9999" Height="60" Canvas.ZIndex="51" x:Name="Wblock"/>
+            <Rectangle Fill="Black" VerticalAlignment="Top" Width="9999" Height="99999" Canvas.ZIndex="59" x:Name="Block" x:Load="False"/>
+            <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" Height="900" Canvas.ZIndex="50" RequestedTheme="Dark"/>
+        </Grid>
+    </Grid>
+</Page>

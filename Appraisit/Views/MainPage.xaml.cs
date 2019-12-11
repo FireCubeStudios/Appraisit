@@ -224,7 +224,7 @@ namespace Appraisit.Views
                          transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
                                           initialBounds,                                  // the initial size and position
                                                     finalBounds);*/
-                        switch (SortBox.SelectedItem.ToString())
+                       /* switch (SortBox.SelectedItem.ToString())
                         {
                             case "New":
                                 try
@@ -265,7 +265,7 @@ namespace Appraisit.Views
                                 UnloadObject(TopSort);
                                 ProgressRing.IsActive = false;
                                 break;
-                        }
+                        }*/
                         ProgressRing.IsActive = false;
                         // the area to fill over the animation duration
                     }
@@ -1986,10 +1986,12 @@ namespace Appraisit.Views
 
         }
 
-        private async void SignIn_Click(object sender, RoutedEventArgs e)
+        private void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new LoginDialog();
-            await dialog.ShowAsync();
+            FindName("LoginFrame");
+            FindName("CloseLogin");
+            LoginFrame.Navigate(typeof(LoginPage));
+
         }
         private async void PostContentText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
         {
@@ -2061,6 +2063,12 @@ namespace Appraisit.Views
             // This is basically the default implementation
             e.Image = new BitmapImage(new Uri(e.Url));
             e.Handled = true;
+        }
+
+        private void CloseLogin_Click(object sender, RoutedEventArgs e)
+        {
+            FindName("LoginFrame");
+            UnloadObject(LoginFrame);
         }
     }
 }

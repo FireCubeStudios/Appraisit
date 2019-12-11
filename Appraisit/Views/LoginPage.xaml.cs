@@ -17,11 +17,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Appraisit.Views
 {
-    public sealed partial class LoginDialog : ContentDialog
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class LoginPage : Page
     {
         public string appId = "-bL9o_t7kgNNmA";
         // string backupRefreshToken = "209908787246-qLtBfs46Ci9dWAcesPmmCZt-lz0";
@@ -32,11 +35,10 @@ namespace Appraisit.Views
         public string backupbackuprefreshToken = "";
         // string backupAccesToken = "209908787246-EHnGFWXgWZDrmpEv3iYmkXLB-ew";
         public string secret = "SESshAirmwAuAvBFHbq_JUkAMmk";
-        public LoginDialog()
+        public LoginPage()
         {
             this.InitializeComponent();
             StartUp();
-         //  this.Width = Window.Current.Bounds.Width;
         }
         private async void StartUp()
         {
@@ -54,9 +56,9 @@ namespace Appraisit.Views
             {
                 FindName("Wblock");
             }
-          //  UnloadObject(loginView);
+            //  UnloadObject(loginView);
         }
-     
+
         private async void LoginView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
 
@@ -74,7 +76,7 @@ namespace Appraisit.Views
                 {
                     FindName("MobileBar");
                     FindName("SB");
-                   // PivotBar.Visibility = Visibility.Collapsed;
+                    // PivotBar.Visibility = Visibility.Collapsed;
                 }
                 FindName("Block");
 
@@ -136,7 +138,6 @@ namespace Appraisit.Views
 
 
         }
-       
 
     }
 }
