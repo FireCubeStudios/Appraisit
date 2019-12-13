@@ -224,7 +224,7 @@ namespace Appraisit.Views
                          transition.Start(Windows.UI.Colors.Purple,  // the color for the circlular bloom
                                           initialBounds,                                  // the initial size and position
                                                     finalBounds);*/
-                       /* switch (SortBox.SelectedItem.ToString())
+                        switch (SortBox.SelectedItem.ToString())
                         {
                             case "New":
                                 try
@@ -265,7 +265,7 @@ namespace Appraisit.Views
                                 UnloadObject(TopSort);
                                 ProgressRing.IsActive = false;
                                 break;
-                        }*/
+                        }
                         ProgressRing.IsActive = false;
                         // the area to fill over the animation duration
                     }
@@ -2069,6 +2069,7 @@ namespace Appraisit.Views
         {
             FindName("LoginFrame");
             UnloadObject(LoginFrame);
+            UnloadObject(CloseLogin);
         }
     }
 }

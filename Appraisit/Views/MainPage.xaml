@@ -319,8 +319,8 @@
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
             <Rectangle x:Name="hostForVisual" Fill="Transparent"/>
-            <Frame x:Name="LoginFrame" x:Load="False" Height="600" Width="800" Canvas.ZIndex="90000"></Frame>
-            <Button Content="Close" x:Name="CloseLogin" x:Load="False" Click="CloseLogin_Click" Canvas.ZIndex="90000" Canvas.Top="50" Canvas.Left="50"/>
+            <Frame x:Name="LoginFrame" x:Load="False" Height="800" MinWidth="300" MaxWidth="1200" Canvas.ZIndex="90000"></Frame>
+            <AppBarButton Background="Blue" Icon="ClosePane" Label="Close" x:Name="CloseLogin" x:Load="False" Click="CloseLogin_Click" Canvas.ZIndex="90000" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Grid x:Name="ContentGrid" Canvas.ZIndex="0">
                 <CommandBar VerticalAlignment="Top" Background='{ThemeResource SystemControlAcrylicWindowBrush}' x:Name="MainBar" OverflowButtonVisibility="Visible" DefaultLabelPosition="Right" Style="{ThemeResource CommandBarRevealStyle}" x:Load="True">
                     <CommandBar.Content>
