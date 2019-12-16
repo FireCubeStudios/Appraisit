@@ -13,6 +13,7 @@
             <TextBlock x:Name="Fail" x:Load="False" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="60">Login unavailable: new login experience is being made due to microsoft store issues</TextBlock>
             <TextBlock x:Name="Success" x:Load="False" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="60">Login completed - close and open up the app again to complete login process</TextBlock>
             <Rectangle Fill="Black" VerticalAlignment="Top" Width="9999" Height="60" Canvas.ZIndex="51" x:Name="Wblock"/>
+            <Rectangle Fill="Black" VerticalAlignment="Bottom" Width="9999" Height="60" Canvas.ZIndex="200" x:Name="WBblock"/>
             <Rectangle Fill="Black" VerticalAlignment="Top" Width="9999" Height="99999" Canvas.ZIndex="59" x:Name="Block" x:Load="False"/>
             <WebView x:Name="loginView" NavigationStarting="LoginView_NavigationStarting" Height="900" Canvas.ZIndex="50" RequestedTheme="Dark"/>
         </Grid>

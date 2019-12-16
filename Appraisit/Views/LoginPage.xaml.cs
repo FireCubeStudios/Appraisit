@@ -55,6 +55,7 @@ namespace Appraisit.Views
             else
             {
                 FindName("Wblock");
+                FindName("WBblock");
             }
             //  UnloadObject(loginView);
         }
